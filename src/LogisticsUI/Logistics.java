@@ -2,10 +2,17 @@ package LogisticsUI;
 
 import javax.swing.border.BevelBorder;
 import javax.swing.ImageIcon;
+import datautils.io.DataIOParser;
+import datautils.io.CSVParser;
+import javax.swing.JOptionPane;
+import ClassTemplates.*;
 
 public class Logistics extends javax.swing.JFrame {
+    private String selectedUserRole;
     public Logistics() {
         initComponents();
+        // Set default value to the first entry in the combobox
+        selectedUserRole = interactionRole.getSelectedItem().toString(); 
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         setLocationRelativeTo(null);
         setResizable(false);
@@ -28,6 +35,13 @@ public class Logistics extends javax.swing.JFrame {
         loginFormPanel = new javax.swing.JPanel();
         loginHeader = new javax.swing.JLabel();
         prompt = new javax.swing.JLabel();
+        username = new javax.swing.JLabel();
+        userfield = new javax.swing.JTextField();
+        password = new javax.swing.JLabel();
+        role = new javax.swing.JLabel();
+        passfield = new javax.swing.JPasswordField();
+        interactionRole = new javax.swing.JComboBox<>();
+        loginBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DeliverIT: Logistics");
@@ -111,29 +125,99 @@ public class Logistics extends javax.swing.JFrame {
         loginHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginHeader.setText("LOG IN");
 
+        prompt.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         prompt.setText("Please enter your details below.");
+
+        username.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        username.setText("Username");
+
+        userfield.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true)));
+        userfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userfieldActionPerformed(evt);
+            }
+        });
+
+        password.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        password.setText("Password");
+
+        role.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        role.setText("Role");
+
+        passfield.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        passfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passfieldActionPerformed(evt);
+            }
+        });
+
+        interactionRole.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        interactionRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer", "Admin", "Frontline", "Warehouse", "Driver" }));
+        interactionRole.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        interactionRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                interactionRoleActionPerformed(evt);
+            }
+        });
+
+        loginBtn.setBackground(new java.awt.Color(70, 92, 239));
+        loginBtn.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        loginBtn.setForeground(new java.awt.Color(255, 255, 255));
+        loginBtn.setText("Login");
+        loginBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        loginBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout loginFormPanelLayout = new javax.swing.GroupLayout(loginFormPanel);
         loginFormPanel.setLayout(loginFormPanelLayout);
         loginFormPanelLayout.setHorizontalGroup(
             loginFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginFormPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(loginHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(138, 138, 138))
             .addGroup(loginFormPanelLayout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(prompt, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE)
+                .addGroup(loginFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginFormPanelLayout.createSequentialGroup()
+                        .addComponent(loginHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(138, 138, 138))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, loginFormPanelLayout.createSequentialGroup()
+                        .addComponent(prompt, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(53, 53, 53))))
+            .addGroup(loginFormPanelLayout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(loginFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(username)
+                    .addComponent(userfield, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                    .addComponent(password)
+                    .addComponent(role)
+                    .addComponent(passfield)
+                    .addComponent(interactionRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(loginBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         loginFormPanelLayout.setVerticalGroup(
             loginFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(loginFormPanelLayout.createSequentialGroup()
                 .addGap(51, 51, 51)
-                .addComponent(loginHeader)
+                .addComponent(loginHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(prompt)
-                .addContainerGap(433, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(username)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userfield, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(password)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(passfield, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(role)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(interactionRole, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         getContentPane().add(loginFormPanel);
@@ -142,33 +226,64 @@ public class Logistics extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void userfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userfieldActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Logistics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Logistics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Logistics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Logistics.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    }//GEN-LAST:event_userfieldActionPerformed
+
+    private void passfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passfieldActionPerformed
+
+    }//GEN-LAST:event_passfieldActionPerformed
+
+    private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
+        System.out.println(selectedUserRole);
+        String username = userfield.getText(), password = new String(passfield.getPassword());
+        if(DataIOParser.checkInput(username) || DataIOParser.checkInput(password)) { 
+            JOptionPane.showMessageDialog(this, "Invalid. Missing input in required field/s.", "ERROR!", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        //</editor-fold>
-        //</editor-fold>
+        boolean success = validateLogin(username, password, selectedUserRole);
+        if(selectedUserRole.equalsIgnoreCase("customer") && !success) {
+            int registerOption = JOptionPane.showConfirmDialog(this, "User not found. Register as a new customer?", "Register", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(registerOption == JOptionPane.YES_OPTION) {
+                this.dispose();
+                new CustomerRegistration(username);
+            }
+        } else if(!success) {
+            JOptionPane.showMessageDialog(this, "Invalid credentials. Please try again.", "ERROR!", JOptionPane.ERROR_MESSAGE);
+            resetLoginFields();
+            return;
+        }
+    }//GEN-LAST:event_loginBtnActionPerformed
 
-        /* Create and display the form */
+    private void interactionRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_interactionRoleActionPerformed
+        selectedUserRole = interactionRole.getSelectedItem().toString();
+    }//GEN-LAST:event_interactionRoleActionPerformed
+
+    private void resetLoginFields() {
+        userfield.setText("");
+        passfield.setText("");
+    }
+    
+    private boolean validateLogin(String user, String pass, String role) {
+        switch(role.toLowerCase()) {
+            case "customer":
+                Customer[] customers = Customer.toCustomer(CSVParser.loadCSVData("src/CSVFiles/customers.csv"));
+                for(Customer customer: customers) {
+                    if(customer.getName().equals(user) && customer.getContactInfo().equals(pass)) {
+                        JOptionPane.showMessageDialog(this, "Successfully Logged In!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
+                        new CustomerDashboard(customer); // TODO:
+                        return true;
+                    }
+                }
+                return false;
+            // Handle other roles in default
+            default: 
+                return false; 
+        }
+    }
+    
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Logistics().setVisible(true);
@@ -178,12 +293,19 @@ public class Logistics extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel creatorLabel;
+    private javax.swing.JComboBox<String> interactionRole;
+    private javax.swing.JButton loginBtn;
     private javax.swing.JPanel loginFormPanel;
     private javax.swing.JLabel loginHeader;
     private javax.swing.JLabel logoLabel;
+    private javax.swing.JPasswordField passfield;
+    private javax.swing.JLabel password;
     private javax.swing.JLabel prompt;
+    private javax.swing.JLabel role;
     private javax.swing.JLabel sectionLabel;
     private javax.swing.JLabel tagline;
+    private javax.swing.JTextField userfield;
+    private javax.swing.JLabel username;
     private javax.swing.JLabel welcomeLabel;
     private javax.swing.JPanel welcomePanel;
     // End of variables declaration//GEN-END:variables

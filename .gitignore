@@ -1,4 +1,4 @@
 nbproject
 *.class
 /dist/
-/build/
+build
