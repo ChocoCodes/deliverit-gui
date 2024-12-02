@@ -1,3 +1,4 @@
+package ClassTemplates;
 // All measurements in centimeters(cm) for accurate calculations later
 public class Dimension {
     private double height;

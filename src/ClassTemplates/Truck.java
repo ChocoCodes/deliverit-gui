@@ -1,3 +1,4 @@
+package ClassTemplates;
 public class Truck extends Vehicle {
     private int maxWarehouseRoutes;
     public Truck(int vehicleID, int whId, String licensePlate, String driver, int maxShipmentCount, int currentShipmentCount, boolean isAvailable, int maxWarehouseRoutes) {

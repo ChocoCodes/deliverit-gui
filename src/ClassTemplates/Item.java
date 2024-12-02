@@ -1,3 +1,5 @@
+package ClassTemplates;
+
 public class Item {
     private final String[] ITEMS_H = {"pkgID", "name", "weight_kg", "length_cm", "width_cm", "height_cm"};
     private String name;

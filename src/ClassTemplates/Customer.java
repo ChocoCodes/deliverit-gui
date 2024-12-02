@@ -1,3 +1,5 @@
+package ClassTemplates;
+
 public class Customer {
     private final String[] CUSTOMER_H = {"id", "name", "contactInfo", "address"};
     private int id;

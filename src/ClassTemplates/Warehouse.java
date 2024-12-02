@@ -1,3 +1,5 @@
+package ClassTemplates;
+
 public class Warehouse {
     private final String[] WAREHOUSE_H = {"wId", "location", "package_capacity", "vehicle_capacity"};
     private int wareHouseID;

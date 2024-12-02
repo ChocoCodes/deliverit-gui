@@ -1,3 +1,5 @@
+package ClassTemplates;
+
 public abstract class Employee {
     public static final String DEFAULT_USER = "employee";
     public static final String DEFAULT_PASS = "employee123";
