@@ -20,9 +20,9 @@ public class Dimension {
 
     // Dimensions of an item/
     public static Dimension toDimension(String[] raw, int start) {
-        double l = CSVParser.toDouble(raw[start]),
-        w = CSVParser.toDouble(raw[start + 1]),
-        h = CSVParser.toDouble(raw[start + 2]);
+        double l = Double.parseDouble(raw[start]),
+        w = Double.parseDouble(raw[start + 1]),
+        h = Double.parseDouble(raw[start + 2]);
         return new Dimension(h, w, l);
     }
 

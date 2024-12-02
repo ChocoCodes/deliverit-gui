@@ -1,3 +1,6 @@
+import datautils.io.CSVParser;
+import datautils.io.DataIOParser;
+
 import java.util.Date;
 import java.util.Random;
 import java.util.Calendar;
@@ -92,8 +95,8 @@ public class Shipment {
             String.valueOf(getShipCost()),
             String.valueOf(isConfirmed()),
             getStatus(),
-            getShipTakeOff() == null ? "Pending" : CSVParser.dateToString(getShipTakeOff()),
-            getEtaDelivery() == null ? "Pending" : CSVParser.dateToString(getEtaDelivery())
+            getShipTakeOff() == null ? "Pending" : DataIOParser.dateToString(getShipTakeOff()),
+            getEtaDelivery() == null ? "Pending" : DataIOParser.dateToString(getEtaDelivery())
         };
     }
 
@@ -107,8 +110,8 @@ public class Shipment {
             getShipCost(),
             isConfirmed(),
             getStatus(),
-            getShipTakeOff() == null ? "Pending" : CSVParser.dateToString(getShipTakeOff()),
-            getEtaDelivery() == null ? "Pending" : CSVParser.dateToString(getEtaDelivery()) 
+            getShipTakeOff() == null ? "Pending" : DataIOParser.dateToString(getShipTakeOff()),
+            getEtaDelivery() == null ? "Pending" : DataIOParser.dateToString(getEtaDelivery())
         );
     }
 
@@ -122,16 +125,16 @@ public class Shipment {
 
     public static Shipment toShipment(String[][] raw, int idx, Package pkg) {
         return new Shipment(
-            CSVParser.toInt(raw[idx][0]),
-            CSVParser.toInt(raw[idx][2]),
-            CSVParser.toInt(raw[idx][3]),
+            Integer.parseInt(raw[idx][0]),
+            Integer.parseInt(raw[idx][2]),
+            Integer.parseInt(raw[idx][3]),
             raw[idx][4],
-            CSVParser.toDouble(raw[idx][5]),
+            Double.parseDouble(raw[idx][5]),
             Boolean.parseBoolean(raw[idx][6]),
             pkg,
             raw[idx][7],
-            CSVParser.strToDate(raw[idx][8]),
-            CSVParser.strToDate(raw[idx][9])
+            DataIOParser.strToDate(raw[idx][8]),
+            DataIOParser.strToDate(raw[idx][9])
         );
     }
 }

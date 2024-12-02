@@ -1,3 +1,5 @@
+import datautils.io.CSVParser;
+
 public class Warehouse {
     private final String[] WAREHOUSE_H = {"wId", "location", "package_capacity", "vehicle_capacity"};
     private int wareHouseID;
@@ -46,10 +48,10 @@ public class Warehouse {
         Warehouse[] wh = new Warehouse[raw.length];
         for(int i = 0; i < raw.length; i++) {
             wh[i] = new Warehouse(
-                CSVParser.toInt(raw[i][0]), 
+                Integer.parseInt(raw[i][0]),
                 raw[i][1], 
-                CSVParser.toInt(raw[i][2]), 
-                CSVParser.toInt(raw[i][3])
+                Integer.parseInt(raw[i][2]),
+                Integer.parseInt(raw[i][3])
             );
         }
         return wh;

@@ -1,3 +1,6 @@
+import datautils.io.CSVParser;
+import datautils.io.DataIOParser;
+
 import java.util.Date;
 
 public class Package {
@@ -49,7 +52,7 @@ public class Package {
             String.valueOf(getId()), 
             String.valueOf(customerID),
             getreceiverAddress(), 
-            CSVParser.dateToString(getDate()),
+            DataIOParser.dateToString(getDate()),
             String.valueOf(getDimensionalWeight()), 
             String.valueOf(dim.getLength()), 
             String.valueOf(dim.getWidth()), 
@@ -126,11 +129,11 @@ public class Package {
     // pkgID,cID,receiverAddress,created,dimensionalWeight_kg,length_cm,width_cm,height_cm
     public static Package toPackage(String[][] raw, int idx, Item[] items) {
         return new Package(
-            CSVParser.toInt(raw[idx][0]),
+            Integer.parseInt(raw[idx][0]),
             items,
             raw[idx][2],
-            CSVParser.strToDate(raw[idx][3]),
-            CSVParser.toDouble(raw[idx][4]),
+            DataIOParser.strToDate(raw[idx][3]),
+            Double.parseDouble(raw[idx][4]),
             Dimension.toDimension(raw[idx], 5)
         );
     }

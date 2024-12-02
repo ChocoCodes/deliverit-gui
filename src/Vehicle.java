@@ -1,3 +1,5 @@
+import datautils.io.CSVParser;
+
 public class Vehicle {
     protected final String[] VEHICLES_H = {"vID", "whId", "type", "licensePlate", "driver", "cap_max", "cap_curr", "max_ship", "curr_ship", "avail"};
     protected int vehicleID;
@@ -134,8 +136,8 @@ public class Vehicle {
        Vehicle[] vehicles = new Vehicle[raw.length];
         for (int i = 0; i < raw.length; i++) {
             vehicles[i] = new Vehicle(
-                CSVParser.toInt(raw[i][0]),
-                CSVParser.toInt(raw[i][1]),
+                Integer.parseInt(raw[i][0]),
+                Integer.parseInt(raw[i][1]),
                 raw[i][2],
                 raw[i][3],
                 raw[i][4],
@@ -157,8 +159,8 @@ public class Vehicle {
     // int, int string, string, string, double, double, int, int, boolean
     public static Vehicle toVehicle(String[][] raw, int idx) { 
         return new Vehicle(
-            CSVParser.toInt(raw[idx][0]),
-            CSVParser.toInt(raw[idx][1]),
+            Integer.parseInt(raw[idx][0]),
+            Integer.parseInt(raw[idx][1]),
             raw[idx][2],
             raw[idx][3],
             raw[idx][4],

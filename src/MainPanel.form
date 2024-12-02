@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="291" width="565" height="129"/>
     </constraints>
-    <properties/>
+    <properties>
+      <foreground color="-1"/>
+    </properties>
     <border type="none" title=""/>
     <children>
       <component id="279f" class="javax.swing.JLabel">
@@ -25,7 +27,7 @@
         <properties>
           <background color="-11494427"/>
           <font name="Inter Semi Bold" size="24" style="1"/>
-          <foreground color="-13947600"/>
+          <foreground color="-1"/>
           <text value="Customer"/>
         </properties>
       </component>
@@ -36,7 +38,7 @@
         <properties>
           <background color="-11940752"/>
           <font name="Inter Semi Bold" size="24" style="1"/>
-          <foreground color="-13947600"/>
+          <foreground color="-1"/>
           <text value="Employee"/>
         </properties>
       </component>

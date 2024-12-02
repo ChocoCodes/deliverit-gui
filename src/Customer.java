@@ -47,7 +47,7 @@ public class Customer {
         Customer[] customers = new Customer[raw.length];
         for (int i = 0; i < raw.length; i++) {
             customers[i] = new Customer(
-                CSVParser.toInt(raw[i][0]),
+                Integer.parseInt(raw[i][0]),
                 raw[i][1],
                 raw[i][2],
                 raw[i][3]
@@ -58,7 +58,7 @@ public class Customer {
 
     public static Customer toCustomer(String[][] raw, int idx) { 
         return new Customer(
-            CSVParser.toInt(raw[idx][0]), 
+            Integer.parseInt(raw[idx][0]),
             raw[idx][1], 
             raw[idx][2], 
             raw[idx][3]
