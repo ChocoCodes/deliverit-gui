@@ -4,6 +4,8 @@
  */
 package logistics;
 
+import javax.swing.border.BevelBorder;
+import javax.swing.ImageIcon;
 /**
  *
  * @author John Roland L. Octavio, Jul Leo S. Javellana, Raean Chrissean R. Tamayo CS2A
@@ -43,7 +45,7 @@ public class Logistics extends javax.swing.JFrame {
         customerBtn.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         customerBtn.setForeground(new java.awt.Color(255, 255, 255));
         customerBtn.setText("Customer");
-        customerBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(null));
+        customerBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(BevelBorder.RAISED));
         customerBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 customerBtnActionPerformed(evt);
@@ -54,7 +56,7 @@ public class Logistics extends javax.swing.JFrame {
         employeeBtn.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
         employeeBtn.setForeground(new java.awt.Color(255, 255, 255));
         employeeBtn.setText("Employee");
-        employeeBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(null));
+        employeeBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(BevelBorder.RAISED));
         employeeBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         employeeBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

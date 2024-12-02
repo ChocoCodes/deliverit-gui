@@ -1,4 +1,3 @@
-import datautils.io.CSVParser;
 import datautils.io.DataIOParser;
 
 import java.util.Date;

@@ -37,7 +37,7 @@ import java.io.BufferedReader;
         return input;
     }
     
-    private static int getIntInput(String prompt) {
+    public static int getIntInput(String prompt) {
         String in = "";
         try {
             do {
@@ -50,7 +50,7 @@ import java.io.BufferedReader;
         return Integer.parseInt(in);
     }
 
-    private static double getDoubleInput(String prompt) {
+    public static double getDoubleInput(String prompt) {
         String in = "";
         try {
             do {

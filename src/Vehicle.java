@@ -1,5 +1,3 @@
-import datautils.io.CSVParser;
-
 public class Vehicle {
     protected final String[] VEHICLES_H = {"vID", "whId", "type", "licensePlate", "driver", "cap_max", "cap_curr", "max_ship", "curr_ship", "avail"};
     protected int vehicleID;
