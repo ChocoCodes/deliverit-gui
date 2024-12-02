@@ -17,7 +17,8 @@ public class Logistics extends javax.swing.JFrame {
      */
     public Logistics() {
         initComponents();
-        setIconImage(new ImageIcon("assets/truck.png").getImage());
+        setIconImage(new ImageIcon("src/assets/truck.png").getImage());
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -95,12 +96,12 @@ public class Logistics extends javax.swing.JFrame {
 
     private void customerBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerBtnActionPerformed
         this.dispose();
-        new CustomerLoginUI().setVisible(true);
+        // new CustomerLoginUI().setVisible(true);
     }//GEN-LAST:event_customerBtnActionPerformed
 
     private void employeeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeBtnActionPerformed
         this.dispose();
-        new EmployeeLoginUI().setVisible(true);
+        // new EmployeeLoginUI().setVisible(true);
     }//GEN-LAST:event_employeeBtnActionPerformed
 
     /**
