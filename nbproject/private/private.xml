@@ -3,9 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/LogisticsUI/Logistics.java</file>
-            <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/LogisticsUI/CustomerRegistration.java</file>
-            <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/LogisticsUI/CustomerDashboard.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/deliverit-gui/src/ClassTemplates/Dimension.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/deliverit-gui/src/ClassTemplates/Customer.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/deliverit-gui/src/LogisticsUI/FrontlineEmployee.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/deliverit-gui/src/ClassTemplates/Employee.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/deliverit-gui/src/ClassTemplates/Package.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/deliverit-gui/src/ClassTemplates/Shipment.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/deliverit-gui/src/ClassTemplates/Item.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/deliverit-gui/src/LogisticsUI/CustomerRegistration.java</file>
+            <file>file:/C:/Users/User/Documents/NetBeansProjects/deliverit-gui/src/ClassTemplates/Warehouse.java</file>
         </group>
     </open-files>
 </project-private>
