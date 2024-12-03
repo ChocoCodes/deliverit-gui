@@ -1,5 +1,6 @@
 package LogisticsUI;
 import ClassTemplates.*;
+import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
 public class CustomerDashboard extends javax.swing.JFrame {
@@ -12,6 +13,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
+        // TODO: Load Customer shipments and information
     }
 
     /**
@@ -23,22 +25,225 @@ public class CustomerDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        layoutPanel = new javax.swing.JPanel();
+        sideBarLayout = new javax.swing.JPanel();
+        helloHeader = new javax.swing.JLabel();
+        customerLoggedInName = new javax.swing.JLabel();
+        sendPkgBtn = new javax.swing.JButton();
+        acctBtn = new javax.swing.JButton();
+        shipmentBtn = new javax.swing.JButton();
+        signOutBtn = new javax.swing.JButton();
+        parentCardPanel = new javax.swing.JPanel();
+        sendPackagePanel = new javax.swing.JPanel();
+        accountsPanel = new javax.swing.JPanel();
+        shipmentsPanel = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("DeliverIT | Customer Dashboard");
+        setResizable(false);
+
+        layoutPanel.setForeground(new java.awt.Color(70, 92, 239));
+        layoutPanel.setLayout(null);
+
+        sideBarLayout.setBackground(new java.awt.Color(70, 92, 239));
+        sideBarLayout.setMinimumSize(new java.awt.Dimension(200, 500));
+        sideBarLayout.setPreferredSize(new java.awt.Dimension(200, 500));
+
+        helloHeader.setFont(new java.awt.Font("Inter", 1, 36)); // NOI18N
+        helloHeader.setForeground(new java.awt.Color(255, 255, 255));
+        helloHeader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        helloHeader.setText("Hello");
+
+        customerLoggedInName.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        customerLoggedInName.setForeground(new java.awt.Color(255, 255, 255));
+        customerLoggedInName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        customerLoggedInName.setText("Customer!");
+
+        sendPkgBtn.setBackground(new java.awt.Color(70, 92, 239));
+        sendPkgBtn.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        sendPkgBtn.setForeground(new java.awt.Color(255, 255, 255));
+        sendPkgBtn.setText("Send Package");
+        sendPkgBtn.setBorder(null);
+        sendPkgBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        sendPkgBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendPkgBtnActionPerformed(evt);
+            }
+        });
+
+        acctBtn.setBackground(new java.awt.Color(70, 92, 239));
+        acctBtn.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        acctBtn.setForeground(new java.awt.Color(255, 255, 255));
+        acctBtn.setText("My Account");
+        acctBtn.setBorder(null);
+        acctBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        acctBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acctBtnActionPerformed(evt);
+            }
+        });
+
+        shipmentBtn.setBackground(new java.awt.Color(70, 92, 239));
+        shipmentBtn.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        shipmentBtn.setForeground(new java.awt.Color(255, 255, 255));
+        shipmentBtn.setText("My Shipments");
+        shipmentBtn.setBorder(null);
+        shipmentBtn.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        shipmentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                shipmentBtnActionPerformed(evt);
+            }
+        });
+
+        signOutBtn.setBackground(new java.awt.Color(0, 0, 204));
+        signOutBtn.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        signOutBtn.setForeground(new java.awt.Color(255, 255, 255));
+        signOutBtn.setText("Sign Out");
+        signOutBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 255), new java.awt.Color(153, 153, 255), new java.awt.Color(102, 51, 255), new java.awt.Color(51, 102, 255)));
+        signOutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signOutBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout sideBarLayoutLayout = new javax.swing.GroupLayout(sideBarLayout);
+        sideBarLayout.setLayout(sideBarLayoutLayout);
+        sideBarLayoutLayout.setHorizontalGroup(
+            sideBarLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(customerLoggedInName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(acctBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(shipmentBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(sendPkgBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(sideBarLayoutLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(signOutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
+            .addComponent(helloHeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        sideBarLayoutLayout.setVerticalGroup(
+            sideBarLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sideBarLayoutLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(helloHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(customerLoggedInName)
+                .addGap(50, 50, 50)
+                .addComponent(sendPkgBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(acctBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(shipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addComponent(signOutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
+        );
+
+        layoutPanel.add(sideBarLayout);
+        sideBarLayout.setBounds(0, 0, 200, 500);
+
+        parentCardPanel.setBackground(new java.awt.Color(255, 255, 255));
+        parentCardPanel.setLayout(new java.awt.CardLayout());
+
+        sendPackagePanel.setBackground(new java.awt.Color(255, 51, 51));
+
+        javax.swing.GroupLayout sendPackagePanelLayout = new javax.swing.GroupLayout(sendPackagePanel);
+        sendPackagePanel.setLayout(sendPackagePanelLayout);
+        sendPackagePanelLayout.setHorizontalGroup(
+            sendPackagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 610, Short.MAX_VALUE)
+        );
+        sendPackagePanelLayout.setVerticalGroup(
+            sendPackagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+
+        parentCardPanel.add(sendPackagePanel, "card2");
+
+        accountsPanel.setBackground(new java.awt.Color(51, 51, 255));
+
+        javax.swing.GroupLayout accountsPanelLayout = new javax.swing.GroupLayout(accountsPanel);
+        accountsPanel.setLayout(accountsPanelLayout);
+        accountsPanelLayout.setHorizontalGroup(
+            accountsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 610, Short.MAX_VALUE)
+        );
+        accountsPanelLayout.setVerticalGroup(
+            accountsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+
+        parentCardPanel.add(accountsPanel, "card3");
+
+        shipmentsPanel.setBackground(new java.awt.Color(255, 255, 51));
+
+        javax.swing.GroupLayout shipmentsPanelLayout = new javax.swing.GroupLayout(shipmentsPanel);
+        shipmentsPanel.setLayout(shipmentsPanelLayout);
+        shipmentsPanelLayout.setHorizontalGroup(
+            shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 610, Short.MAX_VALUE)
+        );
+        shipmentsPanelLayout.setVerticalGroup(
+            shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+
+        parentCardPanel.add(shipmentsPanel, "card4");
+
+        layoutPanel.add(parentCardPanel);
+        parentCardPanel.setBounds(200, 0, 610, 500);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(layoutPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(layoutPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sendPkgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendPkgBtnActionPerformed
+        parentCardPanel.removeAll();
+        parentCardPanel.add(sendPackagePanel);
+        parentCardPanel.repaint();
+        parentCardPanel.revalidate();
+    }//GEN-LAST:event_sendPkgBtnActionPerformed
+
+    private void signOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOutBtnActionPerformed
+        JOptionPane.showMessageDialog(this, "Thanks for using the system!", "Sign-out", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
+    }//GEN-LAST:event_signOutBtnActionPerformed
+
+    private void acctBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acctBtnActionPerformed
+        parentCardPanel.removeAll();
+        parentCardPanel.add(accountsPanel);
+        parentCardPanel.repaint();
+        parentCardPanel.revalidate();
+    }//GEN-LAST:event_acctBtnActionPerformed
+
+    private void shipmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shipmentBtnActionPerformed
+        parentCardPanel.removeAll();
+        parentCardPanel.add(shipmentsPanel);
+        parentCardPanel.repaint();
+        parentCardPanel.revalidate();
+    }//GEN-LAST:event_shipmentBtnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel accountsPanel;
+    private javax.swing.JButton acctBtn;
+    private javax.swing.JLabel customerLoggedInName;
+    private javax.swing.JLabel helloHeader;
+    private javax.swing.JPanel layoutPanel;
+    private javax.swing.JPanel parentCardPanel;
+    private javax.swing.JPanel sendPackagePanel;
+    private javax.swing.JButton sendPkgBtn;
+    private javax.swing.JButton shipmentBtn;
+    private javax.swing.JPanel shipmentsPanel;
+    private javax.swing.JPanel sideBarLayout;
+    private javax.swing.JButton signOutBtn;
     // End of variables declaration//GEN-END:variables
 }
