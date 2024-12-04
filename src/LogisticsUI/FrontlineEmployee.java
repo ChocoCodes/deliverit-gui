@@ -36,10 +36,10 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         EmptyPanel = new javax.swing.JPanel();
         ProcessShipmentPanel = new javax.swing.JPanel();
         NestedPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        HeaderLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         PaidShipmentsTable = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        ConfirmBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 800, 500));
@@ -127,9 +127,9 @@ public class FrontlineEmployee extends javax.swing.JFrame {
 
         NestedPanel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("<html><span style='font-family: Inter; font-weight: bold;'>Unprocessed Paid Shipment(s)</span></html>");
+        HeaderLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        HeaderLabel.setForeground(new java.awt.Color(0, 0, 0));
+        HeaderLabel.setText("<html><span style='font-family: Inter; font-weight: bold;'>Unprocessed Paid Shipment(s)</span></html>");
 
         PaidShipmentsTable.setBackground(new java.awt.Color(255, 255, 255));
         PaidShipmentsTable.setForeground(new java.awt.Color(0, 0, 0));
@@ -160,14 +160,14 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         jScrollPane1.setViewportView(PaidShipmentsTable);
         PaidShipmentsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
-        jButton1.setBackground(new java.awt.Color(73, 204, 112));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
-        jButton1.setBorderPainted(false);
-        jButton1.setFocusPainted(false);
-        jButton1.setFocusable(false);
-        jButton1.setRequestFocusEnabled(false);
-        jButton1.setRolloverEnabled(false);
+        ConfirmBtn.setBackground(new java.awt.Color(73, 204, 112));
+        ConfirmBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ConfirmBtn.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
+        ConfirmBtn.setBorderPainted(false);
+        ConfirmBtn.setFocusPainted(false);
+        ConfirmBtn.setFocusable(false);
+        ConfirmBtn.setRequestFocusEnabled(false);
+        ConfirmBtn.setRolloverEnabled(false);
 
         javax.swing.GroupLayout NestedPanelLayout = new javax.swing.GroupLayout(NestedPanel);
         NestedPanel.setLayout(NestedPanelLayout);
@@ -176,9 +176,9 @@ public class FrontlineEmployee extends javax.swing.JFrame {
             .addGroup(NestedPanelLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(NestedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ConfirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(NestedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(HeaderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
@@ -186,11 +186,11 @@ public class FrontlineEmployee extends javax.swing.JFrame {
             NestedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(NestedPanelLayout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(HeaderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ConfirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
@@ -264,7 +264,9 @@ public class FrontlineEmployee extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ConfirmBtn;
     private javax.swing.JPanel EmptyPanel;
+    private javax.swing.JLabel HeaderLabel;
     private javax.swing.JButton Logout;
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel NestedPanel;
@@ -274,8 +276,6 @@ public class FrontlineEmployee extends javax.swing.JFrame {
     private javax.swing.JPanel ProcessShipmentPanel;
     private javax.swing.JPanel SidebarPanel;
     private javax.swing.JLabel UserGreetingsLabel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
