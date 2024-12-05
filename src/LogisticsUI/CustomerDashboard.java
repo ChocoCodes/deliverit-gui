@@ -1,6 +1,5 @@
 package LogisticsUI;
 import ClassTemplates.*;
-import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
 public class CustomerDashboard extends javax.swing.JFrame {
@@ -286,9 +285,9 @@ public class CustomerDashboard extends javax.swing.JFrame {
                 .addComponent(infoHdr)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(editPanelForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         parentCardPanel.add(accountsPanel, "card3");
