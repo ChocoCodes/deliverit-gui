@@ -3,7 +3,7 @@ package ClassTemplates;
 import datautils.io.DataIOParser;
 import java.util.Date;
 
-public class Package {
+public class Package implements Measurable {
     private final String[] PACKAGE_H = {"cID", "pkgID", "receiverAddress", "created", "dimensionalWeight_kg", "length_cm", "width_cm", "height_cm"};
     private int id;
     private String receiverAddress;
@@ -37,8 +37,20 @@ public class Package {
     public Item[] getContents() { return this.contents; }
     public String getreceiverAddress() { return this.receiverAddress; }
     public int itemCounts() { return getContents().length; }
-    public Dimension getDimensions() { return this.dimension; }
     public String[] getPackageHeader() { return this.PACKAGE_H; }
+
+    @Override
+    public Dimension getDimension() { return this.dimension; }
+    @Override
+    public double getVolume() { return getDimension().calcVolume(); }
+    /* Get which weight is bigger as basis for calculating costs: fairly priced for the space they occupy.
+    * actual(param 1) - total item weight only; large/heavy parcels
+    * dimensional - amount of space a package takes up relative to its actual weight; large but light (bulky but don’t weigh much)
+    */ 
+    @Override
+    public double getWeight() {
+        return Math.max(getTotalItemWeight(getContents()), getDimensionalWeight());
+    }
     // Setters
     public void setId(int id) { this.id = id; }
     public void setDate(Date packageCreated) { this.packageCreated = packageCreated; }
@@ -47,7 +59,7 @@ public class Package {
 
     // Follow header - pkgID,cID,receiverAddress,created,dimensionalWeight_kg,length_cm,width_cm,height_cm
     public String[] toCSVFormat(int customerID) { 
-        Dimension dim = getDimensions();
+        Dimension dim = getDimension();
         return new String[] {
             String.valueOf(getId()), 
             String.valueOf(customerID),
@@ -59,24 +71,13 @@ public class Package {
             String.valueOf(dim.getHeight())
         }; 
     }
+    
     // Calculate the Dimensional Weight of a package in cm^3/kg.
     private double calcDimensionalWeight() {
-        double boxVolume = calcBoxVolume();
+        double boxVolume = getVolume();
         return boxVolume / 5000;
     }
-    /* Get which weight is bigger as basis for calculating costs: fairly priced for the space they occupy.
-    * actual - total item weight only; large/heavy parcels
-    * dimensional - amount of space a package takes up relative to its actual weight; large but light (bulky but don’t weigh much)
-    */ 
-    public double detWeightBasis() {
-        double actual = getTotalItemWeight(getContents());
-        return Math.max(actual, getDimensionalWeight());
-    }
-    // Get volume length of the max dimensions of the package
-    private double calcBoxVolume() {
-        Dimension dim = getDimensions();
-        return dim.getLength() * dim.getWidth() * dim.getHeight();
-    }
+
     // Calculate box category based on getPricingBasis()
     // 0.0 fee for invalid inputs, 200 fee for small, 300 fee for medium, 500 fee for large, 700 fee for exceeding size
     public double calcBoxFee(double weight) {
@@ -85,47 +86,26 @@ public class Package {
                (weight <= 5.0) ? 200.00 : // medium packages
                (weight <= 10.0) ? 300.00 : 500.00; // large and packages exceeding 10.0 kgs
     }
+
     // Sum all item weights in KG - different from the package's dimensional weight
     public double getTotalItemWeight(Item[] contents) { 
         double weight = 0.0;
         for(Item item : contents) { weight += item.getWeight(); }
         return weight;
     }
+
     // Max l,w,h of an item is assumed to be the dimensions of the package
     public Dimension calculateDimensions() {
         double maxLength = 0.0, maxWidth = 0.0, maxHeight = 0.0;
         for (Item item : getContents()) {
-            Dimension dim = item.getDimensions();
+            Dimension dim = item.getDimension();
             maxLength = Math.max(maxLength, dim.getLength());
             maxWidth = Math.max(maxWidth, dim.getWidth());
             maxHeight = Math.max(maxHeight, dim.getHeight());
         }
         return new Dimension(maxLength, maxWidth, maxHeight);
     }
-    @Override
-    public String toString() {
-        Dimension dim = getDimensions();
-        return String.format(
-            "Package ID: %d\nDimensions: %s cm.\nItem Counts: %d\nReceiver Address: %s",
-            getId(),
-            dim.toString(),
-            itemCounts(),
-            getreceiverAddress()
-        );
-    }
-    public void displayPackageContents() {
-        Item[] items = getContents();
-        System.out.println("Package Information");
-        System.out.println("-------------------------------------");
-        System.out.println(toString());
-        System.out.println("=====================================");
-        System.out.println("Item Information");
-        System.out.println("-------------------------------------");
-        for(Item item : items) {
-            System.out.println(item.toString());
-        }
-        System.out.println("=====================================");
-    }
+
     // pkgID,cID,receiverAddress,created,dimensionalWeight_kg,length_cm,width_cm,height_cm
     public static Package toPackage(String[][] raw, int idx, Item[] items) {
         return new Package(

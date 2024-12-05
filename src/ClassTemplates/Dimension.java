@@ -19,7 +19,7 @@ public class Dimension {
     public void setWidth(double width) { this.width = width; }
     public void setHeight(double height) { this.height = height; }
 
-    // Dimensions of an item/
+    // Dimensions of an item
     public static Dimension toDimension(String[] raw, int start) {
         double l = Double.parseDouble(raw[start]),
         w = Double.parseDouble(raw[start + 1]),
@@ -27,8 +27,8 @@ public class Dimension {
         return new Dimension(h, w, l);
     }
 
-    @Override
-    public String toString() {
-        return String.format("%.2fx%.2fx%.2f", getLength(), getWidth(), getHeight());
+    // Get volume length of the dimensions of the package
+    public double calcVolume() {
+        return this.length * this.width * this.height;
     }
 }
