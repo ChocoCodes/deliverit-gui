@@ -3,7 +3,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package LogisticsUI;
+
+import datautils.io.CSVParser;
 import java.awt.CardLayout;
+import java.util.Arrays;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import ClassTemplates.Shipment;
+
 
 /**
  *
@@ -151,10 +158,11 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         });
         PaidShipmentsTable.setCellSelectionEnabled(true);
         PaidShipmentsTable.setFocusable(false);
-        PaidShipmentsTable.setGridColor(new java.awt.Color(255, 255, 255));
+        PaidShipmentsTable.setGridColor(new java.awt.Color(0, 0, 0));
         PaidShipmentsTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
         PaidShipmentsTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        PaidShipmentsTable.setShowGrid(false);
+        PaidShipmentsTable.setShowGrid(true);
+        PaidShipmentsTable.setShowHorizontalLines(true);
         PaidShipmentsTable.getTableHeader().setResizingAllowed(false);
         PaidShipmentsTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(PaidShipmentsTable);
@@ -168,6 +176,11 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         ConfirmBtn.setFocusable(false);
         ConfirmBtn.setRequestFocusEnabled(false);
         ConfirmBtn.setRolloverEnabled(false);
+        ConfirmBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout NestedPanelLayout = new javax.swing.GroupLayout(NestedPanel);
         NestedPanel.setLayout(NestedPanelLayout);
@@ -221,13 +234,69 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         ProcessShipmentBtn.setBackground(java.awt.Color.decode("#509BE5"));
         CardLayout card = (CardLayout)MainPanel.getLayout();
         card.show(MainPanel, "card3");
+        
+        loadShipmentData();
     }//GEN-LAST:event_ProcessShipmentBtnActionPerformed
+
 
     private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_LogoutActionPerformed
 
+    private void ConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmBtnActionPerformed
+        // TODO add your handling code here:
+        Shipment sh = new Shipment(0, null, null);
+        int selectedRow = PaidShipmentsTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Please select a shipment to confirm.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int shipmentId = Integer.parseInt(PaidShipmentsTable.getValueAt(selectedRow, 0).toString());
+
+        int confirm = JOptionPane.showConfirmDialog(null, "Confirm shipment ID " + shipmentId + "?", "Confirm Shipment", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipmentId, "true", 6, sh.getShipmentHeader()); // Update confirmed status
+            CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipmentId, "Pending", 7, sh.getShipmentHeader()); // Update status to "Pending"
+
+            JOptionPane.showMessageDialog(null, "Shipment ID " + shipmentId + " confirmed successfully.", "Confirmation Successful", JOptionPane.INFORMATION_MESSAGE);
+            loadShipmentData(); // Refresh the table
+        }
+    }//GEN-LAST:event_ConfirmBtnActionPerformed
+
+    private void loadShipmentData() {
+        String[][] shipmentData = CSVParser.loadCSVData("src/CSVFiles/shipments.csv");
+        if (shipmentData == null || shipmentData.length == 0) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "No data loaded from the CSV file.",
+                "Data Load Error",
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        // Clear table before adding new data
+        DefaultTableModel model = (DefaultTableModel) PaidShipmentsTable.getModel();
+        model.setRowCount(0);
+
+        for (String[] row : shipmentData) {
+            try {
+                if (row[7].equalsIgnoreCase("Paid")) { 
+                    model.addRow(new Object[]{row[0], row[1], row[7]});
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                javax.swing.JOptionPane.showMessageDialog(
+                    this,
+                    "Row does not have enough columns: " + Arrays.toString(row),
+                    "Row Data Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+        PaidShipmentsTable.revalidate();
+        PaidShipmentsTable.repaint();
+    }
     /**
      * @param args the command line arguments
      */
@@ -257,7 +326,7 @@ public class FrontlineEmployee extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+            public void run(){
                 new FrontlineEmployee().setVisible(true);
             }
         });
