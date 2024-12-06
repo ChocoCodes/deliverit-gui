@@ -29,6 +29,7 @@ public class Shipment {
         this.shipTakeOff = null;
         this.estDelivery = null;
     }
+
     // Constructor for Shipment CSV File Extraction
     public Shipment(int id, int vId, int whId, String destination, double shippingCost, boolean confirmed, Package pkg, String status, Date shipTakeOff, Date estDelivery) {
         this.id = id;
@@ -42,6 +43,7 @@ public class Shipment {
         this.shipTakeOff = shipTakeOff;
         this.estDelivery = estDelivery;
     }
+
     // Setters
     public void setStatus(String status) { this.status = status; }
     public void setShipTakeOff() { if (this.shipTakeOff == null) this.shipTakeOff = new Date(); }
@@ -61,6 +63,7 @@ public class Shipment {
     public int getWarehouseId() { return this.whId; }
     public int getVehicleId() { return this.vId; }
     public String[] getShipmentHeader() { return this.SHIPMENT_H; }
+
     // Algorithm to select an "estimated" timeframe of the shipment delivery within 7 days
     // using Calendar class to manipulate Date and Random class to implement randomization
     public Date calcEstTime() {
@@ -72,15 +75,17 @@ public class Shipment {
         calendar.add(Calendar.DAY_OF_MONTH, etaRange);
         return calendar.getTime();
     }
+
     // Calculate Delivery Fee in Fixed Rate for within and outside Bacolod
     private double calcShipFee() {
         String dest = getDestination();
         return (dest.toLowerCase().contains("bacolod") || dest.toLowerCase().contains("bcd")) ? 50.00 : 150.00;
     }
+
     // Get the shipping fee by adding the box fee acdg. to weight basis (actual or dimensional), and the ship fee acdg to region location
     public void calcShipCost() {  
         Package deliveryPkg = getPackage();
-        double basis = deliveryPkg.detWeightBasis();
+        double basis = deliveryPkg.getWeight();
         this.shippingCost = deliveryPkg.calcBoxFee(basis) + calcShipFee();
     }
 
@@ -98,29 +103,6 @@ public class Shipment {
             getShipTakeOff() == null ? "Pending" : DataIOParser.dateToString(getShipTakeOff()),
             getEtaDelivery() == null ? "Pending" : DataIOParser.dateToString(getEtaDelivery())
         };
-    }
-
-    @Override
-    public String toString() {
-        return String.format("Shipment ID: %d\nVehicle ID: %d\nWarehouse ID: %d\nDestination: %s\nShipping Cost: %.2f\nShipment Confirmed: %b\nStatus: %s\nTake Off: %s\nETA: %s",
-            getShipmentID(),
-            getVehicleId(),
-            getWarehouseId(),
-            getDestination(),
-            getShipCost(),
-            isConfirmed(),
-            getStatus(),
-            getShipTakeOff() == null ? "Pending" : DataIOParser.dateToString(getShipTakeOff()),
-            getEtaDelivery() == null ? "Pending" : DataIOParser.dateToString(getEtaDelivery())
-        );
-    }
-
-    public void displayShipmentForm() {
-        System.out.println("Shipment Form");
-        System.out.println("-------------------------------------");
-        System.out.printf("%s", toString());
-        System.out.println("\n=====================================");
-        getPackage().displayPackageContents();
     }
 
     public static Shipment toShipment(String[][] raw, int idx, Package pkg) {

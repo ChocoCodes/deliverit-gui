@@ -238,7 +238,7 @@ public class Logistics extends javax.swing.JFrame {
         System.out.println(selectedUserRole);
         String username = userfield.getText(), password = new String(passfield.getPassword());
         if(DataIOParser.checkInput(username) || DataIOParser.checkInput(password)) { 
-            JOptionPane.showMessageDialog(this, "Invalid. Missing input in required field/s.", "ERROR!", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI("Invalid. Missing input in required field/s.", JOptionPane.ERROR_MESSAGE);
             return;
         }
         boolean success = validateLogin(username, password, selectedUserRole);
@@ -246,10 +246,10 @@ public class Logistics extends javax.swing.JFrame {
             int registerOption = JOptionPane.showConfirmDialog(this, "User not found. Register as a new customer?", "Register", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if(registerOption == JOptionPane.YES_OPTION) {
                 this.dispose();
-                new CustomerRegistration(username);
+                new CustomerRegistration();
             }
         } else if(!success) {
-            JOptionPane.showMessageDialog(this, "Invalid credentials. Please try again.", "ERROR!", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI("Invalid Login Credentials.", JOptionPane.ERROR_MESSAGE);
             resetLoginFields();
             return;
         }
@@ -270,7 +270,7 @@ public class Logistics extends javax.swing.JFrame {
                 Customer[] customers = Customer.toCustomer(CSVParser.loadCSVData("src/CSVFiles/customers.csv"));
                 for(Customer customer: customers) {
                     if(customer.getName().equals(user) && customer.getContactInfo().equals(pass)) {
-                        JOptionPane.showMessageDialog(this, "Successfully Logged In!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
+                        new DialogBoxUI("Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
                         this.dispose();
                         new CustomerDashboard(customer); // TODO:
                         return true;

@@ -26,16 +26,6 @@ public class Customer {
     public void setContactInfo(String contactInfo) { this.contactInfo = contactInfo; }
     public void setAddress(String address) { this.address = address; }
 
-    @Override
-    public String toString() {
-        return String.format("ID: %d\nName: %s\nContact Number: %s\nAddress: %s\n", 
-        getCustomerID(), 
-        getName(), 
-        getContactInfo(), 
-        getAddress()
-        );
-    }
-
     public String[] toCSVFormat() {
         return new String[] {
             String.valueOf(getCustomerID()),

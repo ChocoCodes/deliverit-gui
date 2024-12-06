@@ -1,6 +1,5 @@
 package LogisticsUI;
 import ClassTemplates.*;
-import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 
 public class CustomerDashboard extends javax.swing.JFrame {
@@ -32,10 +31,22 @@ public class CustomerDashboard extends javax.swing.JFrame {
         sendPkgBtn = new javax.swing.JButton();
         acctBtn = new javax.swing.JButton();
         shipmentBtn = new javax.swing.JButton();
-        signOutBtn = new javax.swing.JButton();
+        signOutBtn1 = new javax.swing.JButton();
         parentCardPanel = new javax.swing.JPanel();
         sendPackagePanel = new javax.swing.JPanel();
         accountsPanel = new javax.swing.JPanel();
+        editPanelForm = new javax.swing.JPanel();
+        nameLbl = new javax.swing.JLabel();
+        nameFld = new javax.swing.JTextField();
+        phoneLbl = new javax.swing.JLabel();
+        phoneFld = new javax.swing.JTextField();
+        addrLbl = new javax.swing.JLabel();
+        addrFld = new javax.swing.JTextField();
+        nameEditBtn = new javax.swing.JButton();
+        phoneEditBtn = new javax.swing.JButton();
+        addrEditBtn = new javax.swing.JButton();
+        infoHdr = new javax.swing.JLabel();
+        saveBtn = new javax.swing.JButton();
         shipmentsPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -95,14 +106,14 @@ public class CustomerDashboard extends javax.swing.JFrame {
             }
         });
 
-        signOutBtn.setBackground(new java.awt.Color(0, 0, 204));
-        signOutBtn.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
-        signOutBtn.setForeground(new java.awt.Color(255, 255, 255));
-        signOutBtn.setText("Sign Out");
-        signOutBtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(153, 153, 255), new java.awt.Color(153, 153, 255), new java.awt.Color(102, 51, 255), new java.awt.Color(51, 102, 255)));
-        signOutBtn.addActionListener(new java.awt.event.ActionListener() {
+        signOutBtn1.setBackground(new java.awt.Color(0, 0, 204));
+        signOutBtn1.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        signOutBtn1.setForeground(new java.awt.Color(255, 255, 255));
+        signOutBtn1.setText("Sign Out");
+        signOutBtn1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(102, 204, 255), new java.awt.Color(153, 153, 255), new java.awt.Color(153, 0, 255), new java.awt.Color(102, 51, 255)));
+        signOutBtn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signOutBtnActionPerformed(evt);
+                signOutBtn1ActionPerformed(evt);
             }
         });
 
@@ -114,11 +125,11 @@ public class CustomerDashboard extends javax.swing.JFrame {
             .addComponent(acctBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(shipmentBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(sendPkgBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(helloHeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(sideBarLayoutLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
-                .addComponent(signOutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signOutBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(43, Short.MAX_VALUE))
-            .addComponent(helloHeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         sideBarLayoutLayout.setVerticalGroup(
             sideBarLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,7 +145,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(shipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addComponent(signOutBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signOutBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
 
@@ -159,17 +170,124 @@ public class CustomerDashboard extends javax.swing.JFrame {
 
         parentCardPanel.add(sendPackagePanel, "card2");
 
-        accountsPanel.setBackground(new java.awt.Color(51, 51, 255));
+        accountsPanel.setBackground(new java.awt.Color(240, 245, 255));
+
+        editPanelForm.setBackground(new java.awt.Color(255, 255, 255));
+
+        nameLbl.setFont(new java.awt.Font("Inter", 0, 20)); // NOI18N
+        nameLbl.setText("Name");
+
+        nameFld.setEnabled(false);
+
+        phoneLbl.setFont(new java.awt.Font("Inter", 0, 20)); // NOI18N
+        phoneLbl.setText("Phone Number");
+
+        phoneFld.setEnabled(false);
+
+        addrLbl.setFont(new java.awt.Font("Inter", 0, 20)); // NOI18N
+        addrLbl.setText("Address");
+
+        addrFld.setEnabled(false);
+
+        nameEditBtn.setBackground(new java.awt.Color(73, 204, 112));
+        nameEditBtn.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        nameEditBtn.setForeground(new java.awt.Color(255, 255, 255));
+        nameEditBtn.setText("Edit");
+        nameEditBtn.setBorderPainted(false);
+        nameEditBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nameEditBtnActionPerformed(evt);
+            }
+        });
+
+        phoneEditBtn.setBackground(new java.awt.Color(73, 204, 112));
+        phoneEditBtn.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        phoneEditBtn.setForeground(new java.awt.Color(255, 255, 255));
+        phoneEditBtn.setText("Edit");
+        phoneEditBtn.setBorderPainted(false);
+
+        addrEditBtn.setBackground(new java.awt.Color(73, 204, 112));
+        addrEditBtn.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        addrEditBtn.setForeground(new java.awt.Color(255, 255, 255));
+        addrEditBtn.setText("Edit");
+        addrEditBtn.setBorderPainted(false);
+
+        javax.swing.GroupLayout editPanelFormLayout = new javax.swing.GroupLayout(editPanelForm);
+        editPanelForm.setLayout(editPanelFormLayout);
+        editPanelFormLayout.setHorizontalGroup(
+            editPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editPanelFormLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(editPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(nameFld)
+                    .addComponent(phoneFld, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                    .addComponent(addrFld, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                    .addComponent(phoneLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addrLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nameLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addGroup(editPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(nameEditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addrEditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(phoneEditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+        editPanelFormLayout.setVerticalGroup(
+            editPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editPanelFormLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(nameLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(editPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameFld, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameEditBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(phoneLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(editPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(phoneEditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(phoneFld))
+                .addGap(18, 18, 18)
+                .addComponent(addrLbl)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(editPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(addrEditBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(addrFld))
+                .addContainerGap(41, Short.MAX_VALUE))
+        );
+
+        infoHdr.setFont(new java.awt.Font("Inter", 1, 36)); // NOI18N
+        infoHdr.setText("My Information");
+
+        saveBtn.setBackground(new java.awt.Color(70, 92, 239));
+        saveBtn.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(255, 255, 255));
+        saveBtn.setText("Save");
+        saveBtn.setBorderPainted(false);
 
         javax.swing.GroupLayout accountsPanelLayout = new javax.swing.GroupLayout(accountsPanel);
         accountsPanel.setLayout(accountsPanelLayout);
         accountsPanelLayout.setHorizontalGroup(
             accountsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGroup(accountsPanelLayout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addGroup(accountsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(accountsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(editPanelForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(infoHdr, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         accountsPanelLayout.setVerticalGroup(
             accountsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(accountsPanelLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(infoHdr)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(editPanelForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(saveBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         parentCardPanel.add(accountsPanel, "card3");
@@ -213,11 +331,6 @@ public class CustomerDashboard extends javax.swing.JFrame {
         parentCardPanel.revalidate();
     }//GEN-LAST:event_sendPkgBtnActionPerformed
 
-    private void signOutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOutBtnActionPerformed
-        JOptionPane.showMessageDialog(this, "Thanks for using the system!", "Sign-out", JOptionPane.INFORMATION_MESSAGE);
-        this.dispose();
-    }//GEN-LAST:event_signOutBtnActionPerformed
-
     private void acctBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acctBtnActionPerformed
         parentCardPanel.removeAll();
         parentCardPanel.add(accountsPanel);
@@ -232,18 +345,38 @@ public class CustomerDashboard extends javax.swing.JFrame {
         parentCardPanel.revalidate();
     }//GEN-LAST:event_shipmentBtnActionPerformed
 
+    private void nameEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameEditBtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nameEditBtnActionPerformed
+
+    private void signOutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOutBtn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_signOutBtn1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accountsPanel;
     private javax.swing.JButton acctBtn;
+    private javax.swing.JButton addrEditBtn;
+    private javax.swing.JTextField addrFld;
+    private javax.swing.JLabel addrLbl;
     private javax.swing.JLabel customerLoggedInName;
+    private javax.swing.JPanel editPanelForm;
     private javax.swing.JLabel helloHeader;
+    private javax.swing.JLabel infoHdr;
     private javax.swing.JPanel layoutPanel;
+    private javax.swing.JButton nameEditBtn;
+    private javax.swing.JTextField nameFld;
+    private javax.swing.JLabel nameLbl;
     private javax.swing.JPanel parentCardPanel;
+    private javax.swing.JButton phoneEditBtn;
+    private javax.swing.JTextField phoneFld;
+    private javax.swing.JLabel phoneLbl;
+    private javax.swing.JButton saveBtn;
     private javax.swing.JPanel sendPackagePanel;
     private javax.swing.JButton sendPkgBtn;
     private javax.swing.JButton shipmentBtn;
     private javax.swing.JPanel shipmentsPanel;
     private javax.swing.JPanel sideBarLayout;
-    private javax.swing.JButton signOutBtn;
+    private javax.swing.JButton signOutBtn1;
     // End of variables declaration//GEN-END:variables
 }

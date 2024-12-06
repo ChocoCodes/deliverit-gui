@@ -5,11 +5,8 @@ import datautils.io.*;
 import ClassTemplates.*;
 
 public class CustomerRegistration extends javax.swing.JFrame {
-    private String customerToRegister;
-
-    public CustomerRegistration(String customerToRegister) {
+    public CustomerRegistration() {
         initComponents();
-        this.customerToRegister = customerToRegister;
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         setLocationRelativeTo(null);
         setResizable(false);

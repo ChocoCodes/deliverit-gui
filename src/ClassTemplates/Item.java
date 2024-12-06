@@ -1,6 +1,6 @@
 package ClassTemplates;
 
-public class Item {
+public class Item implements Measurable {
     private final String[] ITEMS_H = {"pkgID", "name", "weight_kg", "length_cm", "width_cm", "height_cm"};
     private String name;
     private double weight; // in kilograms
@@ -13,24 +13,20 @@ public class Item {
     }
 
     public String getName() { return this.name; }
-    public double getWeight() { return this.weight; }
-    public Dimension getDimensions() { return this.dimension; }
     public String[] getItemHeader() { return this.ITEMS_H; }
-    
-    @Override
-    public String toString() {
-        Dimension dim = getDimensions();
-        return String.format("| %s | %.2f | %s |",
-            getName(),
-            getWeight(),
-            dim.toString()
-        );
-    }
     public double toKilograms(double grams) {
         return grams / 1000.0;
     }
+    
+    @Override
+    public double getWeight() { return this.weight; }
+    @Override
+    public Dimension getDimension() { return this.dimension; }
+    @Override
+    public double getVolume() { return getDimension().calcVolume(); }
+
     public String[] toCSVFormat(int pkgID) { 
-        Dimension dim = getDimensions();
+        Dimension dim = getDimension();
         return new String[] {
             String.valueOf(pkgID),
             getName(), 
