@@ -6,7 +6,6 @@ package LogisticsUI;
 
 import datautils.io.CSVParser;
 import java.awt.CardLayout;
-import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JOptionPane;
 import ClassTemplates.Shipment;
@@ -50,9 +49,7 @@ public class FrontlineEmployee extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 800, 500));
-        setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
-        setPreferredSize(new java.awt.Dimension(800, 500));
 
         NullPanel.setBackground(new java.awt.Color(240, 245, 255));
         NullPanel.setLayout(null);
@@ -115,7 +112,7 @@ public class FrontlineEmployee extends javax.swing.JFrame {
                 .addComponent(UserGreetingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(ProcessShipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(163, 163, 163)
+                .addGap(169, 169, 169)
                 .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -162,13 +159,13 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         PaidShipmentsTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
         PaidShipmentsTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
         PaidShipmentsTable.setShowGrid(true);
-        PaidShipmentsTable.setShowHorizontalLines(true);
         PaidShipmentsTable.getTableHeader().setResizingAllowed(false);
         PaidShipmentsTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(PaidShipmentsTable);
         PaidShipmentsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         ConfirmBtn.setBackground(new java.awt.Color(73, 204, 112));
+        ConfirmBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ConfirmBtn.setForeground(new java.awt.Color(255, 255, 255));
         ConfirmBtn.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
         ConfirmBtn.setBorderPainted(false);
@@ -202,9 +199,9 @@ public class FrontlineEmployee extends javax.swing.JFrame {
                 .addComponent(HeaderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ConfirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         ProcessShipmentPanel.add(NestedPanel, "card2");
@@ -229,7 +226,6 @@ public class FrontlineEmployee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ProcessShipmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcessShipmentBtnActionPerformed
-        // TODO add your handling code here:
         ProcessShipmentBtn.setOpaque(true);
         ProcessShipmentBtn.setBackground(java.awt.Color.decode("#509BE5"));
         CardLayout card = (CardLayout)MainPanel.getLayout();
@@ -240,13 +236,11 @@ public class FrontlineEmployee extends javax.swing.JFrame {
 
 
     private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_LogoutActionPerformed
 
     private void ConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmBtnActionPerformed
-        // TODO add your handling code here:
-        Shipment sh = new Shipment(0, null, null);
+        Shipment sh = new Shipment(0, null, null); // For Shipment Header Access Only
         int selectedRow = PaidShipmentsTable.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(null, "Please select a shipment to confirm.", "No Selection", JOptionPane.WARNING_MESSAGE);
@@ -276,27 +270,36 @@ public class FrontlineEmployee extends javax.swing.JFrame {
             );
             return;
         }
-        // Clear table before adding new data
+        
+        Shipment[] shipments = new Shipment[shipmentData.length];
+        for (int i = 0; i < shipmentData.length; i++) {
+            shipments[i] = Shipment.toShipment(shipmentData, i, null); // pass null for package
+        }
         DefaultTableModel model = (DefaultTableModel) PaidShipmentsTable.getModel();
         model.setRowCount(0);
-
-        for (String[] row : shipmentData) {
+        
+        for (Shipment shipment : shipments) {
             try {
-                if (row[7].equalsIgnoreCase("Paid")) { 
-                    model.addRow(new Object[]{row[0], row[1], row[7]});
+                if (shipment.getStatus().equalsIgnoreCase("Paid")) {
+                    model.addRow(new Object[]{
+                        shipment.getShipmentID(),       
+                        shipment.getDestination(),     
+                        shipment.getStatus()           
+                    });
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (Exception e) {
                 javax.swing.JOptionPane.showMessageDialog(
                     this,
-                    "Row does not have enough columns: " + Arrays.toString(row),
-                    "Row Data Error",
+                    "Error processing shipment: " + shipment,
+                    "Shipment Data Error",
                     javax.swing.JOptionPane.ERROR_MESSAGE
                 );
             }
-        }
+        }        
         PaidShipmentsTable.revalidate();
         PaidShipmentsTable.repaint();
     }
+        
     /**
      * @param args the command line arguments
      */
