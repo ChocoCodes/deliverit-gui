@@ -3,8 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package LogisticsUI;
-import java.awt.CardLayout;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import datautils.io.*;
+import ClassTemplates.*;
+import javax.swing.ImageIcon;
 /**
  *
  * @author Lenovo
@@ -16,6 +19,8 @@ public class AdminDashboard extends javax.swing.JFrame {
      */
     public AdminDashboard() {
         initComponents();
+        loadWarehouseData();
+        setIconImage(new ImageIcon("src/assets/truck.png").getImage());
     }
 
     /**
@@ -35,6 +40,19 @@ public class AdminDashboard extends javax.swing.JFrame {
         generateReports = new javax.swing.JButton();
         vehicleMngmnt1 = new javax.swing.JButton();
         dashboard = new javax.swing.JPanel();
+        warehouseCard = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        pkgCapacityInput = new javax.swing.JTextField();
+        locationInput = new javax.swing.JTextField();
+        vehicleCapacityInput = new javax.swing.JTextField();
+        addWarehouseBtn = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        warehouseTable = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        removeWarehouseBtn = new javax.swing.JButton();
         vehicleCard = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -56,18 +74,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         filePathInput = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        warehouseCard = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        pkgCapacityInput = new javax.swing.JTextField();
-        locationInput = new javax.swing.JTextField();
-        vehicleCapacityInput = new javax.swing.JTextField();
-        addWarehouseBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -169,6 +175,117 @@ public class AdminDashboard extends javax.swing.JFrame {
         dashboard.setPreferredSize(new java.awt.Dimension(600, 500));
         dashboard.setLayout(new java.awt.CardLayout());
 
+        warehouseCard.setBackground(new java.awt.Color(255, 255, 255));
+        warehouseCard.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        warehouseCard.setName("warehouseCard"); // NOI18N
+        warehouseCard.setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Remove Warehouse");
+        warehouseCard.add(jLabel1);
+        jLabel1.setBounds(56, 231, 249, 46);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Add Warehouse");
+        warehouseCard.add(jLabel2);
+        jLabel2.setBounds(56, 41, 249, 46);
+
+        pkgCapacityInput.setBackground(new java.awt.Color(204, 204, 204));
+        pkgCapacityInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pkgCapacityInputActionPerformed(evt);
+            }
+        });
+        warehouseCard.add(pkgCapacityInput);
+        pkgCapacityInput.setBounds(56, 168, 258, 34);
+
+        locationInput.setBackground(new java.awt.Color(204, 204, 204));
+        locationInput.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        locationInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                locationInputActionPerformed(evt);
+            }
+        });
+        warehouseCard.add(locationInput);
+        locationInput.setBounds(56, 101, 258, 34);
+
+        vehicleCapacityInput.setBackground(new java.awt.Color(204, 204, 204));
+        vehicleCapacityInput.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vehicleCapacityInputActionPerformed(evt);
+            }
+        });
+        warehouseCard.add(vehicleCapacityInput);
+        vehicleCapacityInput.setBounds(326, 101, 230, 34);
+
+        addWarehouseBtn.setBackground(new java.awt.Color(73, 204, 112));
+        addWarehouseBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        addWarehouseBtn.setForeground(new java.awt.Color(255, 255, 255));
+        addWarehouseBtn.setText("Add");
+        addWarehouseBtn.setBorder(null);
+        addWarehouseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addWarehouseBtnActionPerformed(evt);
+            }
+        });
+        warehouseCard.add(addWarehouseBtn);
+        addWarehouseBtn.setBounds(370, 170, 155, 34);
+
+        warehouseTable.setBackground(new java.awt.Color(255, 255, 255));
+        warehouseTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Warehouse ID", "Location", "Package Capacity", "Vehicle Capacity"
+            }
+        ));
+        jScrollPane1.setViewportView(warehouseTable);
+
+        warehouseCard.add(jScrollPane1);
+        jScrollPane1.setBounds(60, 280, 500, 190);
+
+        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Vehicle Capacity");
+        warehouseCard.add(jLabel3);
+        jLabel3.setBounds(330, 80, 110, 16);
+
+        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Location");
+        warehouseCard.add(jLabel4);
+        jLabel4.setBounds(60, 80, 110, 20);
+
+        jLabel5.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Package Capacity");
+        warehouseCard.add(jLabel5);
+        jLabel5.setBounds(60, 150, 110, 16);
+
+        removeWarehouseBtn.setBackground(new java.awt.Color(255, 102, 102));
+        removeWarehouseBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        removeWarehouseBtn.setForeground(new java.awt.Color(255, 255, 255));
+        removeWarehouseBtn.setText("Remove");
+        removeWarehouseBtn.setBorder(null);
+        removeWarehouseBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeWarehouseBtnActionPerformed(evt);
+            }
+        });
+        warehouseCard.add(removeWarehouseBtn);
+        removeWarehouseBtn.setBounds(440, 240, 120, 30);
+
+        dashboard.add(warehouseCard, "card2");
+
         vehicleCard.setBackground(new java.awt.Color(255, 255, 255));
         vehicleCard.setName("vehicleCard"); // NOI18N
         vehicleCard.setLayout(null);
@@ -202,7 +319,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         vehicleCard.add(addVehicleBtn);
         addVehicleBtn.setBounds(410, 170, 155, 34);
 
-        jTable2.setBackground(new java.awt.Color(204, 204, 204));
+        jTable2.setBackground(new java.awt.Color(255, 255, 255));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -305,94 +422,6 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         dashboard.add(reportCard, "card4");
 
-        warehouseCard.setBackground(new java.awt.Color(255, 255, 255));
-        warehouseCard.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        warehouseCard.setName("warehouseCard"); // NOI18N
-        warehouseCard.setLayout(null);
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("Remove Warehouse");
-        warehouseCard.add(jLabel1);
-        jLabel1.setBounds(56, 231, 249, 46);
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Add Warehouse");
-        warehouseCard.add(jLabel2);
-        jLabel2.setBounds(56, 41, 249, 46);
-
-        pkgCapacityInput.setBackground(new java.awt.Color(204, 204, 204));
-        warehouseCard.add(pkgCapacityInput);
-        pkgCapacityInput.setBounds(56, 168, 258, 34);
-
-        locationInput.setBackground(new java.awt.Color(204, 204, 204));
-        locationInput.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        locationInput.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                locationInputActionPerformed(evt);
-            }
-        });
-        warehouseCard.add(locationInput);
-        locationInput.setBounds(56, 101, 258, 34);
-
-        vehicleCapacityInput.setBackground(new java.awt.Color(204, 204, 204));
-        warehouseCard.add(vehicleCapacityInput);
-        vehicleCapacityInput.setBounds(326, 101, 230, 34);
-
-        addWarehouseBtn.setBackground(new java.awt.Color(73, 204, 112));
-        addWarehouseBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        addWarehouseBtn.setForeground(new java.awt.Color(255, 255, 255));
-        addWarehouseBtn.setText("Add");
-        addWarehouseBtn.setBorder(null);
-        addWarehouseBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addWarehouseBtnActionPerformed(evt);
-            }
-        });
-        warehouseCard.add(addWarehouseBtn);
-        addWarehouseBtn.setBounds(370, 170, 155, 34);
-
-        jTable1.setBackground(new java.awt.Color(204, 204, 204));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        warehouseCard.add(jScrollPane1);
-        jScrollPane1.setBounds(60, 280, 500, 190);
-
-        jLabel3.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Vehicle Capacity");
-        warehouseCard.add(jLabel3);
-        jLabel3.setBounds(330, 80, 110, 16);
-
-        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel4.setText("Location");
-        warehouseCard.add(jLabel4);
-        jLabel4.setBounds(60, 80, 110, 20);
-
-        jLabel5.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Package Capacity");
-        warehouseCard.add(jLabel5);
-        jLabel5.setBounds(60, 150, 110, 16);
-
-        dashboard.add(warehouseCard, "card2");
-
         jPanel1.add(dashboard);
         dashboard.setBounds(200, 0, 610, 500);
 
@@ -441,13 +470,98 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_locationInputActionPerformed
 
     private void addWarehouseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addWarehouseBtnActionPerformed
-        // TODO add your handling code here:
+        String location = locationInput.getText(), packageCapacity = pkgCapacityInput.getText(), vehicleCapacity = vehicleCapacityInput.getText();
+        
+        if (!DataIOParser.validateInt(packageCapacity)) {
+            new DialogBoxUI("Package Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
+            resetWarehouseFields();
+            return;
+        }
+        
+        if (!DataIOParser.validateInt(vehicleCapacity)) {
+            new DialogBoxUI("Vehicle Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
+            resetWarehouseFields();
+            return;
+        }
+        
+        int packageCapacityInt = Integer.parseInt(packageCapacity), vehicleCapacityInt = Integer.parseInt(vehicleCapacity);
+        
+        Warehouse warehouse = new Warehouse(CSVParser.getLatestID("src/CSVFiles/warehouses.csv") + 1, location, packageCapacityInt, vehicleCapacityInt);
+        CSVParser.saveEntry(warehouse.toCSVFormat(), "src/CSVFiles/warehouses.csv");
+        new DialogBoxUI("Warehouse Added Successfully", JOptionPane.INFORMATION_MESSAGE);
+        loadWarehouseData();
+        resetWarehouseFields();
     }//GEN-LAST:event_addWarehouseBtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void pkgCapacityInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pkgCapacityInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pkgCapacityInputActionPerformed
+
+    private void vehicleCapacityInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicleCapacityInputActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vehicleCapacityInputActionPerformed
+
+    private void removeWarehouseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeWarehouseBtnActionPerformed
+        String csvFilePath = "src/CSVFiles/warehouses.csv";
+        int selectedRow = warehouseTable.getSelectedRow();
+        
+        if (selectedRow == -1) {
+            new DialogBoxUI("Please select a warehouse to delete", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        String warehouseId = (String) warehouseTable.getValueAt(selectedRow, 0);
+        
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this warehouse?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            String[][] warehouseData = CSVParser.loadCSVData(csvFilePath);
+            Warehouse[] warehouses = Warehouse.toWarehouse(warehouseData);
+            boolean removed = false;
+            
+            for (int i = 0; i < warehouseData.length; i++) {
+                if (warehouseData[i][0].equals(warehouseId)) {
+                    warehouseData[i] = null;
+                    removed = true;
+                    break;
+                }
+            }
+
+            if (removed) {
+                String[][] updatedData = new String[warehouseData.length - 1][];
+                int index = 0;
+                for (String[] warehouse : warehouseData) {
+                    if (warehouse != null) {
+                        updatedData[index++] = warehouse;
+                    }
+                }
+                CSVParser.writeToCSV(updatedData, warehouses[0].getWarehouseHeader(), false, csvFilePath);
+            }
+            new DialogBoxUI("Warehouse Removed Successfully", JOptionPane.INFORMATION_MESSAGE);
+        }
+        loadWarehouseData();
+    }//GEN-LAST:event_removeWarehouseBtnActionPerformed
+
+    private void resetWarehouseFields() {
+        locationInput.setText("");
+        pkgCapacityInput.setText("");
+        vehicleCapacityInput.setText("");
+    }
+    
+    private void loadWarehouseData() {
+        String csvFilePath = "src/CSVFiles/warehouses.csv";
+        DefaultTableModel model = (DefaultTableModel) warehouseTable.getModel();
+        model.setRowCount(0);
+        String[][] warehouses = CSVParser.loadCSVData(csvFilePath);
+        
+        for (String[] warehouse : warehouses) {
+            model.addRow(warehouse);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -509,12 +623,12 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField locationInput;
     private javax.swing.JTextField packageCapacityInput;
     private javax.swing.JTextField pkgCapacityInput;
     private javax.swing.JTextField plateInput;
+    private javax.swing.JButton removeWarehouseBtn;
     private javax.swing.JPanel reportCard;
     private javax.swing.JPanel sidebar;
     private javax.swing.JButton signout;
@@ -525,5 +639,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel warehouseCard;
     private javax.swing.JTextField warehouseIDInput;
     private javax.swing.JButton warehouseMngmnt;
+    private javax.swing.JTable warehouseTable;
     // End of variables declaration//GEN-END:variables
 }
