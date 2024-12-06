@@ -8,6 +8,9 @@ import javax.swing.table.DefaultTableModel;
 import datautils.io.*;
 import ClassTemplates.*;
 import javax.swing.ImageIcon;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 /**
  *
  * @author Lenovo
@@ -20,6 +23,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     public AdminDashboard() {
         initComponents();
         loadWarehouseData();
+        loadVehicleData();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
     }
 
@@ -57,10 +61,9 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         warehouseIDInput = new javax.swing.JTextField();
-        typeInput = new javax.swing.JTextField();
         addVehicleBtn = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        vehicleTable = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         driverInput = new javax.swing.JTextField();
@@ -69,11 +72,13 @@ public class AdminDashboard extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         packageCapacityInput = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        typeInput = new javax.swing.JComboBox<>();
+        removeVehicleBtn = new javax.swing.JButton();
         reportCard = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         filePathInput = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        generateBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -304,37 +309,37 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         warehouseIDInput.setBackground(new java.awt.Color(204, 204, 204));
         vehicleCard.add(warehouseIDInput);
-        warehouseIDInput.setBounds(56, 168, 150, 34);
-
-        typeInput.setBackground(new java.awt.Color(204, 204, 204));
-        typeInput.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        vehicleCard.add(typeInput);
-        typeInput.setBounds(56, 101, 150, 34);
+        warehouseIDInput.setBounds(66, 168, 140, 34);
 
         addVehicleBtn.setBackground(new java.awt.Color(73, 204, 112));
         addVehicleBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         addVehicleBtn.setForeground(new java.awt.Color(255, 255, 255));
         addVehicleBtn.setText("Add");
         addVehicleBtn.setBorder(null);
+        addVehicleBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addVehicleBtnActionPerformed(evt);
+            }
+        });
         vehicleCard.add(addVehicleBtn);
         addVehicleBtn.setBounds(410, 170, 155, 34);
 
-        jTable2.setBackground(new java.awt.Color(255, 255, 255));
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        vehicleTable.setBackground(new java.awt.Color(255, 255, 255));
+        vehicleTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Warehouse ID", "Type", "Plate Number", "Driver", "Maximum Capacity", "Current Capacity", "Maximum Shipments", "Current Shipments", "Available"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(vehicleTable);
 
         vehicleCard.add(jScrollPane2);
-        jScrollPane2.setBounds(60, 280, 500, 190);
+        jScrollPane2.setBounds(30, 280, 560, 190);
 
         jLabel9.setBackground(new java.awt.Color(0, 0, 0));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -385,6 +390,23 @@ public class AdminDashboard extends javax.swing.JFrame {
         vehicleCard.add(jLabel13);
         jLabel13.setBounds(410, 80, 110, 20);
 
+        typeInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Truck", "Van" }));
+        vehicleCard.add(typeInput);
+        typeInput.setBounds(60, 100, 150, 30);
+
+        removeVehicleBtn.setBackground(new java.awt.Color(255, 102, 102));
+        removeVehicleBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        removeVehicleBtn.setForeground(new java.awt.Color(255, 255, 255));
+        removeVehicleBtn.setText("Remove");
+        removeVehicleBtn.setBorder(null);
+        removeVehicleBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeVehicleBtnActionPerformed(evt);
+            }
+        });
+        vehicleCard.add(removeVehicleBtn);
+        removeVehicleBtn.setBounds(440, 240, 120, 30);
+
         dashboard.add(vehicleCard, "card3");
 
         reportCard.setBackground(new java.awt.Color(255, 255, 255));
@@ -407,18 +429,18 @@ public class AdminDashboard extends javax.swing.JFrame {
         reportCard.add(jLabel14);
         jLabel14.setBounds(50, 180, 140, 20);
 
-        jButton1.setBackground(new java.awt.Color(73, 204, 112));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Generate");
-        jButton1.setBorder(null);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        generateBtn.setBackground(new java.awt.Color(73, 204, 112));
+        generateBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        generateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        generateBtn.setText("Generate");
+        generateBtn.setBorder(null);
+        generateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                generateBtnActionPerformed(evt);
             }
         });
-        reportCard.add(jButton1);
-        jButton1.setBounds(50, 260, 130, 30);
+        reportCard.add(generateBtn);
+        generateBtn.setBounds(50, 260, 130, 30);
 
         dashboard.add(reportCard, "card4");
 
@@ -474,13 +496,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         
         if (!DataIOParser.validateInt(packageCapacity)) {
             new DialogBoxUI("Package Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
-            resetWarehouseFields();
             return;
         }
         
         if (!DataIOParser.validateInt(vehicleCapacity)) {
             new DialogBoxUI("Vehicle Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
-            resetWarehouseFields();
             return;
         }
         
@@ -493,9 +513,10 @@ public class AdminDashboard extends javax.swing.JFrame {
         resetWarehouseFields();
     }//GEN-LAST:event_addWarehouseBtnActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
+        String filepath = filePathInput.getText();
+        generateReports(filepath);
+    }//GEN-LAST:event_generateBtnActionPerformed
 
     private void pkgCapacityInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pkgCapacityInputActionPerformed
         // TODO add your handling code here:
@@ -546,11 +567,104 @@ public class AdminDashboard extends javax.swing.JFrame {
         loadWarehouseData();
     }//GEN-LAST:event_removeWarehouseBtnActionPerformed
 
+    private void addVehicleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVehicleBtnActionPerformed
+        String type = (String) typeInput.getSelectedItem(), plateNumber = plateInput.getText(), packageCapacity = packageCapacityInput.getText(), driver = driverInput.getText(), whId = warehouseIDInput.getText();
+        int currentShipmentCount = 0;
+        boolean isAvailable = true;
+        
+        if (!DataIOParser.validateInt(packageCapacity)) {
+            new DialogBoxUI("Package Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (!DataIOParser.validateInt(whId)) {
+            new DialogBoxUI("Wharehouse ID must be a nunber", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        Vehicle vehicle;
+        
+        int packageCapacityInt = Integer.parseInt(packageCapacity), whIdInt = Integer.parseInt(whId);
+        
+        if (type.equalsIgnoreCase("van")) {
+            String capacityKg = JOptionPane.showInputDialog(this, "Enter maximum capacity (KG):", "Input Dialog", JOptionPane.QUESTION_MESSAGE);
+            if (!DataIOParser.validateDouble(capacityKg)) {
+                new DialogBoxUI("Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            double capacityKgDouble = Double.parseDouble(capacityKg);
+            double currentCapacity = 0;
+            
+            vehicle = new Vehicle(CSVParser.getLatestID("src/CSVFiles/vehicles.csv") + 1, whIdInt, type, plateNumber, driver, capacityKgDouble, currentCapacity, packageCapacityInt, currentShipmentCount, isAvailable);
+        } else {
+            String maxWarehouseRoutes = JOptionPane.showInputDialog(this, "Enter maximum warehouse routes:", "Input Dialog", JOptionPane.QUESTION_MESSAGE);
+            if (!DataIOParser.validateInt(maxWarehouseRoutes)) {
+                new DialogBoxUI("Warehouse Routes must be a nunber", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            int maxWarehouseRoutesInt = Integer.parseInt(maxWarehouseRoutes);
+            vehicle = new Truck(CSVParser.getLatestID("src/CSVFiles/vehicles.csv") + 1, whIdInt, plateNumber, driver, packageCapacityInt, currentShipmentCount, isAvailable, maxWarehouseRoutesInt);
+        }
+        CSVParser.saveEntry(vehicle.toCSVFormat(), "src/CSVFiles/vehicles.csv");
+        new DialogBoxUI("Vehicle Added Successfully", JOptionPane.INFORMATION_MESSAGE);
+        resetVehicleFields();
+    }//GEN-LAST:event_addVehicleBtnActionPerformed
+
+    private void removeVehicleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeVehicleBtnActionPerformed
+        String csvFilePath = "src/CSVFiles/vehicles.csv";
+        int selectedRow = vehicleTable.getSelectedRow();
+        
+        if (selectedRow == -1) {
+            new DialogBoxUI("Please select a vehicle to delete", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        String vehicleId = (String) vehicleTable.getValueAt(selectedRow, 0);
+        
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this vehicle?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            String[][] vehicleData = CSVParser.loadCSVData(csvFilePath);
+            Vehicle[] vehicles = Vehicle.toVehicle(vehicleData);
+            boolean removed = false;
+            
+            for (int i = 0; i < vehicleData.length; i++) {
+                if (vehicleData[i][0].equals(vehicleId)) {
+                    vehicleData[i] = null;
+                    removed = true;
+                    break;
+                }
+            }
+
+            if (removed) {
+                String[][] updatedData = new String[vehicleData.length - 1][];
+                int index = 0;
+                for (String[] vehicle : vehicleData) {
+                    if (vehicle != null) {
+                        updatedData[index++] = vehicle;
+                    }
+                }
+                CSVParser.writeToCSV(updatedData, vehicles[0].getVehicleHeader(), false, csvFilePath);
+            }
+            new DialogBoxUI("Vehicle Removed Successfully", JOptionPane.INFORMATION_MESSAGE);
+        }
+        loadVehicleData();
+    }//GEN-LAST:event_removeVehicleBtnActionPerformed
+
     private void resetWarehouseFields() {
         locationInput.setText("");
         pkgCapacityInput.setText("");
         vehicleCapacityInput.setText("");
     }
+    
+    private void resetVehicleFields() {
+        typeInput.setSelectedItem("Truck");
+        plateInput.setText("");
+        packageCapacityInput.setText("");
+        driverInput.setText("");
+        warehouseIDInput.setText("");
+    }
+    
     
     private void loadWarehouseData() {
         String csvFilePath = "src/CSVFiles/warehouses.csv";
@@ -562,6 +676,62 @@ public class AdminDashboard extends javax.swing.JFrame {
             model.addRow(warehouse);
         }
     }
+    
+    private void loadVehicleData() {
+        String csvFilePath = "src/CSVFiles/vehicles.csv";
+        DefaultTableModel model = (DefaultTableModel) vehicleTable.getModel();
+        model.setRowCount(0);
+        String[][] vehicles = CSVParser.loadCSVData(csvFilePath);
+        
+        for (String[] vehicle : vehicles) {
+            model.addRow(vehicle);
+        }
+    }
+    
+    private void generateReports(String fileReportLocation) {
+        StringBuilder report = new StringBuilder();
+        report.append("DeliverIT System Report\n");
+        report.append("========================\n\n");
+
+        report.append("Warehouses:\n");
+        String[][] warehousesData = CSVParser.loadCSVData("src/CSVFiles/warehouses.csv");
+        for (String[] warehouse : warehousesData) {
+            report.append(String.format("ID: %s, Location: %s, Max Shipment/s: %s, Max Vehicles: %s\n",
+                    warehouse[0], warehouse[1], warehouse[2], warehouse[3]));
+        }
+        report.append("\n");
+
+        report.append("Packages:\n");
+        String[][] packagesData = CSVParser.loadCSVData("src/CSVFiles/packages.csv");
+        for (String[] pkg : packagesData) {
+            report.append(String.format("ID: %s, Customer ID: %s, Receiver Address: %s, Created: %s, Weight: %s kg, Dimensions: %s x %s x %s cm\n",
+                    pkg[0], pkg[1], pkg[2], pkg[3], pkg[4], pkg[5], pkg[6], pkg[7]));
+        }
+        report.append("\n");
+
+        report.append("Vehicles:\n");
+        String[][] vehiclesData = CSVParser.loadCSVData("src/CSVFiles/vehicles.csv");
+        for (String[] vehicle : vehiclesData) {
+            report.append(String.format("ID: %s, Warehouse ID: %s, Type: %s, License Plate: %s, Driver: %s, Max Capacity: %s KG, Current Capacity: %s KG, Max Shipments: %s, Current Shipments: %s, Available: %s\n",
+                    vehicle[0], vehicle[1], vehicle[2], vehicle[3], vehicle[4], vehicle[5], vehicle[6], vehicle[7], vehicle[8], vehicle[9]));
+        }
+        report.append("\n");
+
+        report.append("Shipments:\n");
+        String[][] shipmentsData = CSVParser.loadCSVData("src/CSVFiles/shipments.csv");
+        for (String[] shipment : shipmentsData) {
+            report.append(String.format("ID: %s, Package ID: %s, Vehicle ID: %s, Warehouse ID: %s, Destination: %s, Cost: %s, Confirmed: %s, Status: %s, Ship Date: %s, ETA: %s\n",
+                    shipment[0], shipment[1], shipment[2], shipment[3], shipment[4], shipment[5], shipment[6], shipment[7], shipment[8], shipment[9]));
+        }
+
+        try (PrintWriter writer = new PrintWriter(new FileWriter("src/CSVFiles/" + fileReportLocation))) {
+            writer.write(report.toString());
+            new DialogBoxUI("Report generated successfully: src/CSVFiles/" + fileReportLocation, JOptionPane.INFORMATION_MESSAGE);
+        } catch (IOException e) {
+            new DialogBoxUI("Error generating report: " + e.getMessage(), JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -603,9 +773,9 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel dashboard;
     private javax.swing.JTextField driverInput;
     private javax.swing.JTextField filePathInput;
+    private javax.swing.JButton generateBtn;
     private javax.swing.JButton generateReports;
     private javax.swing.JLabel greeting;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -623,19 +793,20 @@ public class AdminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable2;
     private javax.swing.JTextField locationInput;
     private javax.swing.JTextField packageCapacityInput;
     private javax.swing.JTextField pkgCapacityInput;
     private javax.swing.JTextField plateInput;
+    private javax.swing.JButton removeVehicleBtn;
     private javax.swing.JButton removeWarehouseBtn;
     private javax.swing.JPanel reportCard;
     private javax.swing.JPanel sidebar;
     private javax.swing.JButton signout;
-    private javax.swing.JTextField typeInput;
+    private javax.swing.JComboBox<String> typeInput;
     private javax.swing.JTextField vehicleCapacityInput;
     private javax.swing.JPanel vehicleCard;
     private javax.swing.JButton vehicleMngmnt1;
+    private javax.swing.JTable vehicleTable;
     private javax.swing.JPanel warehouseCard;
     private javax.swing.JTextField warehouseIDInput;
     private javax.swing.JButton warehouseMngmnt;
