@@ -1,6 +1,7 @@
 package LogisticsUI;
 import ClassTemplates.*;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 public class CustomerDashboard extends javax.swing.JFrame {
     private Customer customerLoggedIn;
@@ -24,6 +25,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         layoutPanel = new javax.swing.JPanel();
         sideBarLayout = new javax.swing.JPanel();
         helloHeader = new javax.swing.JLabel();
@@ -33,7 +35,18 @@ public class CustomerDashboard extends javax.swing.JFrame {
         shipmentBtn = new javax.swing.JButton();
         signOutBtn1 = new javax.swing.JButton();
         parentCardPanel = new javax.swing.JPanel();
+        shipmentsPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         sendPackagePanel = new javax.swing.JPanel();
+        pkgHdr = new javax.swing.JLabel();
+        itemTblScroll = new javax.swing.JScrollPane();
+        itemTbl = new javax.swing.JTable();
+        rAddrFld = new javax.swing.JTextField();
+        rAddHdr = new javax.swing.JLabel();
+        processPkgBtn = new javax.swing.JButton();
+        addItemBtn = new javax.swing.JButton();
         accountsPanel = new javax.swing.JPanel();
         editPanelForm = new javax.swing.JPanel();
         nameLbl = new javax.swing.JLabel();
@@ -47,7 +60,8 @@ public class CustomerDashboard extends javax.swing.JFrame {
         addrEditBtn = new javax.swing.JButton();
         infoHdr = new javax.swing.JLabel();
         saveBtn = new javax.swing.JButton();
-        shipmentsPanel = new javax.swing.JPanel();
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DeliverIT | Customer Dashboard");
@@ -71,7 +85,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
         customerLoggedInName.setText("Customer!");
 
         sendPkgBtn.setBackground(new java.awt.Color(70, 92, 239));
-        sendPkgBtn.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        sendPkgBtn.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         sendPkgBtn.setForeground(new java.awt.Color(255, 255, 255));
         sendPkgBtn.setText("Send Package");
         sendPkgBtn.setBorder(null);
@@ -83,7 +97,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
         });
 
         acctBtn.setBackground(new java.awt.Color(70, 92, 239));
-        acctBtn.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        acctBtn.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         acctBtn.setForeground(new java.awt.Color(255, 255, 255));
         acctBtn.setText("My Account");
         acctBtn.setBorder(null);
@@ -95,7 +109,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
         });
 
         shipmentBtn.setBackground(new java.awt.Color(70, 92, 239));
-        shipmentBtn.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        shipmentBtn.setFont(new java.awt.Font("Inter", 0, 18)); // NOI18N
         shipmentBtn.setForeground(new java.awt.Color(255, 255, 255));
         shipmentBtn.setText("My Shipments");
         shipmentBtn.setBorder(null);
@@ -135,7 +149,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
             sideBarLayoutLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sideBarLayoutLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addComponent(helloHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(helloHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(customerLoggedInName)
                 .addGap(50, 50, 50)
@@ -144,7 +158,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
                 .addComponent(acctBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(shipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                 .addComponent(signOutBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
@@ -155,17 +169,121 @@ public class CustomerDashboard extends javax.swing.JFrame {
         parentCardPanel.setBackground(new java.awt.Color(255, 255, 255));
         parentCardPanel.setLayout(new java.awt.CardLayout());
 
-        sendPackagePanel.setBackground(new java.awt.Color(255, 51, 51));
+        shipmentsPanel.setBackground(new java.awt.Color(240, 245, 255));
+
+        jLabel2.setFont(new java.awt.Font("Inter", 1, 36)); // NOI18N
+        jLabel2.setText("Shipment History");
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout shipmentsPanelLayout = new javax.swing.GroupLayout(shipmentsPanel);
+        shipmentsPanel.setLayout(shipmentsPanelLayout);
+        shipmentsPanelLayout.setHorizontalGroup(
+            shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(shipmentsPanelLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        shipmentsPanelLayout.setVerticalGroup(
+            shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(shipmentsPanelLayout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jLabel2)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99))
+        );
+
+        parentCardPanel.add(shipmentsPanel, "card4");
+
+        sendPackagePanel.setBackground(new java.awt.Color(240, 245, 255));
+
+        pkgHdr.setFont(new java.awt.Font("Inter", 1, 36)); // NOI18N
+        pkgHdr.setText("New Package");
+
+        itemTbl.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        itemTbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Name", "Weight (cm)", "Length (cm)", "Width (cm)", "Height (cm)"
+            }
+        ));
+        itemTbl.setFocusable(false);
+        itemTblScroll.setViewportView(itemTbl);
+
+        rAddHdr.setFont(new java.awt.Font("Inter", 1, 18)); // NOI18N
+        rAddHdr.setText("Receiver Address");
+
+        processPkgBtn.setBackground(new java.awt.Color(70, 92, 239));
+        processPkgBtn.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        processPkgBtn.setForeground(new java.awt.Color(255, 255, 255));
+        processPkgBtn.setText("Send");
+        processPkgBtn.setBorderPainted(false);
+
+        addItemBtn.setBackground(new java.awt.Color(73, 204, 112));
+        addItemBtn.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        addItemBtn.setForeground(new java.awt.Color(255, 255, 255));
+        addItemBtn.setText("Add Item");
+        addItemBtn.setBorderPainted(false);
+        addItemBtn.setFocusPainted(false);
 
         javax.swing.GroupLayout sendPackagePanelLayout = new javax.swing.GroupLayout(sendPackagePanel);
         sendPackagePanel.setLayout(sendPackagePanelLayout);
         sendPackagePanelLayout.setHorizontalGroup(
             sendPackagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
+            .addGroup(sendPackagePanelLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(sendPackagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(sendPackagePanelLayout.createSequentialGroup()
+                        .addGroup(sendPackagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(rAddHdr, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                            .addComponent(rAddrFld, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(18, 18, 18)
+                        .addComponent(processPkgBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(sendPackagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, sendPackagePanelLayout.createSequentialGroup()
+                            .addComponent(pkgHdr, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addItemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(itemTblScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         sendPackagePanelLayout.setVerticalGroup(
             sendPackagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(sendPackagePanelLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(sendPackagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pkgHdr)
+                    .addComponent(addItemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(itemTblScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rAddHdr, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(sendPackagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(processPkgBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(rAddrFld))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         parentCardPanel.add(sendPackagePanel, "card2");
@@ -292,21 +410,6 @@ public class CustomerDashboard extends javax.swing.JFrame {
 
         parentCardPanel.add(accountsPanel, "card3");
 
-        shipmentsPanel.setBackground(new java.awt.Color(255, 255, 51));
-
-        javax.swing.GroupLayout shipmentsPanelLayout = new javax.swing.GroupLayout(shipmentsPanel);
-        shipmentsPanel.setLayout(shipmentsPanelLayout);
-        shipmentsPanelLayout.setHorizontalGroup(
-            shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 610, Short.MAX_VALUE)
-        );
-        shipmentsPanelLayout.setVerticalGroup(
-            shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
-        );
-
-        parentCardPanel.add(shipmentsPanel, "card4");
-
         layoutPanel.add(parentCardPanel);
         parentCardPanel.setBounds(200, 0, 610, 500);
 
@@ -351,11 +454,17 @@ public class CustomerDashboard extends javax.swing.JFrame {
 
     private void signOutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOutBtn1ActionPerformed
         // TODO add your handling code here:
+        int option = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm Sign-out", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(option == JOptionPane.YES_OPTION) {
+            new DialogBoxUI(this, "Thanks for using the system!", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        }
     }//GEN-LAST:event_signOutBtn1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accountsPanel;
     private javax.swing.JButton acctBtn;
+    private javax.swing.JButton addItemBtn;
     private javax.swing.JButton addrEditBtn;
     private javax.swing.JTextField addrFld;
     private javax.swing.JLabel addrLbl;
@@ -363,6 +472,12 @@ public class CustomerDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel editPanelForm;
     private javax.swing.JLabel helloHeader;
     private javax.swing.JLabel infoHdr;
+    private javax.swing.JTable itemTbl;
+    private javax.swing.JScrollPane itemTblScroll;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JPanel layoutPanel;
     private javax.swing.JButton nameEditBtn;
     private javax.swing.JTextField nameFld;
@@ -371,6 +486,10 @@ public class CustomerDashboard extends javax.swing.JFrame {
     private javax.swing.JButton phoneEditBtn;
     private javax.swing.JTextField phoneFld;
     private javax.swing.JLabel phoneLbl;
+    private javax.swing.JLabel pkgHdr;
+    private javax.swing.JButton processPkgBtn;
+    private javax.swing.JLabel rAddHdr;
+    private javax.swing.JTextField rAddrFld;
     private javax.swing.JButton saveBtn;
     private javax.swing.JPanel sendPackagePanel;
     private javax.swing.JButton sendPkgBtn;
