@@ -2,18 +2,21 @@ package LogisticsUI;
 import ClassTemplates.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import datautils.io.*;
 
 public class CustomerDashboard extends javax.swing.JFrame {
     private Customer customerLoggedIn;
-
+    private Shipment[] customerShipments;
+    
     public CustomerDashboard(Customer customerLoggedIn) {
         initComponents();
         this.customerLoggedIn = customerLoggedIn;
+        // TODO: Load Customer shipments and information
+        this.customerShipments = CSVParser.searchShipments(customerLoggedIn.getCustomerID());
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
-        // TODO: Load Customer shipments and information
     }
 
     /**

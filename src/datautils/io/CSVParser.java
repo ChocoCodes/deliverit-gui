@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import ClassTemplates.*;
 import java.io.PrintWriter;
 import java.io.IOException;
 
@@ -93,5 +94,51 @@ public class CSVParser {
         }
         // Rewrite CSV
         writeToCSV(csvData, headers, false, file); 
+    }
+
+    public static Package[] searchPackage(int custID) {
+        ArrayList<Package> custPkg = new ArrayList<>();
+        String[][] csvPkg = loadCSVData("src/CSVFiles/packages.csv");
+        for(int i = 0; i < csvPkg.length; i++) {
+            int id = Integer.parseInt(csvPkg[i][1]);
+            if(id == custID) {
+                custPkg.add(Package.toPackage(csvPkg, i, null));
+            }
+        }
+        return custPkg.toArray(new Package[0]);
+    }
+    // pkgId,name,weight_kg,length_cm,width_cm,height_cm
+    public static Item[] searchItems(int pkgID) {
+        String[][] csvItems = loadCSVData("src/CSVFiles/items.csv");
+        ArrayList<Item> items = new ArrayList<>();
+        for(int i = 0; i < csvItems.length; i++) {
+            int itemPkgId = Integer.parseInt(csvItems[i][0]);
+            if(itemPkgId == pkgID) {
+                items.add(Item.toItem(csvItems, i));
+            }
+        } 
+        return items.toArray(new Item[0]);
+    }
+
+    public static Shipment[] searchShipments(int custID) {
+        // Load customer package/s
+        ArrayList<Shipment> customerShipments = new ArrayList<>();
+        Package[] custPkg = searchPackage(custID);
+        // Load shipment CSV
+        String[][] csvShips = CSVParser.loadCSVData("src/CSVFiles/shipments.csv");
+        for(int i = 0; i < csvShips.length; i++) {
+            int shipPkgId = Integer.parseInt(csvShips[i][1]);
+            if(csvShips[i][7].equalsIgnoreCase("Paid") || csvShips[i][7].equalsIgnoreCase("Pending")) {
+                for(Package pkg : custPkg) {
+                    if(pkg.getId() == shipPkgId) {
+                        Item[] items = searchItems(pkg.getId());
+                        pkg.setContents(items);
+                        customerShipments.add(Shipment.toShipment(csvShips, i, pkg));
+                        break;
+                    }
+                }
+            }
+        }
+        return customerShipments.toArray(new Shipment[0]);
     }
 }

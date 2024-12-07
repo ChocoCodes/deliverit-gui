@@ -235,7 +235,7 @@ public class Logistics extends javax.swing.JFrame {
     }//GEN-LAST:event_passfieldActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        System.out.println(selectedUserRole);
+        // System.out.println(selectedUserRole);
         String username = userfield.getText(), password = new String(passfield.getPassword());
         if(DataIOParser.checkInput(username) || DataIOParser.checkInput(password)) { 
             new DialogBoxUI(this, "Invalid. Missing input in required field/s.", JOptionPane.ERROR_MESSAGE);
