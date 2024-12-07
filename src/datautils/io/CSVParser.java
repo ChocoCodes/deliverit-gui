@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import ClassTemplates.*;
+import ClassTemplates.Item;
+import ClassTemplates.Shipment;
+import ClassTemplates.Package;
 import java.io.PrintWriter;
 import java.io.IOException;
 
