@@ -3,7 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package LogisticsUI;
+
+import datautils.io.CSVParser;
 import java.awt.CardLayout;
+import java.util.ArrayList;
+
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import ClassTemplates.Shipment;
+import ClassTemplates.Vehicle;
 /**
  *
  * @author User
@@ -12,13 +20,51 @@ public class Driver extends javax.swing.JFrame {
     
     private final java.awt.Color defaultButtonColor = java.awt.Color.decode("#465CEF");
     private final java.awt.Color activeButtonColor = java.awt.Color.decode("#509BE5");
+    private String driverName;
+    private Vehicle currentVehicle;
+    private boolean isVehicleAssigned = false;
     /**
      * Creates new form Driver
      */
     public Driver() {
         initComponents();
+        askForDriverName();
     }
 
+    private void askForDriverName() {
+        while (true) {
+            driverName = JOptionPane.showInputDialog(this, "Enter your name:", "Driver Name", JOptionPane.QUESTION_MESSAGE);
+            if (driverName != null && !driverName.trim().isEmpty()) {
+                break; 
+            } else {
+                JOptionPane.showMessageDialog(this, "Name cannot be empty. Please enter a valid name.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        assignVehicleToDriver();
+    }
+
+    private void assignVehicleToDriver() {
+        String[][] vehicleData = CSVParser.loadCSVData("src/CSVFiles/vehicles.csv");
+        if (vehicleData == null || vehicleData.length == 0) {
+            JOptionPane.showMessageDialog(this, "No vehicle data loaded.", "Data Load Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Vehicle vh[] = Vehicle.toVehicle(vehicleData);
+        for (Vehicle vehicle : vh) {
+            if (driverName.equalsIgnoreCase(vehicle.getDriver())) {
+                // Assign the vehicle to the driver
+                vehicle.setDriver(driverName);
+                currentVehicle = vehicle;
+                JOptionPane.showMessageDialog(this, "Vehicle assigned successfully!", "Vehicle Assignment", JOptionPane.INFORMATION_MESSAGE);
+                isVehicleAssigned = true;
+                break;
+            }
+        }
+        if (!isVehicleAssigned) {
+            // No vehicle available to assign
+            JOptionPane.showMessageDialog(this, "No available vehicle found. Please Re-Assign Vehicle Manually.", "Vehicle Assignment Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,6 +102,9 @@ public class Driver extends javax.swing.JFrame {
         NullPanel.setLayout(null);
 
         SidebarPanel.setBackground(new java.awt.Color(70, 92, 239));
+        SidebarPanel.setMaximumSize(new java.awt.Dimension(200, 500));
+        SidebarPanel.setMinimumSize(new java.awt.Dimension(200, 500));
+        SidebarPanel.setPreferredSize(new java.awt.Dimension(200, 500));
 
         UserGreetingsLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         UserGreetingsLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -97,7 +146,7 @@ public class Driver extends javax.swing.JFrame {
         AssignVehicleBtn.setBackground(new java.awt.Color(70, 92, 239));
         AssignVehicleBtn.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         AssignVehicleBtn.setForeground(new java.awt.Color(255, 255, 255));
-        AssignVehicleBtn.setText("<html><body style=\"font-family: Inter; font-weight: 10; text-align: center;\">Re-assign Vehicle</body></html>");
+        AssignVehicleBtn.setText("<html><body style=\"font-family: Inter; font-weight: 10; text-align: center;\">Re-assign<br>Vehicle</body></html>");
         AssignVehicleBtn.setBorderPainted(false);
         AssignVehicleBtn.setContentAreaFilled(false);
         AssignVehicleBtn.setFocusPainted(false);
@@ -114,19 +163,15 @@ public class Driver extends javax.swing.JFrame {
         SidebarPanelLayout.setHorizontalGroup(
             SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(AssignVehicleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
-                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SidebarPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(DeliverPackageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(UserGreetingsLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+            .addComponent(UserGreetingsLabel)
+            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(AssignVehicleBtn)
+                    .addComponent(DeliverPackageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         SidebarPanelLayout.setVerticalGroup(
             SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -137,12 +182,12 @@ public class Driver extends javax.swing.JFrame {
                 .addComponent(AssignVehicleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(DeliverPackageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
+                .addGap(90, 90, 90)
                 .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         NullPanel.add(SidebarPanel);
-        SidebarPanel.setBounds(0, 0, 206, 500);
+        SidebarPanel.setBounds(0, 0, 200, 500);
 
         MainPanel.setBackground(new java.awt.Color(240, 245, 255));
         MainPanel.setLayout(new java.awt.CardLayout());
@@ -183,12 +228,13 @@ public class Driver extends javax.swing.JFrame {
         AvailableVehiclesTable.setGridColor(new java.awt.Color(255, 255, 255));
         AvailableVehiclesTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
         AvailableVehiclesTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        AvailableVehiclesTable.setShowGrid(false);
+        AvailableVehiclesTable.setShowGrid(true);
         AvailableVehiclesTable.getTableHeader().setResizingAllowed(false);
         AvailableVehiclesTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(AvailableVehiclesTable);
 
         ConfirmBtn.setBackground(new java.awt.Color(73, 204, 112));
+        ConfirmBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ConfirmBtn.setForeground(new java.awt.Color(255, 255, 255));
         ConfirmBtn.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
         ConfirmBtn.setBorderPainted(false);
@@ -196,6 +242,11 @@ public class Driver extends javax.swing.JFrame {
         ConfirmBtn.setFocusable(false);
         ConfirmBtn.setRequestFocusEnabled(false);
         ConfirmBtn.setRolloverEnabled(false);
+        ConfirmBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout NestedPanelLayout = new javax.swing.GroupLayout(NestedPanel);
         NestedPanel.setLayout(NestedPanelLayout);
@@ -217,9 +268,9 @@ public class Driver extends javax.swing.JFrame {
                 .addComponent(HeaderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ConfirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         AssignVehiclesPanel.add(NestedPanel, "card2");
@@ -264,6 +315,7 @@ public class Driver extends javax.swing.JFrame {
         jScrollPane2.setViewportView(ShipmentListTable);
 
         ConfirmBtn2.setBackground(new java.awt.Color(73, 204, 112));
+        ConfirmBtn2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ConfirmBtn2.setForeground(new java.awt.Color(255, 255, 255));
         ConfirmBtn2.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
         ConfirmBtn2.setBorderPainted(false);
@@ -271,6 +323,11 @@ public class Driver extends javax.swing.JFrame {
         ConfirmBtn2.setFocusable(false);
         ConfirmBtn2.setRequestFocusEnabled(false);
         ConfirmBtn2.setRolloverEnabled(false);
+        ConfirmBtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ConfirmBtn2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout NestedPanel1Layout = new javax.swing.GroupLayout(NestedPanel1);
         NestedPanel1.setLayout(NestedPanel1Layout);
@@ -292,9 +349,9 @@ public class Driver extends javax.swing.JFrame {
                 .addComponent(HeaderLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ConfirmBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         DeliverPackagePanel.add(NestedPanel1, "card2");
@@ -319,7 +376,6 @@ public class Driver extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_LogoutActionPerformed
 
@@ -331,23 +387,300 @@ public class Driver extends javax.swing.JFrame {
     }
     
     private void DeliverPackageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeliverPackageBtnActionPerformed
-        // TODO add your handling code here:
         resetButtonColors();
         DeliverPackageBtn.setOpaque(true);
         DeliverPackageBtn.setBackground(activeButtonColor);
-        CardLayout card = (CardLayout) MainPanel.getLayout();
-        card.show(MainPanel, "DeliverPackagePanel");
+        if (!isVehicleAssigned) {
+            showMessage("Please assign a vehicle first.", "Vehicle Assignment", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+    
+        showPanel("DeliverPackagePanel");
+        loadShipmentData();
     }//GEN-LAST:event_DeliverPackageBtnActionPerformed
 
+    private void loadShipmentData() {
+        ClassTemplates.Package[] packages = loadPackages();
+        Shipment[] shipments = loadShipments(packages);
+    
+        if (shipments == null) {
+            return;
+        }
+    
+        populateShipmentTable(shipments);
+    }
+
     private void AssignVehicleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssignVehicleBtnActionPerformed
-        // TODO add your handling code here:
         resetButtonColors();
         AssignVehicleBtn.setOpaque(true);
         AssignVehicleBtn.setBackground(activeButtonColor);
         CardLayout card = (CardLayout) MainPanel.getLayout();
         card.show(MainPanel, "AssignVehiclesPanel");
+        
+        loadVehicleData();
     }//GEN-LAST:event_AssignVehicleBtnActionPerformed
 
+    private void ConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmBtnActionPerformed
+        int selectedRow = AvailableVehiclesTable.getSelectedRow();
+        if (selectedRow == -1) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Please select a vehicle to assign the driver.",
+                "No Selection",
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+    
+        // Get selected vehicle details
+        int vehicleID = Integer.parseInt(AvailableVehiclesTable.getValueAt(selectedRow, 0).toString());
+    
+        // Load vehicle data and convert to Vehicle objects
+        String[][] vehicleData = CSVParser.loadCSVData("src/CSVFiles/vehicles.csv");
+        if (vehicleData == null || vehicleData.length == 0) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "No vehicle data found.",
+                "Data Load Error",
+                javax.swing.JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+        Vehicle[] vehicles = Vehicle.toVehicle(vehicleData);
+    
+        Vehicle previousAssignedVehicle = null;
+    
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getDriver().equalsIgnoreCase(driverName)) {
+                previousAssignedVehicle = vehicle;
+            }
+            if (vehicle.getVehicleID() == vehicleID) {
+                currentVehicle = vehicle;
+                isVehicleAssigned = true;
+            }
+        }
+    
+        if (currentVehicle == null) {
+            javax.swing.JOptionPane.showMessageDialog(
+                this,
+                "Selected vehicle not found in the data.",
+                "Data Error",
+                javax.swing.JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+    
+        currentVehicle.setDriver(driverName);
+    
+        CSVParser.updateCSV(
+            "src/CSVFiles/vehicles.csv",
+            currentVehicle.getVehicleID(),
+            driverName,
+            4, 
+            vehicles[0].getVehicleHeader() 
+        );
+    
+        if (previousAssignedVehicle != null) {
+            previousAssignedVehicle.setDriver("NA"); // Unassign driver
+            CSVParser.updateCSV(
+                "src/CSVFiles/vehicles.csv",
+                previousAssignedVehicle.getVehicleID(),
+                "NA",
+                4, 
+                vehicles[0].getVehicleHeader() 
+            );
+        }
+        
+        javax.swing.JOptionPane.showMessageDialog(
+            this,
+            "Driver " + driverName + " successfully assigned to Vehicle ID " + vehicleID + ".",
+            "Assignment Successful",
+            javax.swing.JOptionPane.INFORMATION_MESSAGE
+        );
+    
+        loadVehicleData();
+    }//GEN-LAST:event_ConfirmBtnActionPerformed
+
+    private void ConfirmBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmBtn2ActionPerformed
+        ClassTemplates.Package[] packages = loadPackages();
+        Shipment[] shipments = loadShipments(packages);
+        
+        if (shipments == null) {
+            return;
+        }
+        
+        int selectedRow = ShipmentListTable.getSelectedRow();
+        if (selectedRow == -1) {
+            showMessage("Please select a shipment to confirm.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    
+        int shipmentId = Integer.parseInt(ShipmentListTable.getValueAt(selectedRow, 1).toString());
+        Shipment selectedShipment = findShipmentById(shipments, shipmentId);
+    
+        if (selectedShipment != null) {
+            handleShipmentConfirmation(selectedShipment);
+        } else {
+            showMessage("Shipment not found.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_ConfirmBtn2ActionPerformed
+    
+    private void loadVehicleData() {
+        String[][] vehicleData = CSVParser.loadCSVData("src/CSVFiles/vehicles.csv");
+        if (vehicleData == null || vehicleData.length == 0) {
+            showMessage("No data loaded from the CSV file.", "Data Load Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    
+        Vehicle[] vehicles = Vehicle.toVehicle(vehicleData);
+    
+        DefaultTableModel model = (DefaultTableModel) AvailableVehiclesTable.getModel();
+        model.setRowCount(0); // Clear existing rows
+    
+        for (Vehicle vehicle : vehicles) {
+            try {
+                if (isEligibleVehicle(vehicle)) {
+                    model.addRow(new Object[]{
+                        vehicle.getVehicleID(),
+                        vehicle.getType(),
+                        vehicle.getWarehouseId(),
+                        vehicle.getLicensePlate(),
+                        vehicle.getCurrentShipmentCount()
+                    });
+                }
+            } catch (Exception e) {
+                logAndShowVehicleError(vehicle, e);
+            }
+        }
+    
+        // Refresh the table UI
+        AvailableVehiclesTable.revalidate();
+        AvailableVehiclesTable.repaint();
+    }
+
+    private boolean isEligibleVehicle(Vehicle vehicle) {
+        return (vehicle.getDriver().equalsIgnoreCase("NA") || 
+                vehicle.getDriver().trim().isEmpty() || 
+                vehicle.getDriver().equalsIgnoreCase("null")) &&
+                vehicle.isAvailable() &&
+                vehicle.getType().equalsIgnoreCase("Van");
+    }
+
+    private void logAndShowVehicleError(Vehicle vehicle, Exception e) {
+        System.out.println("Error with vehicle: " + vehicle + ". Exception: " + e.getMessage());
+        JOptionPane.showMessageDialog(
+            this,
+            "Error processing vehicle: " + vehicle.getVehicleID(),
+            "Vehicle Data Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }
+
+    private ClassTemplates.Package[] loadPackages() {
+        String[][] packageData = CSVParser.loadCSVData("src/CSVFiles/packages.csv");
+        if (packageData == null || packageData.length == 0) {
+            showMessage("No package data loaded from the CSV file.", "Data Load Error", JOptionPane.WARNING_MESSAGE);
+            return new ClassTemplates.Package[0];
+        }
+    
+        ClassTemplates.Package[] packages = new ClassTemplates.Package[packageData.length];
+        for (int i = 0; i < packageData.length; i++) {
+            packages[i] = ClassTemplates.Package.toPackage(packageData, i, null);
+        }
+        return packages;
+    }
+
+    private Shipment[] loadShipments(ClassTemplates.Package[] packages) {
+        String[][] shipmentData = CSVParser.loadCSVData("src/CSVFiles/shipments.csv");
+        if (shipmentData == null || shipmentData.length == 0) {
+            showMessage("No shipment data loaded from the CSV file.", "Data Load Error", JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+    
+        Shipment[] shipments = new Shipment[shipmentData.length];
+        for (int i = 0; i < shipmentData.length; i++) {
+            int pkgId = Integer.parseInt(shipmentData[i][1]);
+            ClassTemplates.Package correspondingPackage = findPackageById(packages, pkgId);
+            shipments[i] = Shipment.toShipment(shipmentData, i, correspondingPackage);
+        }
+        return shipments;
+    }
+    
+    private ClassTemplates.Package findPackageById(ClassTemplates.Package[] packages, int pkgId) {
+        for (ClassTemplates.Package pkg : packages) {
+            if (pkg.getId() == pkgId) {
+                return pkg;
+            }
+        }
+        return null;
+    }
+    
+    private Shipment findShipmentById(Shipment[] shipments, int shipmentId) {
+        for (Shipment shipment : shipments) {
+            if (shipment.getShipmentID() == shipmentId) {
+                return shipment;
+            }
+        }
+        return null;
+    }
+    
+    private void handleShipmentConfirmation(Shipment selectedShipment) {
+        int confirm = JOptionPane.showConfirmDialog(
+            null, 
+            "Confirm shipment ID " + selectedShipment.getShipmentID() + "?", 
+            "Confirm Shipment", 
+            JOptionPane.YES_NO_OPTION
+        );
+    
+        if (confirm == JOptionPane.YES_OPTION) {
+            selectedShipment.setStatus("Delivered");
+            selectedShipment.setVehicleId(0);
+            currentVehicle.removeShipment(selectedShipment);
+    
+            updateCSVFiles(selectedShipment);
+    
+            showMessage("Shipment ID " + selectedShipment.getShipmentID() + " confirmed successfully.", "Confirmation Successful", JOptionPane.INFORMATION_MESSAGE);
+            loadShipmentData();
+        }
+    }
+
+    private void updateCSVFiles(Shipment shipment) {
+        CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipment.getShipmentID(), shipment.getStatus(), 7, shipment.getShipmentHeader());
+        CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipment.getShipmentID(), String.valueOf(shipment.getVehicleId()), 2, shipment.getShipmentHeader());
+    
+        CSVParser.updateCSV("src/CSVFiles/vehicles.csv", currentVehicle.getVehicleID(), String.valueOf(currentVehicle.getCurrentShipmentCount()), 8, currentVehicle.getVehicleHeader());
+        CSVParser.updateCSV("src/CSVFiles/vehicles.csv", currentVehicle.getVehicleID(), String.format("%d", (int) currentVehicle.getCurrentCapacityKG()), 6, currentVehicle.getVehicleHeader());
+    }
+
+    private void populateShipmentTable(Shipment[] shipments) {
+        DefaultTableModel model = (DefaultTableModel) ShipmentListTable.getModel();
+        model.setRowCount(0);
+    
+        ArrayList<Shipment> pendingShipments = new ArrayList<>();
+        int counter = 0;
+    
+        for (Shipment shipment : shipments) {
+            if (shipment != null && shipment.getStatus().equalsIgnoreCase("Pending") && shipment.getVehicleId() == currentVehicle.getVehicleID()) {
+                model.addRow(new Object[]{counter, shipment.getShipmentID(), shipment.getStatus()});
+                pendingShipments.add(shipment);
+                counter++;
+            }
+        }
+    
+        currentVehicle.setShipments(pendingShipments.toArray(new Shipment[0]));
+        ShipmentListTable.revalidate();
+        ShipmentListTable.repaint();
+    }
+
+    private void showMessage(String message, String title, int messageType) {
+        JOptionPane.showMessageDialog(this, message, title, messageType);
+    }
+
+    private void showPanel(String panelName) {
+        CardLayout card = (CardLayout) MainPanel.getLayout();
+        card.show(MainPanel, panelName);
+    }
+    
     /**
      * @param args the command line arguments
      */
