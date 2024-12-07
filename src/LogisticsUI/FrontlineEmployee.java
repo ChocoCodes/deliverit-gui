@@ -240,21 +240,17 @@ public class FrontlineEmployee extends javax.swing.JFrame {
     }//GEN-LAST:event_LogoutActionPerformed
 
     private void ConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmBtnActionPerformed
-        Shipment sh = new Shipment(0, null, null); // For Shipment Header Access Only
         int selectedRow = PaidShipmentsTable.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(null, "Please select a shipment to confirm.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            showMessage("Please select a shipment to confirm.", "No Selection", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+    
         int shipmentId = Integer.parseInt(PaidShipmentsTable.getValueAt(selectedRow, 0).toString());
-
-        int confirm = JOptionPane.showConfirmDialog(null, "Confirm shipment ID " + shipmentId + "?", "Confirm Shipment", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipmentId, "true", 6, sh.getShipmentHeader()); // Update confirmed status
-            CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipmentId, "Pending", 7, sh.getShipmentHeader()); // Update status to "Pending"
-
-            JOptionPane.showMessageDialog(null, "Shipment ID " + shipmentId + " confirmed successfully.", "Confirmation Successful", JOptionPane.INFORMATION_MESSAGE);
+    
+        if (confirmAction("Confirm shipment ID " + shipmentId + "?", "Confirm Shipment")) {
+            updateShipmentConfirmation(shipmentId);
+            showMessage("Shipment ID " + shipmentId + " confirmed successfully.", "Confirmation Successful", JOptionPane.INFORMATION_MESSAGE);
             loadShipmentData(); // Refresh the table
         }
     }//GEN-LAST:event_ConfirmBtnActionPerformed
@@ -262,42 +258,62 @@ public class FrontlineEmployee extends javax.swing.JFrame {
     private void loadShipmentData() {
         String[][] shipmentData = CSVParser.loadCSVData("src/CSVFiles/shipments.csv");
         if (shipmentData == null || shipmentData.length == 0) {
-            javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "No data loaded from the CSV file.",
-                "Data Load Error",
-                javax.swing.JOptionPane.WARNING_MESSAGE
-            );
+            showMessage("No data loaded from the CSV file.", "Data Load Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+    
+        Shipment[] shipments = createShipments(shipmentData);
+        populatePaidShipmentsTable(shipments);
+    }
+
+    private boolean confirmAction(String message, String title) {
+        int confirm = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+        return confirm == JOptionPane.YES_OPTION;
+    }
+
+    private void updateShipmentConfirmation(int shipmentId) {
+        Shipment sh = new Shipment(0, null, null); // For Shipment Header Access Only
+        CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipmentId, "true", 6, sh.getShipmentHeader()); // Confirmed status
+        CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipmentId, "Pending", 7, sh.getShipmentHeader()); // Status to "Pending"
+    }
+
+    private Shipment[] createShipments(String[][] shipmentData) {
         Shipment[] shipments = new Shipment[shipmentData.length];
         for (int i = 0; i < shipmentData.length; i++) {
-            shipments[i] = Shipment.toShipment(shipmentData, i, null); // pass null for package
+            shipments[i] = Shipment.toShipment(shipmentData, i, null); // Pass null for package
         }
+        return shipments;
+    }
+
+    private void populatePaidShipmentsTable(Shipment[] shipments) {
         DefaultTableModel model = (DefaultTableModel) PaidShipmentsTable.getModel();
-        model.setRowCount(0);
-        
+        model.setRowCount(0); // Clear existing rows
+    
         for (Shipment shipment : shipments) {
             try {
                 if (shipment.getStatus().equalsIgnoreCase("Paid")) {
                     model.addRow(new Object[]{
-                        shipment.getShipmentID(),       
-                        shipment.getDestination(),     
-                        shipment.getStatus()           
+                        shipment.getShipmentID(),
+                        shipment.getDestination(),
+                        shipment.getStatus()
                     });
                 }
             } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(
-                    this,
-                    "Error processing shipment: " + shipment,
-                    "Shipment Data Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE
-                );
+                handleShipmentError(shipment, e);
             }
-        }        
+        }
+    
         PaidShipmentsTable.revalidate();
         PaidShipmentsTable.repaint();
+    }
+
+    private void handleShipmentError(Shipment shipment, Exception e) {
+        System.err.println("Error processing shipment: " + shipment + ". Exception: " + e.getMessage());
+        showMessage("Error processing shipment: " + shipment.getShipmentID(), "Shipment Data Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void showMessage(String message, String title, int messageType) {
+        JOptionPane.showMessageDialog(this, message, title, messageType);
     }
         
     /**

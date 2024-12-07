@@ -376,7 +376,6 @@ public class Driver extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_LogoutActionPerformed
 
@@ -388,7 +387,6 @@ public class Driver extends javax.swing.JFrame {
     }
     
     private void DeliverPackageBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeliverPackageBtnActionPerformed
-        // TODO add your handling code here:
         resetButtonColors();
         DeliverPackageBtn.setOpaque(true);
         DeliverPackageBtn.setBackground(activeButtonColor);
@@ -413,7 +411,6 @@ public class Driver extends javax.swing.JFrame {
     }
 
     private void AssignVehicleBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AssignVehicleBtnActionPerformed
-        // TODO add your handling code here:
         resetButtonColors();
         AssignVehicleBtn.setOpaque(true);
         AssignVehicleBtn.setBackground(activeButtonColor);
@@ -531,46 +528,52 @@ public class Driver extends javax.swing.JFrame {
     private void loadVehicleData() {
         String[][] vehicleData = CSVParser.loadCSVData("src/CSVFiles/vehicles.csv");
         if (vehicleData == null || vehicleData.length == 0) {
-            javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "No data loaded from the CSV file.",
-                "Data Load Error",
-                javax.swing.JOptionPane.WARNING_MESSAGE
-            );
+            showMessage("No data loaded from the CSV file.", "Data Load Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
+    
         Vehicle[] vehicles = Vehicle.toVehicle(vehicleData);
     
         DefaultTableModel model = (DefaultTableModel) AvailableVehiclesTable.getModel();
-        model.setRowCount(0);
-
+        model.setRowCount(0); // Clear existing rows
+    
         for (Vehicle vehicle : vehicles) {
             try {
-                if ((vehicle.getDriver().equalsIgnoreCase("NA") || vehicle.getDriver().trim().isEmpty() || vehicle.getDriver().equalsIgnoreCase("null"))
-                    && vehicle.isAvailable()
-                    && vehicle.getType().equalsIgnoreCase("Van")) {
-
+                if (isEligibleVehicle(vehicle)) {
                     model.addRow(new Object[]{
-                        vehicle.getVehicleID(), 
-                        vehicle.getType(),   
-                        vehicle.getWarehouseId(), 
-                        vehicle.getLicensePlate(), 
-                        vehicle.getCurrentShipmentCount() 
+                        vehicle.getVehicleID(),
+                        vehicle.getType(),
+                        vehicle.getWarehouseId(),
+                        vehicle.getLicensePlate(),
+                        vehicle.getCurrentShipmentCount()
                     });
-                } 
+                }
             } catch (Exception e) {
-                System.out.println("Error with vehicle: " + vehicle);
-                javax.swing.JOptionPane.showMessageDialog(
-                    this,
-                    "Error processing vehicle: " + vehicle,
-                    "Vehicle Data Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE
-                );
+                logAndShowVehicleError(vehicle, e);
             }
         }
     
+        // Refresh the table UI
         AvailableVehiclesTable.revalidate();
         AvailableVehiclesTable.repaint();
+    }
+
+    private boolean isEligibleVehicle(Vehicle vehicle) {
+        return (vehicle.getDriver().equalsIgnoreCase("NA") || 
+                vehicle.getDriver().trim().isEmpty() || 
+                vehicle.getDriver().equalsIgnoreCase("null")) &&
+                vehicle.isAvailable() &&
+                vehicle.getType().equalsIgnoreCase("Van");
+    }
+
+    private void logAndShowVehicleError(Vehicle vehicle, Exception e) {
+        System.out.println("Error with vehicle: " + vehicle + ". Exception: " + e.getMessage());
+        JOptionPane.showMessageDialog(
+            this,
+            "Error processing vehicle: " + vehicle.getVehicleID(),
+            "Vehicle Data Error",
+            JOptionPane.ERROR_MESSAGE
+        );
     }
 
     private ClassTemplates.Package[] loadPackages() {
