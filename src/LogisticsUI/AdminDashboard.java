@@ -495,12 +495,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         String location = locationInput.getText(), packageCapacity = pkgCapacityInput.getText(), vehicleCapacity = vehicleCapacityInput.getText();
         
         if (!DataIOParser.validateInt(packageCapacity)) {
-            new DialogBoxUI("Package Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI(this, "Package Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
         if (!DataIOParser.validateInt(vehicleCapacity)) {
-            new DialogBoxUI("Vehicle Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI(this, "Vehicle Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
@@ -508,7 +508,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         
         Warehouse warehouse = new Warehouse(CSVParser.getLatestID("src/CSVFiles/warehouses.csv") + 1, location, packageCapacityInt, vehicleCapacityInt);
         CSVParser.saveEntry(warehouse.toCSVFormat(), "src/CSVFiles/warehouses.csv");
-        new DialogBoxUI("Warehouse Added Successfully", JOptionPane.INFORMATION_MESSAGE);
+        new DialogBoxUI(this, "Warehouse Added Successfully", JOptionPane.INFORMATION_MESSAGE);
         loadWarehouseData();
         resetWarehouseFields();
     }//GEN-LAST:event_addWarehouseBtnActionPerformed
@@ -531,7 +531,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         int selectedRow = warehouseTable.getSelectedRow();
         
         if (selectedRow == -1) {
-            new DialogBoxUI("Please select a warehouse to delete", JOptionPane.WARNING_MESSAGE);
+            new DialogBoxUI(this, "Please select a warehouse to delete", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -562,7 +562,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 }
                 CSVParser.writeToCSV(updatedData, warehouses[0].getWarehouseHeader(), false, csvFilePath);
             }
-            new DialogBoxUI("Warehouse Removed Successfully", JOptionPane.INFORMATION_MESSAGE);
+            new DialogBoxUI(this, "Warehouse Removed Successfully", JOptionPane.INFORMATION_MESSAGE);
         }
         loadWarehouseData();
     }//GEN-LAST:event_removeWarehouseBtnActionPerformed
@@ -573,12 +573,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         boolean isAvailable = true;
         
         if (!DataIOParser.validateInt(packageCapacity)) {
-            new DialogBoxUI("Package Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI(this, "Package Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
         if (!DataIOParser.validateInt(whId)) {
-            new DialogBoxUI("Wharehouse ID must be a nunber", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI(this, "Wharehouse ID must be a nunber", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
@@ -589,7 +589,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         if (type.equalsIgnoreCase("van")) {
             String capacityKg = JOptionPane.showInputDialog(this, "Enter maximum capacity (KG):", "Input Dialog", JOptionPane.QUESTION_MESSAGE);
             if (!DataIOParser.validateDouble(capacityKg)) {
-                new DialogBoxUI("Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
+                new DialogBoxUI(this, "Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             double capacityKgDouble = Double.parseDouble(capacityKg);
@@ -599,14 +599,14 @@ public class AdminDashboard extends javax.swing.JFrame {
         } else {
             String maxWarehouseRoutes = JOptionPane.showInputDialog(this, "Enter maximum warehouse routes:", "Input Dialog", JOptionPane.QUESTION_MESSAGE);
             if (!DataIOParser.validateInt(maxWarehouseRoutes)) {
-                new DialogBoxUI("Warehouse Routes must be a nunber", JOptionPane.ERROR_MESSAGE);
+                new DialogBoxUI(this, "Warehouse Routes must be a nunber", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             int maxWarehouseRoutesInt = Integer.parseInt(maxWarehouseRoutes);
             vehicle = new Truck(CSVParser.getLatestID("src/CSVFiles/vehicles.csv") + 1, whIdInt, plateNumber, driver, packageCapacityInt, currentShipmentCount, isAvailable, maxWarehouseRoutesInt);
         }
         CSVParser.saveEntry(vehicle.toCSVFormat(), "src/CSVFiles/vehicles.csv");
-        new DialogBoxUI("Vehicle Added Successfully", JOptionPane.INFORMATION_MESSAGE);
+        new DialogBoxUI(this, "Vehicle Added Successfully", JOptionPane.INFORMATION_MESSAGE);
         resetVehicleFields();
     }//GEN-LAST:event_addVehicleBtnActionPerformed
 
@@ -615,7 +615,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         int selectedRow = vehicleTable.getSelectedRow();
         
         if (selectedRow == -1) {
-            new DialogBoxUI("Please select a vehicle to delete", JOptionPane.WARNING_MESSAGE);
+            new DialogBoxUI(this, "Please select a vehicle to delete", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -646,7 +646,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 }
                 CSVParser.writeToCSV(updatedData, vehicles[0].getVehicleHeader(), false, csvFilePath);
             }
-            new DialogBoxUI("Vehicle Removed Successfully", JOptionPane.INFORMATION_MESSAGE);
+            new DialogBoxUI(this, "Vehicle Removed Successfully", JOptionPane.INFORMATION_MESSAGE);
         }
         loadVehicleData();
     }//GEN-LAST:event_removeVehicleBtnActionPerformed
@@ -726,9 +726,9 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         try (PrintWriter writer = new PrintWriter(new FileWriter("src/CSVFiles/" + fileReportLocation))) {
             writer.write(report.toString());
-            new DialogBoxUI("Report generated successfully: src/CSVFiles/" + fileReportLocation, JOptionPane.INFORMATION_MESSAGE);
+            new DialogBoxUI(this, "Report generated successfully: src/CSVFiles/" + fileReportLocation, JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            new DialogBoxUI("Error generating report: " + e.getMessage(), JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI(this, "Error generating report: " + e.getMessage(), JOptionPane.ERROR_MESSAGE);
         }
     }
     
