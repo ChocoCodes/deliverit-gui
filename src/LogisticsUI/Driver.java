@@ -52,7 +52,6 @@ public class Driver extends javax.swing.JFrame {
         Vehicle vh[] = Vehicle.toVehicle(vehicleData);
         for (Vehicle vehicle : vh) {
             if (driverName.equalsIgnoreCase(vehicle.getDriver())) {
-                // Assign the vehicle to the driver
                 vehicle.setDriver(driverName);
                 currentVehicle = vehicle;
                 JOptionPane.showMessageDialog(this, "Vehicle assigned successfully!", "Vehicle Assignment", JOptionPane.INFORMATION_MESSAGE);
@@ -61,7 +60,6 @@ public class Driver extends javax.swing.JFrame {
             }
         }
         if (!isVehicleAssigned) {
-            // No vehicle available to assign
             JOptionPane.showMessageDialog(this, "No available vehicle found. Please Re-Assign Vehicle Manually.", "Vehicle Assignment Error", JOptionPane.ERROR_MESSAGE);
         }
     }

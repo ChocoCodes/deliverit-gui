@@ -6,9 +6,15 @@ package LogisticsUI;
 
 import datautils.io.CSVParser;
 import java.awt.CardLayout;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
+
+import ClassTemplates.Shipment;
+import ClassTemplates.Vehicle;
+import ClassTemplates.Warehouse;
+
 import javax.swing.JOptionPane;
 /**
  *
@@ -18,13 +24,118 @@ public class WarehouseManager extends javax.swing.JFrame {
     
     private final java.awt.Color defaultButtonColor = java.awt.Color.decode("#465CEF");
     private final java.awt.Color activeButtonColor = java.awt.Color.decode("#509BE5");
+    private Warehouse currentWarehouse;
     /**
      * Creates new form WarehouseManager
      */
     public WarehouseManager() {
         initComponents();
+        assignWarehouseWithDialog();
     }
+
+    private void assignWarehouseWithDialog() {
+        String[][] warehouseData = CSVParser.loadCSVData("src/CSVFiles/warehouses.csv");
+        Warehouse[] availableWarehouses = Warehouse.toWarehouse(warehouseData);
     
+        String[] warehouseOptions = new String[availableWarehouses.length + 1];
+        warehouseOptions[0] = "Select a warehouse"; 
+        for (int i = 0; i < availableWarehouses.length; i++) {
+            warehouseOptions[i + 1] = String.format("ID: %d - %s Hub", 
+                availableWarehouses[i].getWarehouseID(), availableWarehouses[i].getLocation());
+        }
+
+        String selectedWarehouse = null;
+        while (selectedWarehouse == null || selectedWarehouse.equals("Select a warehouse")) {
+            selectedWarehouse = (String) JOptionPane.showInputDialog(
+                null,
+                "Select a warehouse to manage:",
+                "Assign Warehouse",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                warehouseOptions,
+                warehouseOptions[0]
+            );
+    
+            if (selectedWarehouse == null) {
+                JOptionPane.showMessageDialog(null, 
+                    "Error: You must select a warehouse to proceed.", 
+                    "Selection Required", 
+                    JOptionPane.ERROR_MESSAGE);
+            } else if (selectedWarehouse.equals("Select a warehouse")) {
+                JOptionPane.showMessageDialog(null, 
+                    "Error: Please select a valid warehouse.", 
+                    "Invalid Selection", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    
+        int selectedIndex = java.util.Arrays.asList(warehouseOptions).indexOf(selectedWarehouse) - 1;
+        this.currentWarehouse = availableWarehouses[selectedIndex];
+        JOptionPane.showMessageDialog(null, 
+            "Assigned to warehouse at " + currentWarehouse.getLocation(), 
+            "Success", 
+            JOptionPane.INFORMATION_MESSAGE);
+    
+        loadAndAssignResources();
+    }
+    private void loadAndAssignResources() {
+        Vehicle[] vehicles = loadVehicles();
+        Shipment[] shipments = loadShipments();
+
+        ArrayList<Vehicle> whVehicle = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) { 
+            if (vehicle.getWarehouseId() == currentWarehouse.getWarehouseID()) {
+                whVehicle.add(vehicle);
+            }
+        }
+        
+        ArrayList<Shipment> whShipments = new ArrayList<>();
+        for (Shipment shipment : shipments) { 
+            if (shipment.getWarehouseId() == currentWarehouse.getWarehouseID()) {
+                whShipments.add(shipment);
+            }
+        }
+
+        for (int i = 0; i < whShipments.size(); i++) {
+            boolean shipmentExists = false;
+
+            for (int j = 0; j < currentWarehouse.getShipments().length; j++) {
+                // Safety net: Skip if the shipment at index j is null
+                if (currentWarehouse.getShipments()[j] == null) {
+                    continue;  
+                }
+        
+                if (currentWarehouse.getShipments()[j].getShipmentID() == whShipments.get(i).getShipmentID()) {
+                    shipmentExists = true;
+                    break;  
+                }
+            }
+    
+            if (!shipmentExists) {
+                currentWarehouse.addShipment(whShipments.get(i));
+            }
+        }
+        
+        for (int i = 0; i < whVehicle.size(); i++) {
+            boolean vehicleExists = false;
+
+            for (int j = 0; j < currentWarehouse.getVehicles().length; j++) {
+                // Safety net: Skip if the shipment at index j is null
+                if (currentWarehouse.getVehicles()[j] == null) {
+                    continue;  
+                }
+        
+                if (currentWarehouse.getVehicles()[j].getVehicleID() == whVehicle.get(i).getVehicleID()) {
+                    vehicleExists = true;
+                    break;  
+                }
+            }
+    
+            if (!vehicleExists ) {
+                currentWarehouse.addVehicle(whVehicle.get(i));
+            }
+        }
+    }
     private void resetButtonColors() {
         DropOffBtn.setOpaque(false);
         DropOffBtn.setBackground(defaultButtonColor);
@@ -33,7 +144,6 @@ public class WarehouseManager extends javax.swing.JFrame {
         ManageVehiclesBtn.setOpaque(false);
         ManageVehiclesBtn.setBackground(defaultButtonColor);
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,8 +167,8 @@ public class WarehouseManager extends javax.swing.JFrame {
         NestedPanel = new javax.swing.JPanel();
         HeaderLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        AvailableVehiclesTable = new javax.swing.JTable();
-        ConfirmBtn = new javax.swing.JButton();
+        VehiclesForLoadingTable = new javax.swing.JTable();
+        ConfirmForLoadPackagesBtn = new javax.swing.JButton();
         DestinationTxtField = new javax.swing.JTextField();
         DestinationLabel = new javax.swing.JLabel();
         VehicleTypeLabel = new javax.swing.JLabel();
@@ -67,16 +177,16 @@ public class WarehouseManager extends javax.swing.JFrame {
         NestedPanel1 = new javax.swing.JPanel();
         HeaderLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        DropOffVehicleListTable = new javax.swing.JTable();
-        ConfirmBtn2 = new javax.swing.JButton();
+        VehiclesForDropOffTable = new javax.swing.JTable();
+        ConfirmForDropOffBtn = new javax.swing.JButton();
         ManageVehiclesPanel = new javax.swing.JPanel();
         NestedPanel3 = new javax.swing.JPanel();
         HeaderLabel3 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        AvailableVehiclesTable1 = new javax.swing.JTable();
-        ConfirmBtn1 = new javax.swing.JButton();
+        VehicleActionTable = new javax.swing.JTable();
+        ConfirmForManageVehiclesBtn = new javax.swing.JButton();
         VehicleActionLabel = new javax.swing.JLabel();
-        VehicleActionComboBox1 = new javax.swing.JComboBox<>();
+        VehicleActionComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(800, 500));
@@ -114,7 +224,6 @@ public class WarehouseManager extends javax.swing.JFrame {
         DropOffBtn.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
         DropOffBtn.setForeground(new java.awt.Color(255, 255, 255));
         DropOffBtn.setText("<html><body style=\"font-family: Inter; font-weight: 10; text-align: center;\">Drop-Off<br>Vehicle Load</body></html>");
-        DropOffBtn.setActionCommand("<html><body style=\"font-family: Inter; font-weight: 10; text-align: center;\">Drop-Off<br>Vehicle Load</body></html>");
         DropOffBtn.setBorderPainted(false);
         DropOffBtn.setContentAreaFilled(false);
         DropOffBtn.setFocusPainted(false);
@@ -209,9 +318,9 @@ public class WarehouseManager extends javax.swing.JFrame {
         HeaderLabel.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel.setText("<html><span style='font-family: Inter; font-weight: bold;'>Load Packages to Vehicle</span></html>");
 
-        AvailableVehiclesTable.setBackground(new java.awt.Color(255, 255, 255));
-        AvailableVehiclesTable.setForeground(new java.awt.Color(0, 0, 0));
-        AvailableVehiclesTable.setModel(new javax.swing.table.DefaultTableModel(
+        VehiclesForLoadingTable.setBackground(new java.awt.Color(255, 255, 255));
+        VehiclesForLoadingTable.setForeground(new java.awt.Color(0, 0, 0));
+        VehiclesForLoadingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -227,28 +336,28 @@ public class WarehouseManager extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        AvailableVehiclesTable.setCellSelectionEnabled(true);
-        AvailableVehiclesTable.setFocusable(false);
-        AvailableVehiclesTable.setGridColor(new java.awt.Color(255, 255, 255));
-        AvailableVehiclesTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
-        AvailableVehiclesTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        AvailableVehiclesTable.setShowGrid(true);
-        AvailableVehiclesTable.getTableHeader().setResizingAllowed(false);
-        AvailableVehiclesTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(AvailableVehiclesTable);
+        VehiclesForLoadingTable.setCellSelectionEnabled(true);
+        VehiclesForLoadingTable.setFocusable(false);
+        VehiclesForLoadingTable.setGridColor(new java.awt.Color(255, 255, 255));
+        VehiclesForLoadingTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        VehiclesForLoadingTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        VehiclesForLoadingTable.setShowGrid(true);
+        VehiclesForLoadingTable.getTableHeader().setResizingAllowed(false);
+        VehiclesForLoadingTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(VehiclesForLoadingTable);
 
-        ConfirmBtn.setBackground(new java.awt.Color(73, 204, 112));
-        ConfirmBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ConfirmBtn.setForeground(new java.awt.Color(255, 255, 255));
-        ConfirmBtn.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
-        ConfirmBtn.setBorderPainted(false);
-        ConfirmBtn.setFocusPainted(false);
-        ConfirmBtn.setFocusable(false);
-        ConfirmBtn.setRequestFocusEnabled(false);
-        ConfirmBtn.setRolloverEnabled(false);
-        ConfirmBtn.addActionListener(new java.awt.event.ActionListener() {
+        ConfirmForLoadPackagesBtn.setBackground(new java.awt.Color(73, 204, 112));
+        ConfirmForLoadPackagesBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ConfirmForLoadPackagesBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ConfirmForLoadPackagesBtn.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
+        ConfirmForLoadPackagesBtn.setBorderPainted(false);
+        ConfirmForLoadPackagesBtn.setFocusPainted(false);
+        ConfirmForLoadPackagesBtn.setFocusable(false);
+        ConfirmForLoadPackagesBtn.setRequestFocusEnabled(false);
+        ConfirmForLoadPackagesBtn.setRolloverEnabled(false);
+        ConfirmForLoadPackagesBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConfirmBtnActionPerformed(evt);
+                ConfirmForLoadPackagesBtnActionPerformed(evt);
             }
         });
 
@@ -256,6 +365,11 @@ public class WarehouseManager extends javax.swing.JFrame {
         DestinationTxtField.setForeground(new java.awt.Color(0, 0, 0));
         DestinationTxtField.setCaretColor(new java.awt.Color(255, 255, 255));
         DestinationTxtField.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        DestinationTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                DestinationTxtFieldKeyReleased(evt);
+            }
+        });
 
         DestinationLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         DestinationLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -268,6 +382,11 @@ public class WarehouseManager extends javax.swing.JFrame {
         VehicleTypeComboBox.setBackground(new java.awt.Color(255, 255, 255));
         VehicleTypeComboBox.setForeground(new java.awt.Color(0, 0, 0));
         VehicleTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Van", "Truck" }));
+        VehicleTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VehicleTypeComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout NestedPanelLayout = new javax.swing.GroupLayout(NestedPanel);
         NestedPanel.setLayout(NestedPanelLayout);
@@ -276,7 +395,7 @@ public class WarehouseManager extends javax.swing.JFrame {
             .addGroup(NestedPanelLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(NestedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ConfirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ConfirmForLoadPackagesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(NestedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(HeaderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(NestedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -307,7 +426,7 @@ public class WarehouseManager extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ConfirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ConfirmForLoadPackagesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
@@ -324,9 +443,9 @@ public class WarehouseManager extends javax.swing.JFrame {
         HeaderLabel1.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel1.setText("<html><span style='font-family: Inter; font-weight: bold;'>Available Vehicles for Drop-Off</span></html>");
 
-        DropOffVehicleListTable.setBackground(new java.awt.Color(255, 255, 255));
-        DropOffVehicleListTable.setForeground(new java.awt.Color(0, 0, 0));
-        DropOffVehicleListTable.setModel(new javax.swing.table.DefaultTableModel(
+        VehiclesForDropOffTable.setBackground(new java.awt.Color(255, 255, 255));
+        VehiclesForDropOffTable.setForeground(new java.awt.Color(0, 0, 0));
+        VehiclesForDropOffTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -342,28 +461,28 @@ public class WarehouseManager extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        DropOffVehicleListTable.setCellSelectionEnabled(true);
-        DropOffVehicleListTable.setFocusable(false);
-        DropOffVehicleListTable.setGridColor(new java.awt.Color(255, 255, 255));
-        DropOffVehicleListTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
-        DropOffVehicleListTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        DropOffVehicleListTable.setShowGrid(false);
-        DropOffVehicleListTable.getTableHeader().setResizingAllowed(false);
-        DropOffVehicleListTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(DropOffVehicleListTable);
+        VehiclesForDropOffTable.setCellSelectionEnabled(true);
+        VehiclesForDropOffTable.setFocusable(false);
+        VehiclesForDropOffTable.setGridColor(new java.awt.Color(255, 255, 255));
+        VehiclesForDropOffTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        VehiclesForDropOffTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        VehiclesForDropOffTable.setShowGrid(false);
+        VehiclesForDropOffTable.getTableHeader().setResizingAllowed(false);
+        VehiclesForDropOffTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(VehiclesForDropOffTable);
 
-        ConfirmBtn2.setBackground(new java.awt.Color(73, 204, 112));
-        ConfirmBtn2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ConfirmBtn2.setForeground(new java.awt.Color(255, 255, 255));
-        ConfirmBtn2.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
-        ConfirmBtn2.setBorderPainted(false);
-        ConfirmBtn2.setFocusPainted(false);
-        ConfirmBtn2.setFocusable(false);
-        ConfirmBtn2.setRequestFocusEnabled(false);
-        ConfirmBtn2.setRolloverEnabled(false);
-        ConfirmBtn2.addActionListener(new java.awt.event.ActionListener() {
+        ConfirmForDropOffBtn.setBackground(new java.awt.Color(73, 204, 112));
+        ConfirmForDropOffBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ConfirmForDropOffBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ConfirmForDropOffBtn.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
+        ConfirmForDropOffBtn.setBorderPainted(false);
+        ConfirmForDropOffBtn.setFocusPainted(false);
+        ConfirmForDropOffBtn.setFocusable(false);
+        ConfirmForDropOffBtn.setRequestFocusEnabled(false);
+        ConfirmForDropOffBtn.setRolloverEnabled(false);
+        ConfirmForDropOffBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConfirmBtn2ActionPerformed(evt);
+                ConfirmForDropOffBtnActionPerformed(evt);
             }
         });
 
@@ -374,7 +493,7 @@ public class WarehouseManager extends javax.swing.JFrame {
             .addGroup(NestedPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(NestedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ConfirmBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ConfirmForDropOffBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(NestedPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(HeaderLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -388,7 +507,7 @@ public class WarehouseManager extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ConfirmBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ConfirmForDropOffBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(67, Short.MAX_VALUE))
         );
 
@@ -405,9 +524,9 @@ public class WarehouseManager extends javax.swing.JFrame {
         HeaderLabel3.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel3.setText("<html><span style='font-family: Inter; font-weight: bold;'>Load Packages to Vehicle</span></html>");
 
-        AvailableVehiclesTable1.setBackground(new java.awt.Color(255, 255, 255));
-        AvailableVehiclesTable1.setForeground(new java.awt.Color(0, 0, 0));
-        AvailableVehiclesTable1.setModel(new javax.swing.table.DefaultTableModel(
+        VehicleActionTable.setBackground(new java.awt.Color(255, 255, 255));
+        VehicleActionTable.setForeground(new java.awt.Color(0, 0, 0));
+        VehicleActionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -423,28 +542,28 @@ public class WarehouseManager extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        AvailableVehiclesTable1.setCellSelectionEnabled(true);
-        AvailableVehiclesTable1.setFocusable(false);
-        AvailableVehiclesTable1.setGridColor(new java.awt.Color(255, 255, 255));
-        AvailableVehiclesTable1.setSelectionBackground(new java.awt.Color(204, 204, 204));
-        AvailableVehiclesTable1.setSelectionForeground(new java.awt.Color(255, 255, 255));
-        AvailableVehiclesTable1.setShowGrid(true);
-        AvailableVehiclesTable1.getTableHeader().setResizingAllowed(false);
-        AvailableVehiclesTable1.getTableHeader().setReorderingAllowed(false);
-        jScrollPane4.setViewportView(AvailableVehiclesTable1);
+        VehicleActionTable.setCellSelectionEnabled(true);
+        VehicleActionTable.setFocusable(false);
+        VehicleActionTable.setGridColor(new java.awt.Color(255, 255, 255));
+        VehicleActionTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        VehicleActionTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
+        VehicleActionTable.setShowGrid(true);
+        VehicleActionTable.getTableHeader().setResizingAllowed(false);
+        VehicleActionTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane4.setViewportView(VehicleActionTable);
 
-        ConfirmBtn1.setBackground(new java.awt.Color(73, 204, 112));
-        ConfirmBtn1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        ConfirmBtn1.setForeground(new java.awt.Color(255, 255, 255));
-        ConfirmBtn1.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
-        ConfirmBtn1.setBorderPainted(false);
-        ConfirmBtn1.setFocusPainted(false);
-        ConfirmBtn1.setFocusable(false);
-        ConfirmBtn1.setRequestFocusEnabled(false);
-        ConfirmBtn1.setRolloverEnabled(false);
-        ConfirmBtn1.addActionListener(new java.awt.event.ActionListener() {
+        ConfirmForManageVehiclesBtn.setBackground(new java.awt.Color(73, 204, 112));
+        ConfirmForManageVehiclesBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ConfirmForManageVehiclesBtn.setForeground(new java.awt.Color(255, 255, 255));
+        ConfirmForManageVehiclesBtn.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
+        ConfirmForManageVehiclesBtn.setBorderPainted(false);
+        ConfirmForManageVehiclesBtn.setFocusPainted(false);
+        ConfirmForManageVehiclesBtn.setFocusable(false);
+        ConfirmForManageVehiclesBtn.setRequestFocusEnabled(false);
+        ConfirmForManageVehiclesBtn.setRolloverEnabled(false);
+        ConfirmForManageVehiclesBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConfirmBtn1ActionPerformed(evt);
+                ConfirmForManageVehiclesBtnActionPerformed(evt);
             }
         });
 
@@ -452,9 +571,14 @@ public class WarehouseManager extends javax.swing.JFrame {
         VehicleActionLabel.setForeground(new java.awt.Color(0, 0, 0));
         VehicleActionLabel.setText("<html><body style=\"font-family: Inter; font-weight: 10; text-align: center;\">Select Vehicle Action</body></html>");
 
-        VehicleActionComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        VehicleActionComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        VehicleActionComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vehicle Arriving", "Vehicle Leaving" }));
+        VehicleActionComboBox.setBackground(new java.awt.Color(255, 255, 255));
+        VehicleActionComboBox.setForeground(new java.awt.Color(0, 0, 0));
+        VehicleActionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vehicle Arriving", "Vehicle Leaving" }));
+        VehicleActionComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VehicleActionComboBoxActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout NestedPanel3Layout = new javax.swing.GroupLayout(NestedPanel3);
         NestedPanel3.setLayout(NestedPanel3Layout);
@@ -463,13 +587,12 @@ public class WarehouseManager extends javax.swing.JFrame {
             .addGroup(NestedPanel3Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(NestedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(ConfirmBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ConfirmForManageVehiclesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(NestedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(HeaderLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(NestedPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(VehicleActionLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(VehicleActionComboBox1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 536, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(VehicleActionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(VehicleActionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         NestedPanel3Layout.setVerticalGroup(
@@ -480,11 +603,11 @@ public class WarehouseManager extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(VehicleActionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(VehicleActionComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(VehicleActionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(ConfirmBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ConfirmForManageVehiclesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(65, Short.MAX_VALUE))
         );
 
@@ -519,6 +642,8 @@ public class WarehouseManager extends javax.swing.JFrame {
         DropOffBtn.setBackground(activeButtonColor);
         CardLayout card = (CardLayout) MainPanel.getLayout();
         card.show(MainPanel, "DropOffPanel");
+
+        populateVehiclesForDropOffTable();
     }//GEN-LAST:event_DropOffBtnActionPerformed
 
     private void LoadPackagesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadPackagesBtnActionPerformed
@@ -529,13 +654,77 @@ public class WarehouseManager extends javax.swing.JFrame {
         card.show(MainPanel, "LoadPackagesPanel");
     }//GEN-LAST:event_LoadPackagesBtnActionPerformed
 
-    private void ConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmBtnActionPerformed
+    private void ConfirmForLoadPackagesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmForLoadPackagesBtnActionPerformed
+    int selectedRow = VehiclesForLoadingTable.getSelectedRow();
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Please select a vehicle from the table.", "Selection Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-    }//GEN-LAST:event_ConfirmBtnActionPerformed
+    int vehicleID = (int) VehiclesForLoadingTable.getValueAt(selectedRow, 0);
+    Vehicle selectedVehicle = null;
 
-    private void ConfirmBtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmBtn2ActionPerformed
+    for (Vehicle vehicle : filterAvailableVehicles(currentWarehouse.getVehicles(), (String) VehicleTypeComboBox.getSelectedItem(), true)) {
+        if (vehicle.getVehicleID() == vehicleID) {
+            selectedVehicle = vehicle;
+            break;
+        }
+    }
 
-    }//GEN-LAST:event_ConfirmBtn2ActionPerformed
+    if (selectedVehicle == null) {
+        JOptionPane.showMessageDialog(this, "Error loading the selected vehicle. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String destination = DestinationTxtField.getText().trim();
+    ArrayList<Shipment> loadToVehicleShipments = filterShipmentsForLoading(currentWarehouse.getShipments(), destination);
+
+    if (loadToVehicleShipments.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No shipments available for the selected destination.", "No Shipments Found", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    loadToVehicle(loadToVehicleShipments, selectedVehicle);
+    selectedVehicle.setAvailability(false);
+    updateShipmentAndVehicleCSV(loadToVehicleShipments.toArray(new Shipment[0]), selectedVehicle);
+
+    JOptionPane.showMessageDialog(this, "Shipments successfully loaded to vehicle ID: " + selectedVehicle.getVehicleID(), "Success", JOptionPane.INFORMATION_MESSAGE);
+
+    populateVehiclesForLoadingTable();
+    }//GEN-LAST:event_ConfirmForLoadPackagesBtnActionPerformed
+
+    private void ConfirmForDropOffBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmForDropOffBtnActionPerformed
+        int selectedRow = VehiclesForDropOffTable.getSelectedRow();
+        Shipment shipments[] = loadShipments();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Please select a vehicle for drop-off.", "Selection Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int vehicleID = (int) VehiclesForDropOffTable.getValueAt(selectedRow, 0);
+        Vehicle selectedVehicle = null;
+
+        for (Vehicle vehicle : currentWarehouse.getVehicles()) {
+            if (vehicle != null && vehicle.getVehicleID() == vehicleID) {
+                selectedVehicle = vehicle;
+                break;
+            }
+        }
+
+        if (selectedVehicle == null) {
+            JOptionPane.showMessageDialog(this, "Error retrieving the selected vehicle. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        assignShipmentsToVehicle(shipments, selectedVehicle);
+
+        Shipment[] droppedOffShipments = dropOffShipments(selectedVehicle);
+        updateShipmentAndVehicleCSV(droppedOffShipments, selectedVehicle);
+        JOptionPane.showMessageDialog(this, "Drop-off completed for Vehicle ID: " + selectedVehicle.getVehicleID(),
+                "Success", JOptionPane.INFORMATION_MESSAGE);
+        
+        populateVehiclesForDropOffTable();
+    }//GEN-LAST:event_ConfirmForDropOffBtnActionPerformed
 
     private void ManageVehiclesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ManageVehiclesBtnActionPerformed
         resetButtonColors();
@@ -545,10 +734,328 @@ public class WarehouseManager extends javax.swing.JFrame {
         card.show(MainPanel, "ManageVehiclesPanel");
     }//GEN-LAST:event_ManageVehiclesBtnActionPerformed
 
-    private void ConfirmBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmBtn1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ConfirmBtn1ActionPerformed
+    private void ConfirmForManageVehiclesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmForManageVehiclesBtnActionPerformed
+        int selectedRow = VehicleActionTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "No vehicle selected. Please select a vehicle from the table.");
+            return;
+        }
+    
+        DefaultTableModel model = (DefaultTableModel) VehicleActionTable.getModel();
+        String selectedAction = (String) VehicleActionComboBox.getSelectedItem();
+        if (selectedAction == null) {
+            JOptionPane.showMessageDialog(this, "No action selected. Please choose an action from the dropdown.");
+            return;
+        }
+    
+        int vehicleId = (int) model.getValueAt(selectedRow, 0);
+        String licensePlate = (String) model.getValueAt(selectedRow, 3);
+        int currentWarehouseId = (int) model.getValueAt(selectedRow, 2);
+    
+        switch (selectedAction) {
+            case "Vehicle Arriving":
+                handleArrivalConfirmation(vehicleId, licensePlate, currentWarehouseId);
+                break;
+            case "Vehicle Leaving":
+                handleLeavingConfirmation(vehicleId, licensePlate, currentWarehouseId);
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Invalid action selected.");
+        }
 
+        refreshVehicleActionTable(selectedAction);
+    }//GEN-LAST:event_ConfirmForManageVehiclesBtnActionPerformed
+
+    private void DestinationTxtFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DestinationTxtFieldKeyReleased
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            populateVehiclesForLoadingTable();
+            validateInputs();
+        }
+    }//GEN-LAST:event_DestinationTxtFieldKeyReleased
+
+    private void VehicleTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VehicleTypeComboBoxActionPerformed
+        populateVehiclesForLoadingTable();
+        validateInputs();
+    }//GEN-LAST:event_VehicleTypeComboBoxActionPerformed
+
+    private void VehicleActionComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VehicleActionComboBoxActionPerformed
+        String selectedAction = (String) VehicleActionComboBox.getSelectedItem();
+    
+        if (selectedAction == null) {
+            return;
+        }
+        
+        switch (selectedAction) {
+            case "Vehicle Arriving":
+                handleVehicleArrival();
+                break;
+            case "Vehicle Leaving":
+                handleVehicleLeaving();
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Invalid action selected.");
+        }
+    }//GEN-LAST:event_VehicleActionComboBoxActionPerformed
+
+    private void refreshVehicleActionTable(String selectedAction) {
+        ArrayList<Vehicle> vehiclesToShow = new ArrayList<>();
+        Vehicle[] allVehicles = loadVehicles();
+    
+        if ("Vehicle Arriving".equals(selectedAction)) {
+            for (Vehicle vehicle : allVehicles) {
+                if (!vehicle.isAvailable() && vehicle.getWarehouseId() == 0) {
+                    vehiclesToShow.add(vehicle);
+                }
+            }
+        } else if ("Vehicle Leaving".equals(selectedAction)) {
+            for (Vehicle vehicle : allVehicles) {
+                if (vehicle.getWarehouseId() == currentWarehouse.getWarehouseID()) {
+                    vehiclesToShow.add(vehicle);
+                }
+            }
+        }
+    
+        populateVehicleActionTable(vehiclesToShow);
+    }
+
+    private void handleArrivalConfirmation(int vehicleId, String licensePlate, int currentWarehouseId) {
+        if (currentWarehouseId != 0) {
+            JOptionPane.showMessageDialog(this, "Vehicle is already in a warehouse. Cannot mark as arriving.");
+            return;
+        }
+    
+        for (Vehicle vehicle : loadVehicles()) {
+            if (vehicle.getVehicleID() == vehicleId) {
+                vehicle.setWarehouseId(currentWarehouse.getWarehouseID());
+                vehicle.setAvailability(true); 
+                CSVParser.updateCSV("src/CSVFiles/vehicles.csv", vehicleId, String.valueOf(currentWarehouse.getWarehouseID()), 1, vehicle.getVehicleHeader());
+                JOptionPane.showMessageDialog(this, "Vehicle " + licensePlate + " has been marked as arrived.");
+                break;
+            }
+        }
+    }
+    
+    private void handleLeavingConfirmation(int vehicleId, String licensePlate, int currentWarehouseId) {
+        if (currentWarehouseId != currentWarehouse.getWarehouseID()) {
+            JOptionPane.showMessageDialog(this, "Vehicle is not in the current warehouse. Cannot mark as leaving.");
+            return;
+        }
+    
+        for (Vehicle vehicle : loadVehicles()) {
+            if (vehicle.getVehicleID() == vehicleId) {
+                vehicle.setWarehouseId(0); 
+                vehicle.setAvailability(false); 
+                CSVParser.updateCSV("src/CSVFiles/vehicles.csv", vehicleId, String.valueOf(0), 1, vehicle.getVehicleHeader());
+                CSVParser.updateCSV("src/CSVFiles/vehicles.csv", vehicleId, String.valueOf(false), 9, vehicle.getVehicleHeader());
+                JOptionPane.showMessageDialog(this, "Vehicle " + licensePlate + " has been marked as leaving.");
+                break;
+            }
+        }
+    }
+    
+    private void handleVehicleArrival() {
+        ArrayList<Vehicle> arrivingVehicles = new ArrayList<>();
+        Vehicle[] vehicles = loadVehicles();
+    
+        for (Vehicle vehicle : vehicles) {
+            if (!vehicle.isAvailable() && vehicle.getWarehouseId() == 0) {
+                arrivingVehicles.add(vehicle);
+            }
+        }
+    
+        if (arrivingVehicles.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No vehicles arriving.");
+        } else {
+            populateVehicleActionTable(arrivingVehicles);
+            JOptionPane.showMessageDialog(this, "Select a vehicle from the table for arrival.");
+        }
+    }
+
+    private void handleVehicleLeaving() {
+        ArrayList<Vehicle> leavingVehicles = new ArrayList<>();
+        Vehicle[] vehicles = loadVehicles();
+    
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle.getWarehouseId() == currentWarehouse.getWarehouseID()) {
+                leavingVehicles.add(vehicle);
+            }
+        }
+    
+        if (leavingVehicles.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No vehicles ready to leave.");
+        } else {
+            populateVehicleActionTable(leavingVehicles);
+            JOptionPane.showMessageDialog(this, "Select a vehicle from the table for departure.");
+        }
+    }
+
+    private void populateVehicleActionTable(ArrayList<Vehicle> vehicles) {
+        DefaultTableModel model = (DefaultTableModel) VehicleActionTable.getModel();
+        model.setRowCount(0); // Clear existing rows
+    
+        if (model.getColumnCount() == 0) {
+            model.addColumn("Vehicle ID");
+            model.addColumn("Type");
+            model.addColumn("Warehouse ID");
+            model.addColumn("License Plate");
+            model.addColumn("Current Shipments");
+        }
+    
+        for (Vehicle vehicle : vehicles) {
+            model.addRow(new Object[]{
+                vehicle.getVehicleID(),
+                vehicle.getType(),
+                vehicle.getWarehouseId(),
+                vehicle.getLicensePlate(),
+                vehicle.getCurrentShipmentCount()
+            });
+        }
+    }
+    
+    private void populateVehiclesForDropOffTable() {
+        loadAndAssignResources();
+        DefaultTableModel model = (DefaultTableModel) VehiclesForDropOffTable.getModel();
+        model.setRowCount(0); // Clear the table
+    
+        ArrayList<Vehicle> availableVehicles = filterAvailableVehicles(currentWarehouse.getVehicles(), "truck", false);
+    
+        for (Vehicle vehicle : availableVehicles) {
+            model.addRow(new Object[]{
+                vehicle.getVehicleID(),
+                vehicle.getType(),
+                vehicle.getWarehouseId(),
+                vehicle.getLicensePlate(),
+                vehicle.getCurrentShipmentCount()
+            });
+        }
+    }
+
+    private void populateVehiclesForLoadingTable() {
+        loadAndAssignResources();
+        DefaultTableModel model = (DefaultTableModel) VehiclesForLoadingTable.getModel();
+        model.setRowCount(0); // Clear the table
+    
+        String vehicleType = (String) VehicleTypeComboBox.getSelectedItem();
+        ArrayList<Vehicle> availableVehicles = filterAvailableVehicles(currentWarehouse.getVehicles(), vehicleType, true);
+    
+        for (Vehicle vehicle : availableVehicles) {
+            model.addRow(new Object[]{
+                vehicle.getVehicleID(),
+                vehicle.getType(),
+                vehicle.getWarehouseId(),
+                vehicle.getLicensePlate(),
+                vehicle.getCurrentShipmentCount()
+            });
+        }
+    }
+    
+    private void validateInputs() {
+        ConfirmForLoadPackagesBtn.setEnabled(true);
+    }
+    
+    private Shipment[] loadShipments() {
+        String[][] packageData = CSVParser.loadCSVData("src/CSVFiles/packages.csv");
+        ClassTemplates.Package[] packages = new ClassTemplates.Package[packageData.length];
+        for (int i = 0; i < packageData.length; i++) {
+            packages[i] = ClassTemplates.Package.toPackage(packageData, i, null); // Pass null for the items
+        }
+
+        String[][] shipmentData = CSVParser.loadCSVData("src/CSVFiles/shipments.csv");
+        Shipment[] shipments = new Shipment[shipmentData.length];
+            
+        for (int i = 0; i < shipmentData.length; i++) {
+            int pkgId = Integer.parseInt(shipmentData[i][1]);  // Get the pkgID from shipment data
+            
+            // Find the corresponding package by ID
+            ClassTemplates.Package correspondingPackage = null;
+            for (ClassTemplates.Package pkg : packages) {
+                if (pkg.getId() == pkgId) {
+                    correspondingPackage = pkg;
+                    break;  
+                }
+            }
+                
+            // Pass the corresponding package to the Shipment constructor
+            shipments[i] = Shipment.toShipment(shipmentData, i, correspondingPackage);
+        }
+        
+        return shipments;
+    }
+
+    private Vehicle[] loadVehicles() {
+        String[][] vehicleData = CSVParser.loadCSVData("src/CSVFiles/vehicles.csv");
+        return Vehicle.toVehicle(vehicleData);
+    }
+
+    private ArrayList<Shipment> filterShipmentsForLoading(Shipment[] shipments, String destination) {
+        ArrayList<Shipment> filteredShipments = new ArrayList<>();
+        for (Shipment shipment : shipments) {
+            if (shipment != null && shipment.getWarehouseId() == currentWarehouse.getWarehouseID()
+                    && shipment.getStatus().equalsIgnoreCase("Pending")
+                    && shipment.getDestination().toLowerCase().contains(destination.toLowerCase())) {
+                filteredShipments.add(shipment);
+            }
+        }
+        return filteredShipments;
+    }
+
+    private ArrayList<Vehicle> filterAvailableVehicles(Vehicle[] vehicles, String vehicleType, boolean flag) {
+        ArrayList<Vehicle> availableVehicles = new ArrayList<>();
+        for (Vehicle vehicle : vehicles) {
+            if (vehicle != null && (vehicle.getWarehouseId() == currentWarehouse.getWarehouseID()) && (vehicle.isAvailable() == flag)
+                    && vehicle.getType().equalsIgnoreCase(vehicleType)) {
+                availableVehicles.add(vehicle);
+            }
+        }
+        return availableVehicles;
+    }
+
+    private void loadToVehicle(ArrayList<Shipment> shipments, Vehicle vehicle) {
+        for (Shipment s : shipments) {
+            if (vehicle.addShipment(s)) {
+                s.setWarehouseId(0); // Indicating its not on the warehouse anymore
+                currentWarehouse.removeShipment(s);
+                s.setVehicleId(vehicle.getVehicleID());
+            } else {
+                System.out.println("Cannot add Shipment ID: " + s.getShipmentID() + " to vehicle due to exceeding capacity and/or weight limit.");
+            }
+        }
+    }
+
+    private Shipment[] dropOffShipments(Vehicle vehicle) {
+        Shipment[] droppedOffShipments = new Shipment[vehicle.getShipments().length];
+        int index = 0;
+        for (Shipment shipment : vehicle.getShipments()) {
+            shipment.setVehicleId(0); 
+            shipment.setWarehouseId(currentWarehouse.getWarehouseID()); 
+            vehicle.removeShipment(shipment);
+            currentWarehouse.addShipment(shipment);
+            droppedOffShipments[index] = shipment;
+            index++;
+        }
+        vehicle.setAvailability(true); 
+        return droppedOffShipments;
+    }
+
+    private void assignShipmentsToVehicle(Shipment[] shipments, Vehicle vehicle) {
+        ArrayList<Shipment> vehicleShipments = new ArrayList<>();
+        for (Shipment shipment : shipments) {
+            if (shipment.getVehicleId() == vehicle.getVehicleID())
+            vehicleShipments.add(shipment);
+        }
+        vehicle.setShipments(vehicleShipments.toArray(new Shipment[0]));
+    }
+
+    private void updateShipmentAndVehicleCSV(Shipment[] shipments, Vehicle vehicle) {
+        for (Shipment s : shipments) {
+            CSVParser.updateCSV("src/CSVFiles/shipments.csv", s.getShipmentID(), String.valueOf(s.getVehicleId()), 2, s.getShipmentHeader()); 
+            CSVParser.updateCSV("src/CSVFiles/shipments.csv", s.getShipmentID(), String.valueOf(s.getWarehouseId()), 3, s.getShipmentHeader()); 
+        }
+
+        CSVParser.updateCSV("src/CSVFiles/vehicles.csv",vehicle.getVehicleID(), String.format("%d", (int)vehicle.getCurrentCapacityKG()), 6, vehicle.getVehicleHeader()); 
+        CSVParser.updateCSV("src/CSVFiles/vehicles.csv", vehicle.getVehicleID(), String.valueOf(vehicle.getCurrentShipmentCount()), 8, vehicle.getVehicleHeader()); 
+        CSVParser.updateCSV("src/CSVFiles/vehicles.csv", vehicle.getVehicleID(), String.valueOf(vehicle.isAvailable()), 9,vehicle.getVehicleHeader());
+    }
     /**
      * @param args the command line arguments
      */
@@ -585,16 +1092,13 @@ public class WarehouseManager extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable AvailableVehiclesTable;
-    private javax.swing.JTable AvailableVehiclesTable1;
-    private javax.swing.JButton ConfirmBtn;
-    private javax.swing.JButton ConfirmBtn1;
-    private javax.swing.JButton ConfirmBtn2;
+    private javax.swing.JButton ConfirmForDropOffBtn;
+    private javax.swing.JButton ConfirmForLoadPackagesBtn;
+    private javax.swing.JButton ConfirmForManageVehiclesBtn;
     private javax.swing.JLabel DestinationLabel;
     private javax.swing.JTextField DestinationTxtField;
     private javax.swing.JButton DropOffBtn;
     private javax.swing.JPanel DropOffPanel;
-    private javax.swing.JTable DropOffVehicleListTable;
     private javax.swing.JPanel EmptyPanel;
     private javax.swing.JLabel HeaderLabel;
     private javax.swing.JLabel HeaderLabel1;
@@ -611,10 +1115,13 @@ public class WarehouseManager extends javax.swing.JFrame {
     private javax.swing.JPanel NullPanel;
     private javax.swing.JPanel SidebarPanel;
     private javax.swing.JLabel UserGreetingsLabel;
-    private javax.swing.JComboBox<String> VehicleActionComboBox1;
+    private javax.swing.JComboBox<String> VehicleActionComboBox;
     private javax.swing.JLabel VehicleActionLabel;
+    private javax.swing.JTable VehicleActionTable;
     private javax.swing.JComboBox<String> VehicleTypeComboBox;
     private javax.swing.JLabel VehicleTypeLabel;
+    private javax.swing.JTable VehiclesForDropOffTable;
+    private javax.swing.JTable VehiclesForLoadingTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
