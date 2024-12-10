@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package LogisticsUI;
 
 import javax.swing.ImageIcon;
@@ -39,6 +35,7 @@ public class ItemForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("DeliverIT | Add Item");
+        setPreferredSize(new java.awt.Dimension(400, 500));
         setResizable(false);
 
         itemHdr.setFont(new java.awt.Font("Inter", 1, 36)); // NOI18N

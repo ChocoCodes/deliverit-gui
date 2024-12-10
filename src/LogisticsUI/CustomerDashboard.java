@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import datautils.io.*;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import javax.swing.JTextField;
 
 public class CustomerDashboard extends javax.swing.JFrame {
     private Customer customerLoggedIn;
@@ -529,7 +530,14 @@ public class CustomerDashboard extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_signOutBtn1ActionPerformed
-
+    
+    private void resetFields() {
+        JTextField[] fields = {nameFld, phoneFld, addrFld};
+        for(JTextField f : fields) {
+            f.setText("");
+        }
+    }
+    
     private void nameEditBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameEditBtnActionPerformed
         nameFld.setEnabled(nameEditBtn.isSelected() ? true : false);
     }//GEN-LAST:event_nameEditBtnActionPerformed
@@ -547,6 +555,12 @@ public class CustomerDashboard extends javax.swing.JFrame {
         String name = nameFld.getText(), phone = phoneFld.getText(), addr = addrFld.getText();
         if(DataIOParser.areEmptyFields(new String[] {name, phone, addr})) {
             new DialogBoxUI(this, "Field/s are empty. Please double check your entries.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Check for duplicates first
+        if(CSVParser.searchCustomer(name)) {
+            new DialogBoxUI(this, "ATTEMPT ERROR: Customer name is already registered at our system.", JOptionPane.ERROR_MESSAGE);
+            resetFields();
             return;
         }
         // Proceed with updating the customer object info

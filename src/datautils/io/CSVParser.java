@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import ClassTemplates.Item;
-import ClassTemplates.Shipment;
-import ClassTemplates.Package;
+import ClassTemplates.*;
 import java.io.PrintWriter;
 import java.io.IOException;
 
@@ -143,4 +141,13 @@ public class CSVParser {
         }
         return customerShipments.toArray(new Shipment[0]);
     }
+    
+    public static boolean searchCustomer(String name) {
+        Customer[] customers = Customer.toCustomer(CSVParser.loadCSVData("src/CSVFiles/customers.csv"));
+        for(Customer c : customers) {
+            if(c.getName().equalsIgnoreCase(name)) return true;
+        }
+        return false;
+    }
+   
 }
