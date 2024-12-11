@@ -7,6 +7,7 @@ package LogisticsUI;
 import datautils.io.CSVParser;
 import java.awt.CardLayout;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ClassTemplates.Shipment;
 
@@ -22,6 +23,7 @@ public class FrontlineEmployee extends javax.swing.JFrame {
      */
     public FrontlineEmployee() {
         initComponents();
+        setIconImage(new ImageIcon("src/assets/truck.png").getImage());
     }
 
     /**
@@ -48,6 +50,7 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         ConfirmBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("DeliverIT | Dashboard");
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
 

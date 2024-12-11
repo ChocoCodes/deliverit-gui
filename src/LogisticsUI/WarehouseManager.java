@@ -15,6 +15,7 @@ import ClassTemplates.Shipment;
 import ClassTemplates.Vehicle;
 import ClassTemplates.Warehouse;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 /**
  *
@@ -31,6 +32,7 @@ public class WarehouseManager extends javax.swing.JFrame {
     public WarehouseManager() {
         initComponents();
         assignWarehouseWithDialog();
+        setIconImage(new ImageIcon("src/assets/truck.png").getImage());
     }
 
     private void assignWarehouseWithDialog() {
@@ -189,6 +191,7 @@ public class WarehouseManager extends javax.swing.JFrame {
         VehicleActionComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("DeliverIT | Dashboard");
         setPreferredSize(new java.awt.Dimension(800, 500));
 
         NullPanel.setBackground(new java.awt.Color(240, 245, 255));

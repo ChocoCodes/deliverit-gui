@@ -9,6 +9,7 @@ import java.awt.CardLayout;
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ClassTemplates.Shipment;
 import ClassTemplates.Vehicle;
@@ -28,6 +29,7 @@ public class Driver extends javax.swing.JFrame {
      */
     public Driver() {
         initComponents();
+        setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         askForDriverName();
     }
 
@@ -94,6 +96,7 @@ public class Driver extends javax.swing.JFrame {
         ConfirmBtn2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("DeliverIT | Dashboard");
         setPreferredSize(new java.awt.Dimension(800, 500));
 
         NullPanel.setBackground(new java.awt.Color(240, 245, 255));
