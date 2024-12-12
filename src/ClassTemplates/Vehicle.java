@@ -119,7 +119,7 @@ public class Vehicle {
         }
     
         for (int i = 0; i < shipments.length; i++) {
-            if (shipments[i] != null && shipments[i].equals(shipment)) {
+            if (shipments[i] != null && shipments[i].getShipmentID() == shipment.getShipmentID()) {
                 // Decrease current weight and shipment count
                 currentCapacityKG -= shipments[i].getPackage().getDimensionalWeight();
                 currentShipmentCount--;

@@ -6,8 +6,8 @@ package LogisticsUI;
 
 import datautils.io.CSVParser;
 import java.awt.CardLayout;
-import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ClassTemplates.Shipment;
 
@@ -23,6 +23,7 @@ public class FrontlineEmployee extends javax.swing.JFrame {
      */
     public FrontlineEmployee() {
         initComponents();
+        setIconImage(new ImageIcon("src/assets/truck.png").getImage());
     }
 
     /**
@@ -49,10 +50,9 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         ConfirmBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("DeliverIT | Dashboard");
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 800, 500));
-        setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
-        setPreferredSize(new java.awt.Dimension(800, 500));
 
         NullPanel.setBackground(new java.awt.Color(240, 245, 255));
         NullPanel.setLayout(null);
@@ -115,7 +115,7 @@ public class FrontlineEmployee extends javax.swing.JFrame {
                 .addComponent(UserGreetingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(ProcessShipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(163, 163, 163)
+                .addGap(169, 169, 169)
                 .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -162,13 +162,13 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         PaidShipmentsTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
         PaidShipmentsTable.setSelectionForeground(new java.awt.Color(255, 255, 255));
         PaidShipmentsTable.setShowGrid(true);
-        PaidShipmentsTable.setShowHorizontalLines(true);
         PaidShipmentsTable.getTableHeader().setResizingAllowed(false);
         PaidShipmentsTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(PaidShipmentsTable);
         PaidShipmentsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         ConfirmBtn.setBackground(new java.awt.Color(73, 204, 112));
+        ConfirmBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         ConfirmBtn.setForeground(new java.awt.Color(255, 255, 255));
         ConfirmBtn.setText("<html>\n  <body style=\"font-family: Inter; font-weight: bold; text-align: center;\">\n    Confirm\n  </body>\n</html>\n");
         ConfirmBtn.setBorderPainted(false);
@@ -202,9 +202,9 @@ public class FrontlineEmployee extends javax.swing.JFrame {
                 .addComponent(HeaderLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ConfirmBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
 
         ProcessShipmentPanel.add(NestedPanel, "card2");
@@ -229,7 +229,6 @@ public class FrontlineEmployee extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ProcessShipmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProcessShipmentBtnActionPerformed
-        // TODO add your handling code here:
         ProcessShipmentBtn.setOpaque(true);
         ProcessShipmentBtn.setBackground(java.awt.Color.decode("#509BE5"));
         CardLayout card = (CardLayout)MainPanel.getLayout();
@@ -240,27 +239,21 @@ public class FrontlineEmployee extends javax.swing.JFrame {
 
 
     private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_LogoutActionPerformed
 
     private void ConfirmBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmBtnActionPerformed
-        // TODO add your handling code here:
-        Shipment sh = new Shipment(0, null, null);
         int selectedRow = PaidShipmentsTable.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(null, "Please select a shipment to confirm.", "No Selection", JOptionPane.WARNING_MESSAGE);
+            showMessage("Please select a shipment to confirm.", "No Selection", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
+    
         int shipmentId = Integer.parseInt(PaidShipmentsTable.getValueAt(selectedRow, 0).toString());
-
-        int confirm = JOptionPane.showConfirmDialog(null, "Confirm shipment ID " + shipmentId + "?", "Confirm Shipment", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipmentId, "true", 6, sh.getShipmentHeader()); // Update confirmed status
-            CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipmentId, "Pending", 7, sh.getShipmentHeader()); // Update status to "Pending"
-
-            JOptionPane.showMessageDialog(null, "Shipment ID " + shipmentId + " confirmed successfully.", "Confirmation Successful", JOptionPane.INFORMATION_MESSAGE);
+    
+        if (confirmAction("Confirm shipment ID " + shipmentId + "?", "Confirm Shipment")) {
+            updateShipmentConfirmation(shipmentId);
+            showMessage("Shipment ID " + shipmentId + " confirmed successfully.", "Confirmation Successful", JOptionPane.INFORMATION_MESSAGE);
             loadShipmentData(); // Refresh the table
         }
     }//GEN-LAST:event_ConfirmBtnActionPerformed
@@ -268,35 +261,64 @@ public class FrontlineEmployee extends javax.swing.JFrame {
     private void loadShipmentData() {
         String[][] shipmentData = CSVParser.loadCSVData("src/CSVFiles/shipments.csv");
         if (shipmentData == null || shipmentData.length == 0) {
-            javax.swing.JOptionPane.showMessageDialog(
-                this,
-                "No data loaded from the CSV file.",
-                "Data Load Error",
-                javax.swing.JOptionPane.WARNING_MESSAGE
-            );
+            showMessage("No data loaded from the CSV file.", "Data Load Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        // Clear table before adding new data
-        DefaultTableModel model = (DefaultTableModel) PaidShipmentsTable.getModel();
-        model.setRowCount(0);
+    
+        Shipment[] shipments = createShipments(shipmentData);
+        populatePaidShipmentsTable(shipments);
+    }
 
-        for (String[] row : shipmentData) {
+    private boolean confirmAction(String message, String title) {
+        int confirm = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+        return confirm == JOptionPane.YES_OPTION;
+    }
+
+    private void updateShipmentConfirmation(int shipmentId) {
+        Shipment sh = new Shipment(0, null, null); // For Shipment Header Access Only
+        CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipmentId, "true", 6, sh.getShipmentHeader()); // Confirmed status
+        CSVParser.updateCSV("src/CSVFiles/shipments.csv", shipmentId, "Pending", 7, sh.getShipmentHeader()); // Status to "Pending"
+    }
+
+    private Shipment[] createShipments(String[][] shipmentData) {
+        Shipment[] shipments = new Shipment[shipmentData.length];
+        for (int i = 0; i < shipmentData.length; i++) {
+            shipments[i] = Shipment.toShipment(shipmentData, i, null); // Pass null for package
+        }
+        return shipments;
+    }
+
+    private void populatePaidShipmentsTable(Shipment[] shipments) {
+        DefaultTableModel model = (DefaultTableModel) PaidShipmentsTable.getModel();
+        model.setRowCount(0); // Clear existing rows
+    
+        for (Shipment shipment : shipments) {
             try {
-                if (row[7].equalsIgnoreCase("Paid")) { 
-                    model.addRow(new Object[]{row[0], row[1], row[7]});
+                if (shipment.getStatus().equalsIgnoreCase("Paid")) {
+                    model.addRow(new Object[]{
+                        shipment.getShipmentID(),
+                        shipment.getDestination(),
+                        shipment.getStatus()
+                    });
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {
-                javax.swing.JOptionPane.showMessageDialog(
-                    this,
-                    "Row does not have enough columns: " + Arrays.toString(row),
-                    "Row Data Error",
-                    javax.swing.JOptionPane.ERROR_MESSAGE
-                );
+            } catch (Exception e) {
+                handleShipmentError(shipment, e);
             }
         }
+    
         PaidShipmentsTable.revalidate();
         PaidShipmentsTable.repaint();
     }
+
+    private void handleShipmentError(Shipment shipment, Exception e) {
+        System.err.println("Error processing shipment: " + shipment + ". Exception: " + e.getMessage());
+        showMessage("Error processing shipment: " + shipment.getShipmentID(), "Shipment Data Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void showMessage(String message, String title, int messageType) {
+        JOptionPane.showMessageDialog(this, message, title, messageType);
+    }
+        
     /**
      * @param args the command line arguments
      */

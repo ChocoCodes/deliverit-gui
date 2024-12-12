@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.9" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="DeliverIT | Dashboard"/>
@@ -59,9 +59,6 @@
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[200, 500]"/>
             </Property>
-            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[200, 500]"/>
-            </Property>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -72,18 +69,24 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="33" pref="33" max="-2" attributes="0"/>
                       <Component id="Logout" min="-2" pref="137" max="-2" attributes="0"/>
                       <EmptySpace min="36" max="32767" attributes="0"/>
                   </Group>
                   <Component id="UserGreetingsLabel" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="AssignVehicleBtn" max="32767" attributes="0"/>
-                          <Component id="DeliverPackageBtn" min="-2" pref="200" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="LoadPackagesBtn" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="DropOffBtn" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="ManageVehiclesBtn" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -93,10 +96,12 @@
                       <EmptySpace min="60" pref="60" max="-2" attributes="0"/>
                       <Component id="UserGreetingsLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="AssignVehicleBtn" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                      <Component id="DeliverPackageBtn" min="-2" pref="80" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="LoadPackagesBtn" min="-2" pref="80" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="DropOffBtn" min="-2" pref="80" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="ManageVehiclesBtn" min="-2" pref="80" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="Logout" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -112,7 +117,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;span style=&apos;font-family:Inter; font-weight:bold;&apos;&gt;Hello, &lt;/span&gt;&lt;span style=&apos;font-family:Inter; font-weight:50;&apos;&gt;Driver&lt;/span&gt;&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;span style=&apos;font-family:Inter; font-weight:bold;&apos;&gt;Hello, &lt;/span&gt;&lt;span style=&apos;font-family:Inter; font-weight:50;&apos;&gt;Manager&lt;/span&gt;&lt;/html&gt;"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="Logout">
@@ -139,7 +144,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LogoutActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="DeliverPackageBtn">
+            <Component class="javax.swing.JButton" name="DropOffBtn">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ef" green="5c" red="46" type="rgb"/>
@@ -150,7 +155,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body style=&quot;font-family: Inter; font-weight: 10; text-align: center;&quot;&gt;Deliver&lt;br&gt;Package&lt;/body&gt;&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body style=&quot;font-family: Inter; font-weight: 10; text-align: center;&quot;&gt;Drop-Off&lt;br&gt;Vehicle Load&lt;/body&gt;&lt;/html&gt;"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="focusPainted" type="boolean" value="false"/>
@@ -158,10 +163,10 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DeliverPackageBtnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DropOffBtnActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="AssignVehicleBtn">
+            <Component class="javax.swing.JButton" name="LoadPackagesBtn">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ef" green="5c" red="46" type="rgb"/>
@@ -172,7 +177,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body style=&quot;font-family: Inter; font-weight: 10; text-align: center;&quot;&gt;Re-assign&lt;br&gt;Vehicle&lt;/body&gt;&lt;/html&gt;"/>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body style=&quot;font-family: Inter; font-weight: 10; text-align: center;&quot;&gt;Load Packages&lt;br&gt;by Destination&lt;/body&gt;&lt;/html&gt;"/>
                 <Property name="borderPainted" type="boolean" value="false"/>
                 <Property name="contentAreaFilled" type="boolean" value="false"/>
                 <Property name="focusPainted" type="boolean" value="false"/>
@@ -180,7 +185,29 @@
                 <Property name="horizontalTextPosition" type="int" value="0"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AssignVehicleBtnActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LoadPackagesBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="ManageVehiclesBtn">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ef" green="5c" red="46" type="rgb"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="20" style="0"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body style=&quot;font-family: Inter; font-weight: 10; text-align: center;&quot;&gt;Manage&lt;br&gt;Vehicles&lt;/body&gt;&lt;/html&gt;"/>
+                <Property name="borderPainted" type="boolean" value="false"/>
+                <Property name="contentAreaFilled" type="boolean" value="false"/>
+                <Property name="focusPainted" type="boolean" value="false"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ManageVehiclesBtnActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -213,7 +240,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
             </Container>
-            <Container class="javax.swing.JPanel" name="AssignVehiclesPanel">
+            <Container class="javax.swing.JPanel" name="LoadPackagesPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="f5" red="f0" type="rgb"/>
@@ -221,7 +248,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="AssignVehiclesPanel"/>
+                  <CardConstraints cardName="LoadPackagesPanel"/>
                 </Constraint>
               </Constraints>
 
@@ -245,10 +272,23 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="ConfirmBtn" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
+                                  <Component id="ConfirmForLoadPackagesBtn" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
                                   <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                       <Component id="HeaderLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane1" alignment="0" min="-2" pref="536" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="jScrollPane1" alignment="0" min="-2" pref="536" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="DestinationTxtField" max="32767" attributes="0"/>
+                                                  <Component id="DestinationLabel" pref="197" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace max="32767" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="VehicleTypeLabel" pref="197" max="32767" attributes="0"/>
+                                                  <Component id="VehicleTypeComboBox" max="32767" attributes="0"/>
+                                              </Group>
+                                          </Group>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace pref="37" max="32767" attributes="0"/>
@@ -260,11 +300,21 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                               <Component id="HeaderLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="DestinationLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="VehicleTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="DestinationTxtField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="VehicleTypeComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" pref="226" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" min="-2" pref="306" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="ConfirmBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="67" max="32767" attributes="0"/>
+                              <Component id="ConfirmForLoadPackagesBtn" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="65" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -278,7 +328,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="0" green="0" red="0" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;span style=&apos;font-family: Inter; font-weight: bold;&apos;&gt;Available Vehicle(s)&lt;/span&gt;&lt;/html&gt;"/>
+                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;span style=&apos;font-family: Inter; font-weight: bold;&apos;&gt;Load Packages to Vehicle&lt;/span&gt;&lt;/html&gt;"/>
                       </Properties>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -288,7 +338,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="AvailableVehiclesTable">
+                        <Component class="javax.swing.JTable" name="VehiclesForLoadingTable">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -324,7 +374,7 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JButton" name="ConfirmBtn">
+                    <Component class="javax.swing.JButton" name="ConfirmForLoadPackagesBtn">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="70" green="cc" red="49" type="rgb"/>
@@ -343,14 +393,77 @@
                         <Property name="rolloverEnabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConfirmBtnActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConfirmForLoadPackagesBtnActionPerformed"/>
                       </Events>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="DestinationTxtField">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        </Property>
+                        <Property name="caretColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="DestinationTxtFieldKeyReleased"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="DestinationLabel">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body style=&quot;font-family: Inter; font-weight: 10; text-align: center;&quot;&gt;Sort by Destination&lt;/body&gt;&lt;/html&gt;"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="VehicleTypeLabel">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body style=&quot;font-family: Inter; font-weight: 10; text-align: center;&quot;&gt;Vehicle Type&lt;/body&gt;&lt;/html&gt;"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="VehicleTypeComboBox">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        </Property>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="2">
+                            <StringItem index="0" value="Van"/>
+                            <StringItem index="1" value="Truck"/>
+                          </StringArray>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="VehicleTypeComboBoxActionPerformed"/>
+                      </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="DeliverPackagePanel">
+            <Container class="javax.swing.JPanel" name="DropOffPanel">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="f5" red="f0" type="rgb"/>
@@ -358,7 +471,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="DeliverPackagePanel"/>
+                  <CardConstraints cardName="DropOffPanel"/>
                 </Constraint>
               </Constraints>
 
@@ -382,7 +495,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="ConfirmBtn2" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
+                                  <Component id="ConfirmForDropOffBtn" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
                                   <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                       <Component id="HeaderLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Component id="jScrollPane2" alignment="0" min="-2" pref="536" max="-2" attributes="0"/>
@@ -400,7 +513,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jScrollPane2" min="-2" pref="306" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="ConfirmBtn2" min="-2" max="-2" attributes="0"/>
+                              <Component id="ConfirmForDropOffBtn" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="67" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -415,7 +528,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="0" green="0" red="0" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;span style=&apos;font-family: Inter; font-weight: bold;&apos;&gt;Shipment(s) Stored in Vehicle&lt;/span&gt;&lt;/html&gt;"/>
+                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;span style=&apos;font-family: Inter; font-weight: bold;&apos;&gt;Available Vehicles for Drop-Off&lt;/span&gt;&lt;/html&gt;"/>
                       </Properties>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -425,7 +538,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JTable" name="ShipmentListTable">
+                        <Component class="javax.swing.JTable" name="VehiclesForDropOffTable">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -434,10 +547,12 @@
                               <Color blue="0" green="0" red="0" type="rgb"/>
                             </Property>
                             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                              <Table columnCount="3" rowCount="0">
-                                <Column editable="true" title="Shipment No." type="java.lang.Integer"/>
+                              <Table columnCount="5" rowCount="0">
                                 <Column editable="true" title="ID" type="java.lang.Integer"/>
-                                <Column editable="true" title="Status" type="java.lang.String"/>
+                                <Column editable="true" title="Type" type="java.lang.String"/>
+                                <Column editable="true" title="Warehouse ID" type="java.lang.Integer"/>
+                                <Column editable="true" title="License Plate" type="java.lang.String"/>
+                                <Column editable="true" title="Current Shipments" type="java.lang.Integer"/>
                               </Table>
                             </Property>
                             <Property name="cellSelectionEnabled" type="boolean" value="true"/>
@@ -459,7 +574,7 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JButton" name="ConfirmBtn2">
+                    <Component class="javax.swing.JButton" name="ConfirmForDropOffBtn">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="70" green="cc" red="49" type="rgb"/>
@@ -478,8 +593,184 @@
                         <Property name="rolloverEnabled" type="boolean" value="false"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConfirmBtn2ActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConfirmForDropOffBtnActionPerformed"/>
                       </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="ManageVehiclesPanel">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="f5" red="f0" type="rgb"/>
+                </Property>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                  <CardConstraints cardName="ManageVehiclesPanel"/>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
+              <SubComponents>
+                <Container class="javax.swing.JPanel" name="NestedPanel3">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
+                      <CardConstraints cardName="card2"/>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="ConfirmForManageVehiclesBtn" alignment="1" min="-2" pref="103" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                      <Component id="HeaderLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jScrollPane4" alignment="0" min="-2" pref="536" max="-2" attributes="0"/>
+                                      <Component id="VehicleActionLabel" alignment="0" min="-2" pref="197" max="-2" attributes="0"/>
+                                      <Component id="VehicleActionComboBox" alignment="0" min="-2" pref="197" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="37" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                              <Component id="HeaderLabel3" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <Component id="VehicleActionLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="VehicleActionComboBox" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                              <Component id="jScrollPane4" min="-2" pref="226" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="ConfirmForManageVehiclesBtn" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="65" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="HeaderLabel3">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="24" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;span style=&apos;font-family: Inter; font-weight: bold;&apos;&gt;Load Packages to Vehicle&lt;/span&gt;&lt;/html&gt;"/>
+                      </Properties>
+                    </Component>
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane4">
+                      <AuxValues>
+                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                      </AuxValues>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <SubComponents>
+                        <Component class="javax.swing.JTable" name="VehicleActionTable">
+                          <Properties>
+                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                            </Property>
+                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="0" green="0" red="0" type="rgb"/>
+                            </Property>
+                            <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                              <Table columnCount="5" rowCount="0">
+                                <Column editable="true" title="Vehicle ID" type="java.lang.Integer"/>
+                                <Column editable="true" title="Type" type="java.lang.String"/>
+                                <Column editable="true" title="Warehouse ID" type="java.lang.Integer"/>
+                                <Column editable="true" title="License Plate" type="java.lang.String"/>
+                                <Column editable="true" title="Current Shipments" type="java.lang.Integer"/>
+                              </Table>
+                            </Property>
+                            <Property name="cellSelectionEnabled" type="boolean" value="true"/>
+                            <Property name="focusable" type="boolean" value="false"/>
+                            <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                            </Property>
+                            <Property name="selectionBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="cc" green="cc" red="cc" type="rgb"/>
+                            </Property>
+                            <Property name="selectionForeground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                            </Property>
+                            <Property name="showGrid" type="boolean" value="true"/>
+                            <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
+                              <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Component class="javax.swing.JButton" name="ConfirmForManageVehiclesBtn">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="70" green="cc" red="49" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;  &lt;body style=&quot;font-family: Inter; font-weight: bold; text-align: center;&quot;&gt;&#xa;    Confirm&#xa;  &lt;/body&gt;&#xa;&lt;/html&gt;&#xa;"/>
+                        <Property name="borderPainted" type="boolean" value="false"/>
+                        <Property name="focusPainted" type="boolean" value="false"/>
+                        <Property name="focusable" type="boolean" value="false"/>
+                        <Property name="requestFocusEnabled" type="boolean" value="false"/>
+                        <Property name="rolloverEnabled" type="boolean" value="false"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ConfirmForManageVehiclesBtnActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="VehicleActionLabel">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body style=&quot;font-family: Inter; font-weight: 10; text-align: center;&quot;&gt;Select Vehicle Action&lt;/body&gt;&lt;/html&gt;"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="VehicleActionComboBox">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        </Property>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="2">
+                            <StringItem index="0" value="Vehicle Arriving"/>
+                            <StringItem index="1" value="Vehicle Leaving"/>
+                          </StringArray>
+                        </Property>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="VehicleActionComboBoxActionPerformed"/>
+                      </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
