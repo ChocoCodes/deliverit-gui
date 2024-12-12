@@ -1,25 +1,30 @@
 package LogisticsUI;
+
 import ClassTemplates.*;
+import ClassTemplates.Package;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import datautils.io.*;
 import javax.swing.table.DefaultTableModel;
-import java.util.ArrayList;
 import javax.swing.JTextField;
+import javax.swing.JTable;
+import javax.swing.JPanel;
 
 public class CustomerDashboard extends javax.swing.JFrame {
+    private static DefaultTableModel itemTblModel = new DefaultTableModel(new String[] {"Name", "Weight(grams)", "Height(cm)", "Width(cm)", "Length(cm)"}, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) { return false; }
+    };
     private Customer customerLoggedIn;
     private Shipment[] customerShipments;
-    private DefaultTableModel shipmentModel;
     
     public CustomerDashboard(Customer customerLoggedIn) {
         this.customerLoggedIn = customerLoggedIn;
         this.customerShipments = CSVParser.searchShipments(customerLoggedIn.getCustomerID());
         initComponents();
-        this.shipmentModel = new DefaultTableModel(new String[]{"Shipment ID", "Destination", "Status", "Ship Take-Off", "ETA Delivery"}, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) { return false; }
-        };
+        // Pre-set the table models for item table
+        itemTbl.setModel(itemTblModel);
+        setTableModel(new String[]{"Shipment ID", "Destination", "Status", "Ship Take-Off", "ETA Delivery"}, shipmentHistTbl);
         populateShipmentTbl();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         setLocationRelativeTo(null);
@@ -28,16 +33,16 @@ public class CustomerDashboard extends javax.swing.JFrame {
     }
     
     private void populateShipmentTbl() {
+        DefaultTableModel currTblModel = (DefaultTableModel) shipmentHistTbl.getModel();
         // No shipments found for the customer
         if(this.customerShipments.length == 0) {
             new DialogBoxUI(this, "You don't have any shipments. Send a package first.", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        shipmentHistTbl.setModel(shipmentModel);
-        shipmentModel.setRowCount(0);
+        currTblModel.setRowCount(0);
         // Populate Shipment Table
         for(Shipment shipment : customerShipments) {
-            shipmentModel.addRow(
+            currTblModel.addRow(
                 new Object[] {
                     shipment.getShipmentID(),
                     shipment.getDestination(),
@@ -49,13 +54,16 @@ public class CustomerDashboard extends javax.swing.JFrame {
         }
     }
     
-    public static void addItemToTbl(Object[] item) {
-        DefaultTableModel model = new DefaultTableModel(new String[]{"Name", "Weight(grams)", "Length(cm)", "Width(cm)", "Height(cm)"}, 0) {
+    private void setTableModel(String[] columnHeaders, JTable tbl) {
+        DefaultTableModel model = new DefaultTableModel(columnHeaders, 0) {
             @Override
             public boolean isCellEditable(int row, int column) { return false; }
         };
-        itemTbl.setModel(model);
-        model.addRow(item);
+        tbl.setModel(model);     
+    }
+    
+    public static void addItemToTbl(Object[] item) {
+        itemTblModel.addRow(item);
     }
     
     @SuppressWarnings("unchecked")
@@ -266,7 +274,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Weight (cm)", "Length (cm)", "Width (cm)", "Height (cm)"
+                "Name", "Weight (cm)", "Height (cm)", "Width (cm)", "Length (cm)"
             }
         ));
         itemTbl.setFocusable(false);
@@ -284,6 +292,11 @@ public class CustomerDashboard extends javax.swing.JFrame {
         processPkgBtn.setText("Send");
         processPkgBtn.setBorderPainted(false);
         processPkgBtn.setFocusPainted(false);
+        processPkgBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                processPkgBtnActionPerformed(evt);
+            }
+        });
 
         addItemBtn.setBackground(new java.awt.Color(73, 204, 112));
         addItemBtn.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
@@ -496,33 +509,30 @@ public class CustomerDashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sendPkgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendPkgBtnActionPerformed
-        parentCardPanel.removeAll();
-        parentCardPanel.add(sendPackagePanel);
-        parentCardPanel.repaint();
-        parentCardPanel.revalidate();
+        changePanel(sendPackagePanel);
     }//GEN-LAST:event_sendPkgBtnActionPerformed
 
     private void acctBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acctBtnActionPerformed
-        parentCardPanel.removeAll();
-        parentCardPanel.add(accountsPanel);
-        parentCardPanel.repaint();
-        parentCardPanel.revalidate();
-        
+        changePanel(accountsPanel);
         nameFld.setText(customerLoggedIn.getName());
         phoneFld.setText(customerLoggedIn.getContactInfo());
         addrFld.setText(customerLoggedIn.getAddress());
     }//GEN-LAST:event_acctBtnActionPerformed
 
     private void shipmentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shipmentBtnActionPerformed
-        parentCardPanel.removeAll();
-        parentCardPanel.add(shipmentsPanel);
-        parentCardPanel.repaint();
-        parentCardPanel.revalidate();
+        changePanel(shipmentsPanel);
         // Refresh the table to cater changes
         this.customerShipments = CSVParser.searchShipments(customerLoggedIn.getCustomerID());
         populateShipmentTbl();
     }//GEN-LAST:event_shipmentBtnActionPerformed
 
+    private void changePanel(JPanel panel) {
+        parentCardPanel.removeAll();
+        parentCardPanel.add(panel);
+        parentCardPanel.repaint();
+        parentCardPanel.revalidate();
+    }
+    
     private void signOutBtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signOutBtn1ActionPerformed
         int option = JOptionPane.showConfirmDialog(this, "Are you sure?", "Confirm Sign-out", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(option == JOptionPane.YES_OPTION) {
@@ -553,13 +563,20 @@ public class CustomerDashboard extends javax.swing.JFrame {
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // Extract and validate text field inputs
         String name = nameFld.getText(), phone = phoneFld.getText(), addr = addrFld.getText();
+        // Case 1 - empty fields
         if(DataIOParser.areEmptyFields(new String[] {name, phone, addr})) {
             new DialogBoxUI(this, "Field/s are empty. Please double check your entries.", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        // Check for duplicates first
-        if(CSVParser.searchCustomer(name)) {
-            new DialogBoxUI(this, "ATTEMPT ERROR: Customer name is already registered at our system.", JOptionPane.ERROR_MESSAGE);
+        // Case 2 - duplicate names: name field is different than the customer name field
+        if(!customerLoggedIn.getName().equals(name) && CSVParser.searchCustomer(name)) {
+            new DialogBoxUI(this, "ATTEMPT ERROR 1: Customer name entered is already registered at our system.", JOptionPane.ERROR_MESSAGE);
+            resetFields();
+            return;
+        }
+        // Case 3 - duplicate phone numbers: phone field is different than the customer phone field
+        if(!customerLoggedIn.getContactInfo().equals(phone) && CSVParser.searchCustomer(name)) {
+            new DialogBoxUI(this, "ATTEMPT ERROR 2: The phone number entered is already registered at our system.", JOptionPane.ERROR_MESSAGE);
             resetFields();
             return;
         }
@@ -567,13 +584,49 @@ public class CustomerDashboard extends javax.swing.JFrame {
         customerLoggedIn.setName(name);
         customerLoggedIn.setContactInfo(phone);
         customerLoggedIn.setAddress(addr);
-        // Save new info in the Customer CSV
-        CSVParser.saveEntry(customerLoggedIn.toCSVFormat(), "src/CSVFiles/customers.csv");
+        // Save updated info in the Customer CSV
+        CSVParser.updateCSV("src/CSVFiles/customers.csv", customerLoggedIn.getCustomerID(), customerLoggedIn, customerLoggedIn.getCustomerHeader());
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
         new ItemForm();
     }//GEN-LAST:event_addItemBtnActionPerformed
+
+    private void processPkgBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processPkgBtnActionPerformed
+        String receiverAddr = rAddrFld.getText();
+        // Case 1 - receiver address is empty
+        if(DataIOParser.checkInput(receiverAddr)) {
+            new DialogBoxUI(this, "Receiver Address is empty.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Case 2 - no item found in the table
+        if(itemTbl.getRowCount() == 0) {
+            new DialogBoxUI(this, "No items found in the package. Add items first.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        // Get table data
+        String[][] itemDataRaw = extractItemTable();
+        System.out.println(itemDataRaw[0].length); // DB
+        Item[] items = Item.toItem(itemDataRaw);
+        System.out.println(items.length); // DB
+        Package pkg = new Package(CSVParser.getLatestID("src/CSVFiles/packages.csv") + 1, items, receiverAddr);
+        Shipment shipment = new Shipment(CSVParser.getLatestID("src/CSVFiles/shipments.csv") + 1, receiverAddr, pkg);
+        shipment.calcShipCost();
+        // Create checkout form
+        new ShipmentForm(shipment);
+    }//GEN-LAST:event_processPkgBtnActionPerformed
+
+    private String[][] extractItemTable() {
+        DefaultTableModel model = (DefaultTableModel) itemTbl.getModel();
+        int rows = model.getRowCount(), cols = model.getColumnCount();
+        String[][] data = new String[rows][cols];
+        for(int i = 0; i < rows; i++) {
+            for(int j = 0; j < cols; j++) {
+                data[i][j] = model.getValueAt(i, j).toString();
+            }
+        }
+        return data;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel accountsPanel;

@@ -409,9 +409,9 @@
                           <Table columnCount="5" rowCount="0">
                             <Column editable="true" title="Name" type="java.lang.Object"/>
                             <Column editable="true" title="Weight (cm)" type="java.lang.Object"/>
-                            <Column editable="true" title="Length (cm)" type="java.lang.Object"/>
-                            <Column editable="true" title="Width (cm)" type="java.lang.Object"/>
                             <Column editable="true" title="Height (cm)" type="java.lang.Object"/>
+                            <Column editable="true" title="Width (cm)" type="java.lang.Object"/>
+                            <Column editable="true" title="Length (cm)" type="java.lang.Object"/>
                           </Table>
                         </Property>
                         <Property name="focusable" type="boolean" value="false"/>
@@ -451,6 +451,9 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                     <Property name="focusPainted" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="processPkgBtnActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="addItemBtn">
                   <Properties>

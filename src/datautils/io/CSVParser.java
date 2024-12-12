@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import ClassTemplates.*;
+import ClassTemplates.Package;
+import ClassTemplates.Shipment;
+import ClassTemplates.Customer;
+import ClassTemplates.Item;
 import java.io.PrintWriter;
 import java.io.IOException;
 
@@ -84,11 +87,14 @@ public class CSVParser {
         return rawCSV.length == 0 ? 0 : Integer.parseInt(rawCSV[rawCSV.length - 1][0]);
     }
 
-    public static void updateCSV(String file, int id, String newEntry, int columnIndex, String[] headers) {
+    // Tweak to update customer data based on the customer object set
+    public static void updateCSV(String file, int id, Customer customer, String[] headers) {
         String[][] csvData = loadCSVData(file);
         for (int i = 0; i < csvData.length; i++) {
             if (Integer.parseInt(csvData[i][0]) == id) {
-                csvData[i][columnIndex] = newEntry;
+                csvData[i][1] = customer.getName();
+                csvData[i][2] = customer.getContactInfo();
+                csvData[i][3] = customer.getAddress();
                 break;
             }
         }
