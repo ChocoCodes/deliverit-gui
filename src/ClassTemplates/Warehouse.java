@@ -72,7 +72,7 @@ public class Warehouse {
     // Remove a Shipment from the warehouse (e.g., being loaded to the vehicle)
     public boolean removeShipment(Shipment shp) {
         for (int i = 0; i < currShipCount; i++) {
-            if (shipments[i] != null && shipments[i].equals(shp)) {
+            if (shipments[i] != null && shipments[i].getShipmentID() == shp.getShipmentID()) {
                 for (int j = i; j < currShipCount - 1; j++) {
                     shipments[j] = shipments[j + 1];
                 }

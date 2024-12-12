@@ -9,6 +9,7 @@ import java.awt.CardLayout;
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ClassTemplates.Shipment;
 import ClassTemplates.Vehicle;
@@ -28,6 +29,7 @@ public class Driver extends javax.swing.JFrame {
      */
     public Driver() {
         initComponents();
+        setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         askForDriverName();
     }
 
@@ -52,7 +54,6 @@ public class Driver extends javax.swing.JFrame {
         Vehicle vh[] = Vehicle.toVehicle(vehicleData);
         for (Vehicle vehicle : vh) {
             if (driverName.equalsIgnoreCase(vehicle.getDriver())) {
-                // Assign the vehicle to the driver
                 vehicle.setDriver(driverName);
                 currentVehicle = vehicle;
                 JOptionPane.showMessageDialog(this, "Vehicle assigned successfully!", "Vehicle Assignment", JOptionPane.INFORMATION_MESSAGE);
@@ -61,7 +62,6 @@ public class Driver extends javax.swing.JFrame {
             }
         }
         if (!isVehicleAssigned) {
-            // No vehicle available to assign
             JOptionPane.showMessageDialog(this, "No available vehicle found. Please Re-Assign Vehicle Manually.", "Vehicle Assignment Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -96,6 +96,7 @@ public class Driver extends javax.swing.JFrame {
         ConfirmBtn2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("DeliverIT | Dashboard");
         setPreferredSize(new java.awt.Dimension(800, 500));
 
         NullPanel.setBackground(new java.awt.Color(240, 245, 255));
