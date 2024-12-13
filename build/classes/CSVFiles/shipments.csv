@@ -11,3 +11,4 @@ id,pkgId,vId,wId,dest,shipCost,confirmed,status,shipDate,eta
 11,12,2,0,Bago City Torres St,450.0,true,Pending,10/13/2024,10/16/2024
 12,12,2,0,Bago City,300.0,true,Pending,10/16/2024,10/17/2024
 13,13,2,0,Bago City,300.0,true,Pending,10/17/2024,10/21/2024
+14,14,0,1,Mansilingan Bacolod City,200.0,false,Paid,Pending,Pending

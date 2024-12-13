@@ -1,8 +1,8 @@
 package ClassTemplates;
 
-public abstract class Employee {
-    public static final String DEFAULT_USER = "employee";
-    public static final String DEFAULT_PASS = "employee123";
+
+public class Employee {
+    private final String DEFAULT_PASS = "employee123";
 
     protected String name;
 
@@ -10,13 +10,11 @@ public abstract class Employee {
         this.name = name;
     }
 
-    public static boolean login(String inUser, String inPass) {
-        return DEFAULT_USER.equals(inUser) && DEFAULT_PASS.equals(inPass);
+    public boolean login(String pass) {
+        return DEFAULT_PASS.equals(pass);
     }
 
     public String getName() {
         return name;
     }
-
-    public abstract void showMenu();
 }

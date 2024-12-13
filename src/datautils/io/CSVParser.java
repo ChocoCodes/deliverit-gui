@@ -102,6 +102,20 @@ public class CSVParser {
         writeToCSV(csvData, headers, false, file); 
     }
 
+
+    // UpdateCSV base method
+    public static void updateCSV(String file, int id, String newAttribute, int columnIndex, String[] headers) {
+        String[][] csvData = loadCSVData(file);
+        for (int i = 0; i < csvData.length; i++) {
+            if (Integer.parseInt(csvData[i][0]) == id) {
+                csvData[i][columnIndex] = newAttribute;
+                break;
+            }
+        }
+        // Rewrite Customer CSV
+        writeToCSV(csvData, headers, false, file); 
+    }
+
     public static Package[] searchPackage(int custID) {
         ArrayList<Package> custPkg = new ArrayList<>();
         String[][] csvPkg = loadCSVData("src/CSVFiles/packages.csv");

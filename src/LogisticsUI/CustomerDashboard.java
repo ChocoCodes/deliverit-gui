@@ -612,8 +612,8 @@ public class CustomerDashboard extends javax.swing.JFrame {
         Package pkg = new Package(CSVParser.getLatestID("src/CSVFiles/packages.csv") + 1, items, receiverAddr);
         Shipment shipment = new Shipment(CSVParser.getLatestID("src/CSVFiles/shipments.csv") + 1, receiverAddr, pkg);
         shipment.calcShipCost();
-        // Create checkout form
-        new ShipmentForm(shipment);
+        // Show checkout form
+        new ShipmentForm(customerLoggedIn, shipment);
     }//GEN-LAST:event_processPkgBtnActionPerformed
 
     private String[][] extractItemTable() {

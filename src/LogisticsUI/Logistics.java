@@ -272,12 +272,23 @@ public class Logistics extends javax.swing.JFrame {
                     if(customer.getName().equals(user) && customer.getContactInfo().equals(pass)) {
                         new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
                         this.dispose();
-                        new CustomerDashboard(customer); // TODO:
+                        new CustomerDashboard(customer);
                         return true;
                     }
                 }
                 return false;
-            // Handle other roles in default
+            case "admin":
+                Admin admin = new Admin(user);
+                if(admin.login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    new AdminDashboard(admin);
+                    return true;
+                }
+            case "frontline":
+            case "warehouse": 
+            case "driver":
+                return new Employee(user).login(pass);
             default: 
                 return false; 
         }

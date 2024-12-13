@@ -5,12 +5,12 @@
         <group>
             <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/datautils/io/DataIOParser.java</file>
             <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/LogisticsUI/Logistics.java</file>
+            <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/CSVFiles/customers.csv</file>
             <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/datautils/io/CSVParser.java</file>
             <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/LogisticsUI/CustomerDashboard.java</file>
             <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/LogisticsUI/ItemForm.java</file>
             <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/ClassTemplates/Dimension.java</file>
             <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/LogisticsUI/ShipmentForm.java</file>
-            <file>file:/D:/FILES/USLS/CS2A%20-%20AY%2024-25/Logistics/src/LogisticsUI/DialogBoxUI.java</file>
         </group>
     </open-files>
 </project-private>
