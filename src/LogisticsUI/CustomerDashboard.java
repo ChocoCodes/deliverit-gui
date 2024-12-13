@@ -84,6 +84,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
         shipHdr = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         shipmentHistTbl = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
         sendPackagePanel = new javax.swing.JPanel();
         pkgHdr = new javax.swing.JLabel();
         itemTblScroll = new javax.swing.JScrollPane();
@@ -240,25 +241,31 @@ public class CustomerDashboard extends javax.swing.JFrame {
         shipmentHistTbl.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(shipmentHistTbl);
 
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel2.setText("*Take-Off and ETA Dates with 01-01-1970 are currently being processed.");
+
         javax.swing.GroupLayout shipmentsPanelLayout = new javax.swing.GroupLayout(shipmentsPanel);
         shipmentsPanel.setLayout(shipmentsPanelLayout);
         shipmentsPanelLayout.setHorizontalGroup(
             shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(shipmentsPanelLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(shipHdr, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
         shipmentsPanelLayout.setVerticalGroup(
             shipmentsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(shipmentsPanelLayout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                .addGap(40, 40, 40)
                 .addComponent(shipHdr)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(77, 77, 77))
         );
 
         parentCardPanel.add(shipmentsPanel, "card4");
@@ -614,6 +621,10 @@ public class CustomerDashboard extends javax.swing.JFrame {
         shipment.calcShipCost();
         // Show checkout form
         new ShipmentForm(customerLoggedIn, shipment);
+        // Reset fields after transaction
+        rAddrFld.setText("");
+        DefaultTableModel model = (DefaultTableModel) itemTbl.getModel();
+        model.setRowCount(0);
     }//GEN-LAST:event_processPkgBtnActionPerformed
 
     private String[][] extractItemTable() {
@@ -642,6 +653,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
     private static javax.swing.JTable itemTbl;
     private javax.swing.JScrollPane itemTblScroll;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel layoutPanel;
     private javax.swing.JToggleButton nameEditBtn;

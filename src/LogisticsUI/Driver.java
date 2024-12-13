@@ -31,6 +31,8 @@ public class Driver extends javax.swing.JFrame {
         initComponents();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         askForDriverName();
+        setResizable(false);
+        setVisible(true);
     }
 
     private void askForDriverName() {
@@ -203,11 +205,8 @@ public class Driver extends javax.swing.JFrame {
         NestedPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         HeaderLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        HeaderLabel.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel.setText("<html><span style='font-family: Inter; font-weight: bold;'>Available Vehicle(s)</span></html>");
 
-        AvailableVehiclesTable.setBackground(new java.awt.Color(255, 255, 255));
-        AvailableVehiclesTable.setForeground(new java.awt.Color(0, 0, 0));
         AvailableVehiclesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -284,11 +283,8 @@ public class Driver extends javax.swing.JFrame {
         NestedPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         HeaderLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        HeaderLabel1.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel1.setText("<html><span style='font-family: Inter; font-weight: bold;'>Shipment(s) Stored in Vehicle</span></html>");
 
-        ShipmentListTable.setBackground(new java.awt.Color(255, 255, 255));
-        ShipmentListTable.setForeground(new java.awt.Color(0, 0, 0));
         ShipmentListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

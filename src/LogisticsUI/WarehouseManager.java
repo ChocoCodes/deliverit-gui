@@ -26,6 +26,8 @@ public class WarehouseManager extends javax.swing.JFrame {
         initComponents();
         assignWarehouseWithDialog();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
+        setResizable(false);
+        setVisible(true);
     }
 
     private void assignWarehouseWithDialog() {
@@ -188,7 +190,6 @@ public class WarehouseManager extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(800, 500));
 
         NullPanel.setBackground(new java.awt.Color(240, 245, 255));
-        NullPanel.setLayout(null);
 
         SidebarPanel.setBackground(new java.awt.Color(70, 92, 239));
         SidebarPanel.setMaximumSize(new java.awt.Dimension(200, 500));
@@ -265,25 +266,19 @@ public class WarehouseManager extends javax.swing.JFrame {
         SidebarPanel.setLayout(SidebarPanelLayout);
         SidebarPanelLayout.setHorizontalGroup(
             SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(UserGreetingsLabel)
+            .addComponent(LoadPackagesBtn)
             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LoadPackagesBtn)
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
-                        .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(DropOffBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ManageVehiclesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(35, 35, 35)
+                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
+            .addComponent(DropOffBtn)
+            .addComponent(ManageVehiclesBtn)
         );
         SidebarPanelLayout.setVerticalGroup(
             SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGap(60, 60, 60)
+                .addGap(31, 31, 31)
                 .addComponent(UserGreetingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(LoadPackagesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -292,11 +287,9 @@ public class WarehouseManager extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(ManageVehiclesBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        NullPanel.add(SidebarPanel);
-        SidebarPanel.setBounds(0, 0, 200, 500);
 
         MainPanel.setBackground(new java.awt.Color(240, 245, 255));
         MainPanel.setLayout(new java.awt.CardLayout());
@@ -311,11 +304,8 @@ public class WarehouseManager extends javax.swing.JFrame {
         NestedPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         HeaderLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        HeaderLabel.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel.setText("<html><span style='font-family: Inter; font-weight: bold;'>Load Packages to Vehicle</span></html>");
 
-        VehiclesForLoadingTable.setBackground(new java.awt.Color(255, 255, 255));
-        VehiclesForLoadingTable.setForeground(new java.awt.Color(0, 0, 0));
         VehiclesForLoadingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -357,8 +347,6 @@ public class WarehouseManager extends javax.swing.JFrame {
             }
         });
 
-        DestinationTxtField.setBackground(new java.awt.Color(255, 255, 255));
-        DestinationTxtField.setForeground(new java.awt.Color(0, 0, 0));
         DestinationTxtField.setCaretColor(new java.awt.Color(255, 255, 255));
         DestinationTxtField.setDisabledTextColor(new java.awt.Color(255, 255, 255));
         DestinationTxtField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -368,15 +356,11 @@ public class WarehouseManager extends javax.swing.JFrame {
         });
 
         DestinationLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        DestinationLabel.setForeground(new java.awt.Color(0, 0, 0));
         DestinationLabel.setText("<html><body style=\"font-family: Inter; font-weight: 10; text-align: center;\">Sort by Destination</body></html>");
 
         VehicleTypeLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        VehicleTypeLabel.setForeground(new java.awt.Color(0, 0, 0));
         VehicleTypeLabel.setText("<html><body style=\"font-family: Inter; font-weight: 10; text-align: center;\">Vehicle Type</body></html>");
 
-        VehicleTypeComboBox.setBackground(new java.awt.Color(255, 255, 255));
-        VehicleTypeComboBox.setForeground(new java.awt.Color(0, 0, 0));
         VehicleTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Van", "Truck" }));
         VehicleTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -436,11 +420,8 @@ public class WarehouseManager extends javax.swing.JFrame {
         NestedPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         HeaderLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        HeaderLabel1.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel1.setText("<html><span style='font-family: Inter; font-weight: bold;'>Available Vehicles for Drop-Off</span></html>");
 
-        VehiclesForDropOffTable.setBackground(new java.awt.Color(255, 255, 255));
-        VehiclesForDropOffTable.setForeground(new java.awt.Color(0, 0, 0));
         VehiclesForDropOffTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -517,11 +498,8 @@ public class WarehouseManager extends javax.swing.JFrame {
         NestedPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         HeaderLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        HeaderLabel3.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel3.setText("<html><span style='font-family: Inter; font-weight: bold;'>Load Packages to Vehicle</span></html>");
 
-        VehicleActionTable.setBackground(new java.awt.Color(255, 255, 255));
-        VehicleActionTable.setForeground(new java.awt.Color(0, 0, 0));
         VehicleActionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -564,11 +542,8 @@ public class WarehouseManager extends javax.swing.JFrame {
         });
 
         VehicleActionLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        VehicleActionLabel.setForeground(new java.awt.Color(0, 0, 0));
         VehicleActionLabel.setText("<html><body style=\"font-family: Inter; font-weight: 10; text-align: center;\">Select Vehicle Action</body></html>");
 
-        VehicleActionComboBox.setBackground(new java.awt.Color(255, 255, 255));
-        VehicleActionComboBox.setForeground(new java.awt.Color(0, 0, 0));
         VehicleActionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vehicle Arriving", "Vehicle Leaving" }));
         VehicleActionComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -611,8 +586,22 @@ public class WarehouseManager extends javax.swing.JFrame {
 
         MainPanel.add(ManageVehiclesPanel, "ManageVehiclesPanel");
 
-        NullPanel.add(MainPanel);
-        MainPanel.setBounds(200, 0, 600, 500);
+        javax.swing.GroupLayout NullPanelLayout = new javax.swing.GroupLayout(NullPanel);
+        NullPanel.setLayout(NullPanelLayout);
+        NullPanelLayout.setHorizontalGroup(
+            NullPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NullPanelLayout.createSequentialGroup()
+                .addComponent(SidebarPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        NullPanelLayout.setVerticalGroup(
+            NullPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NullPanelLayout.createSequentialGroup()
+                .addComponent(MainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(SidebarPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

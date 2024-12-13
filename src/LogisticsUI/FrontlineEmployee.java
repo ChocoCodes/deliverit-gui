@@ -24,6 +24,8 @@ public class FrontlineEmployee extends javax.swing.JFrame {
     public FrontlineEmployee() {
         initComponents();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
+        setResizable(false);
+        setVisible(true);
     }
 
     /**
@@ -100,13 +102,14 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         SidebarPanel.setLayout(SidebarPanelLayout);
         SidebarPanelLayout.setHorizontalGroup(
             SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(UserGreetingsLabel, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(UserGreetingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(ProcessShipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ProcessShipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         SidebarPanelLayout.setVerticalGroup(
             SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,8 +118,9 @@ public class FrontlineEmployee extends javax.swing.JFrame {
                 .addComponent(UserGreetingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(ProcessShipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(169, 169, 169)
-                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(111, 111, 111)
+                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         NullPanel.add(SidebarPanel);
@@ -135,11 +139,8 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         NestedPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         HeaderLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        HeaderLabel.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel.setText("<html><span style='font-family: Inter; font-weight: bold;'>Unprocessed Paid Shipment(s)</span></html>");
 
-        PaidShipmentsTable.setBackground(new java.awt.Color(255, 255, 255));
-        PaidShipmentsTable.setForeground(new java.awt.Color(0, 0, 0));
         PaidShipmentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 

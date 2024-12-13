@@ -13,3 +13,5 @@ pkgID,cID,receiverAddress,created,dimensionalWeight_kg,length_cm,width_cm,height
 12,11,Bago City,10/16/2024,1.12,20.0,14.0,20.0
 13,12,Bago City,10/17/2024,0.78,20.0,15.0,13.0
 14,1,Mansilingan Bacolod City,12/13/2024,0.012,5.0,4.0,3.0
+15,1,Alijis Bacolod City,12/13/2024,0.018,10.0,3.0,3.0
+16,1,UNO-R Bacolod City,12/13/2024,42.0,100.0,70.0,30.0

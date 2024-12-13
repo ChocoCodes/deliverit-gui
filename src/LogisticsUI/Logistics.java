@@ -286,9 +286,26 @@ public class Logistics extends javax.swing.JFrame {
                     return true;
                 }
             case "frontline":
+                if(new Employee(user).login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    new FrontlineEmployee();
+                    return true;
+                }
             case "warehouse": 
+                if(new Employee(user).login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    new WarehouseManager();
+                    return true;
+                }
             case "driver":
-                return new Employee(user).login(pass);
+                if(new Employee(user).login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    new Driver();
+                    return true;
+                }
             default: 
                 return false; 
         }

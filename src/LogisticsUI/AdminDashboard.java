@@ -498,6 +498,7 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
         String filepath = filePathInput.getText();
         generateReports(filepath);
+        filePathInput.setText("");
     }//GEN-LAST:event_generateBtnActionPerformed
 
     private void pkgCapacityInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pkgCapacityInputActionPerformed
@@ -579,7 +580,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         } else {
             String maxWarehouseRoutes = JOptionPane.showInputDialog(this, "Enter maximum warehouse routes:", "Input Dialog", JOptionPane.QUESTION_MESSAGE);
             if (!DataIOParser.validateInt(maxWarehouseRoutes)) {
-                new DialogBoxUI(this, "Warehouse Routes must be a nunber.", JOptionPane.ERROR_MESSAGE);
+                new DialogBoxUI(this, "Warehouse Routes must be a number.", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             int maxWarehouseRoutesInt = Integer.parseInt(maxWarehouseRoutes);
@@ -587,6 +588,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
         CSVParser.saveEntry(vehicle.toCSVFormat(), "src/CSVFiles/vehicles.csv");
         new DialogBoxUI(this, "Vehicle Added Successfully", JOptionPane.INFORMATION_MESSAGE);
+        loadVehicleData();
         resetVehicleFields();
     }//GEN-LAST:event_addVehicleBtnActionPerformed
 

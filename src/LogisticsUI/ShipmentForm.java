@@ -278,7 +278,7 @@ public class ShipmentForm extends javax.swing.JFrame {
             return;
         }
         // Confirm payment
-        double change = totalAmt - cash;
+        double change = cash - totalAmt;
         String confirmMessage = String.format("Payment Successful. Change: %.2f", change);
         new DialogBoxUI(this, confirmMessage, JOptionPane.INFORMATION_MESSAGE);
         // change ship status -> pending from the original frame
