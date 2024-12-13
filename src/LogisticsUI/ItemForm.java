@@ -149,7 +149,6 @@ public class ItemForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nameFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_nameFldActionPerformed
 
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
@@ -189,7 +188,6 @@ public class ItemForm extends javax.swing.JFrame {
     }
     
     private void heightFldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_heightFldActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_heightFldActionPerformed
 
     public static void main(String args[]) {

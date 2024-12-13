@@ -226,15 +226,12 @@ public class CustomerRegistration extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void custNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custNameActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_custNameActionPerformed
 
     private void contactPhoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactPhoneActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_contactPhoneActionPerformed
 
     private void custAddrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_custAddrActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_custAddrActionPerformed
 
     private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed

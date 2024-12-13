@@ -11,7 +11,8 @@ import java.io.BufferedReader;
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     public static String dateToString(Date date) {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        return format.format(date);
+        // Set date to epoch date 01-01-1970
+        return format.format((date == null) ? new Date(0) : date);
     }
 
     public static Date strToDate(String csvDate) {

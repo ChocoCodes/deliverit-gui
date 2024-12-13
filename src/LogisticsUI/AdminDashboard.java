@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package LogisticsUI;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -11,20 +7,14 @@ import javax.swing.ImageIcon;
 import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-/**
- *
- * @author Lenovo
- */
-public class AdminDashboard extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AdminDashboard
-     */
+public class AdminDashboard extends javax.swing.JFrame {
     public AdminDashboard() {
         initComponents();
         loadWarehouseData();
         loadVehicleData();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -81,6 +71,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         generateBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("DeliverIT | Admin");
         setResizable(false);
 
         jPanel1.setLayout(null);
@@ -97,6 +88,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         signout.setForeground(new java.awt.Color(255, 255, 255));
         signout.setText("Logout");
         signout.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        signout.setFocusPainted(false);
         signout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 signoutActionPerformed(evt);
@@ -148,7 +140,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                         .addGap(17, 17, 17))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sidebarLayout.createSequentialGroup()
                         .addComponent(signout, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(38, 38, 38))))
+                        .addGap(45, 45, 45))))
             .addGroup(sidebarLayout.createSequentialGroup()
                 .addGroup(sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(warehouseMngmnt, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,13 +178,11 @@ public class AdminDashboard extends javax.swing.JFrame {
         warehouseCard.setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Remove Warehouse");
         warehouseCard.add(jLabel1);
         jLabel1.setBounds(56, 231, 249, 46);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Add Warehouse");
         warehouseCard.add(jLabel2);
         jLabel2.setBounds(56, 41, 249, 46);
@@ -230,6 +220,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         addWarehouseBtn.setForeground(new java.awt.Color(255, 255, 255));
         addWarehouseBtn.setText("Add");
         addWarehouseBtn.setBorder(null);
+        addWarehouseBtn.setFocusPainted(false);
         addWarehouseBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addWarehouseBtnActionPerformed(evt);
@@ -238,7 +229,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         warehouseCard.add(addWarehouseBtn);
         addWarehouseBtn.setBounds(370, 170, 155, 34);
 
-        warehouseTable.setBackground(new java.awt.Color(255, 255, 255));
         warehouseTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -257,30 +247,28 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Vehicle Capacity");
         warehouseCard.add(jLabel3);
         jLabel3.setBounds(330, 80, 110, 16);
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Location");
         warehouseCard.add(jLabel4);
         jLabel4.setBounds(60, 80, 110, 20);
 
         jLabel5.setBackground(new java.awt.Color(0, 0, 0));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Package Capacity");
         warehouseCard.add(jLabel5);
-        jLabel5.setBounds(60, 150, 110, 16);
+        jLabel5.setBounds(60, 146, 110, 20);
 
         removeWarehouseBtn.setBackground(new java.awt.Color(255, 102, 102));
         removeWarehouseBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         removeWarehouseBtn.setForeground(new java.awt.Color(255, 255, 255));
         removeWarehouseBtn.setText("Remove");
         removeWarehouseBtn.setBorder(null);
+        removeWarehouseBtn.setFocusPainted(false);
         removeWarehouseBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeWarehouseBtnActionPerformed(evt);
@@ -296,20 +284,18 @@ public class AdminDashboard extends javax.swing.JFrame {
         vehicleCard.setLayout(null);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Remove Vehicle");
         vehicleCard.add(jLabel6);
         jLabel6.setBounds(56, 231, 249, 46);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Add Vehicle");
         vehicleCard.add(jLabel7);
         jLabel7.setBounds(56, 41, 249, 46);
 
         warehouseIDInput.setBackground(new java.awt.Color(204, 204, 204));
         vehicleCard.add(warehouseIDInput);
-        warehouseIDInput.setBounds(66, 168, 140, 34);
+        warehouseIDInput.setBounds(60, 170, 150, 34);
 
         addVehicleBtn.setBackground(new java.awt.Color(73, 204, 112));
         addVehicleBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -324,7 +310,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         vehicleCard.add(addVehicleBtn);
         addVehicleBtn.setBounds(410, 170, 155, 34);
 
-        vehicleTable.setBackground(new java.awt.Color(255, 255, 255));
         vehicleTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
@@ -343,14 +328,12 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLabel9.setBackground(new java.awt.Color(0, 0, 0));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Type");
         vehicleCard.add(jLabel9);
         jLabel9.setBounds(60, 80, 110, 20);
 
         jLabel10.setBackground(new java.awt.Color(0, 0, 0));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Warehouse ID");
         vehicleCard.add(jLabel10);
         jLabel10.setBounds(60, 150, 110, 16);
@@ -366,14 +349,12 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLabel11.setBackground(new java.awt.Color(0, 0, 0));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("License Plate");
         vehicleCard.add(jLabel11);
         jLabel11.setBounds(230, 80, 110, 20);
 
         jLabel12.setBackground(new java.awt.Color(0, 0, 0));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Driver Name");
         vehicleCard.add(jLabel12);
         jLabel12.setBounds(230, 150, 110, 16);
@@ -385,7 +366,6 @@ public class AdminDashboard extends javax.swing.JFrame {
 
         jLabel13.setBackground(new java.awt.Color(0, 0, 0));
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Package Capacity");
         vehicleCard.add(jLabel13);
         jLabel13.setBounds(410, 80, 110, 20);
@@ -414,7 +394,6 @@ public class AdminDashboard extends javax.swing.JFrame {
         reportCard.setLayout(null);
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Generate Reports");
         reportCard.add(jLabel8);
         jLabel8.setBounds(50, 120, 310, 60);
@@ -424,16 +403,16 @@ public class AdminDashboard extends javax.swing.JFrame {
         filePathInput.setBounds(50, 200, 340, 30);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Report File Path");
         reportCard.add(jLabel14);
-        jLabel14.setBounds(50, 180, 140, 20);
+        jLabel14.setBounds(50, 170, 140, 20);
 
         generateBtn.setBackground(new java.awt.Color(73, 204, 112));
         generateBtn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         generateBtn.setForeground(new java.awt.Color(255, 255, 255));
         generateBtn.setText("Generate");
         generateBtn.setBorder(null);
+        generateBtn.setFocusPainted(false);
         generateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generateBtnActionPerformed(evt);
@@ -488,7 +467,6 @@ public class AdminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_vehicleMngmnt1ActionPerformed
 
     private void locationInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_locationInputActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_locationInputActionPerformed
 
     private void addWarehouseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addWarehouseBtnActionPerformed
@@ -516,14 +494,13 @@ public class AdminDashboard extends javax.swing.JFrame {
     private void generateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateBtnActionPerformed
         String filepath = filePathInput.getText();
         generateReports(filepath);
+        filePathInput.setText("");
     }//GEN-LAST:event_generateBtnActionPerformed
 
     private void pkgCapacityInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pkgCapacityInputActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_pkgCapacityInputActionPerformed
 
     private void vehicleCapacityInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vehicleCapacityInputActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_vehicleCapacityInputActionPerformed
 
     private void removeWarehouseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeWarehouseBtnActionPerformed
@@ -531,7 +508,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         int selectedRow = warehouseTable.getSelectedRow();
         
         if (selectedRow == -1) {
-            new DialogBoxUI(this, "Please select a warehouse to delete", JOptionPane.WARNING_MESSAGE);
+            new DialogBoxUI(this, "Please select a warehouse to delete.", JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -562,7 +539,7 @@ public class AdminDashboard extends javax.swing.JFrame {
                 }
                 CSVParser.writeToCSV(updatedData, warehouses[0].getWarehouseHeader(), false, csvFilePath);
             }
-            new DialogBoxUI(this, "Warehouse Removed Successfully", JOptionPane.INFORMATION_MESSAGE);
+            new DialogBoxUI(this, "Warehouse removed successfully.", JOptionPane.INFORMATION_MESSAGE);
         }
         loadWarehouseData();
     }//GEN-LAST:event_removeWarehouseBtnActionPerformed
@@ -573,12 +550,12 @@ public class AdminDashboard extends javax.swing.JFrame {
         boolean isAvailable = true;
         
         if (!DataIOParser.validateInt(packageCapacity)) {
-            new DialogBoxUI(this, "Package Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI(this, "Package Capacity must be a nunber.", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
         if (!DataIOParser.validateInt(whId)) {
-            new DialogBoxUI(this, "Wharehouse ID must be a nunber", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI(this, "Wharehouse ID must be a nunber.", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
@@ -589,7 +566,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         if (type.equalsIgnoreCase("van")) {
             String capacityKg = JOptionPane.showInputDialog(this, "Enter maximum capacity (KG):", "Input Dialog", JOptionPane.QUESTION_MESSAGE);
             if (!DataIOParser.validateDouble(capacityKg)) {
-                new DialogBoxUI(this, "Capacity must be a nunber", JOptionPane.ERROR_MESSAGE);
+                new DialogBoxUI(this, "Capacity must be a number.", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             double capacityKgDouble = Double.parseDouble(capacityKg);
@@ -599,7 +576,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         } else {
             String maxWarehouseRoutes = JOptionPane.showInputDialog(this, "Enter maximum warehouse routes:", "Input Dialog", JOptionPane.QUESTION_MESSAGE);
             if (!DataIOParser.validateInt(maxWarehouseRoutes)) {
-                new DialogBoxUI(this, "Warehouse Routes must be a nunber", JOptionPane.ERROR_MESSAGE);
+                new DialogBoxUI(this, "Warehouse Routes must be a number.", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             int maxWarehouseRoutesInt = Integer.parseInt(maxWarehouseRoutes);
@@ -607,6 +584,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
         CSVParser.saveEntry(vehicle.toCSVFormat(), "src/CSVFiles/vehicles.csv");
         new DialogBoxUI(this, "Vehicle Added Successfully", JOptionPane.INFORMATION_MESSAGE);
+        loadVehicleData();
         resetVehicleFields();
     }//GEN-LAST:event_addVehicleBtnActionPerformed
 
@@ -732,39 +710,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         }
     }
     
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminDashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AdminDashboard().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

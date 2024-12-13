@@ -272,12 +272,43 @@ public class Logistics extends javax.swing.JFrame {
                     if(customer.getName().equals(user) && customer.getContactInfo().equals(pass)) {
                         new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
                         this.dispose();
-                        new CustomerDashboard(customer); // TODO:
+                        new CustomerDashboard(customer);
                         return true;
                     }
                 }
                 return false;
-            // Handle other roles in default
+            case "admin":
+                Employee admin = new Admin(user);
+                if(admin.login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    admin.showMenu();
+                    return true;
+                }
+            case "frontline":
+                Employee fEmp = new FrontlineEmployee(user);
+                if(fEmp.login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    fEmp.showMenu();
+                    return true;
+                }
+            case "warehouse": 
+                Employee warehouseMan = new WarehouseManager(user);
+                if(warehouseMan.login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    warehouseMan.showMenu();
+                    return true;
+                }
+            case "driver":
+                Employee driver = new Driver(user);
+                if(driver.login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    driver.showMenu();
+                    return true;
+                }
             default: 
                 return false; 
         }

@@ -2,16 +2,20 @@ package LogisticsUI;
 
 import ClassTemplates.Shipment;
 import ClassTemplates.Package;
+import ClassTemplates.Customer;
+import ClassTemplates.Item;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import datautils.io.*;
 
 public class ShipmentForm extends javax.swing.JFrame {
+    private Customer customerLoggedIn;
     private Shipment customerShipment;
 
-    public ShipmentForm(Shipment shipment) {
-        this.customerShipment = shipment;
+    public ShipmentForm(Customer customerLoggedIn, Shipment customerShipment) {
+        this.customerLoggedIn = customerLoggedIn;
+        this.customerShipment = customerShipment;
         initComponents();
         displayShipmentInfo();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
@@ -251,7 +255,6 @@ public class ShipmentForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void totalDsplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalDsplayActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_totalDsplayActionPerformed
 
     private void payBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payBtnActionPerformed
@@ -264,7 +267,7 @@ public class ShipmentForm extends javax.swing.JFrame {
         }
         // Case 2 - invalid type/format
         if(!DataIOParser.validateDouble(cashOnHand)) {
-            new DialogBoxUI(this, "Not a valid input!", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI(this, "Invalid input!", JOptionPane.ERROR_MESSAGE);
             cashFld.setText("");
             return;
         }
@@ -274,12 +277,22 @@ public class ShipmentForm extends javax.swing.JFrame {
             cashFld.setText("");
             return;
         }
-        // confirm pay
-        double change = totalAmt - cash;
+        // Confirm payment
+        double change = cash - totalAmt;
         String confirmMessage = String.format("Payment Successful. Change: %.2f", change);
-        new DialogBoxUI(this, confirmMessage, JOptionPane.INFORMATION_MESSAGE)
-        // change ship status -> pending
-        
+        new DialogBoxUI(this, confirmMessage, JOptionPane.INFORMATION_MESSAGE);
+        // change ship status -> pending from the original frame
+        customerShipment.setStatus("Paid");
+        Package pkg = customerShipment.getPackage();
+        CSVParser.saveEntry(pkg.toCSVFormat(customerLoggedIn.getCustomerID()), "src/CSVFiles/packages.csv");
+        Item[] items = pkg.getContents();
+        for(Item item : items) {
+            CSVParser.saveEntry(item.toCSVFormat(pkg.getId()), "src/CSVFiles/items.csv");
+        }
+        // save shipment to CSV if done
+        CSVParser.saveEntry(customerShipment.toCSVFormat(), "src/CSVFiles/shipments.csv");
+        new DialogBoxUI(this, "Shipment has been saved successfully.", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
     }//GEN-LAST:event_payBtnActionPerformed
 
 
@@ -310,7 +323,6 @@ public class ShipmentForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ShipmentForm().setVisible(true);
             }
         });
     }
