@@ -74,4 +74,18 @@ import java.io.BufferedReader;
             return Double.parseDouble(input) > 0.0;
         } catch (NumberFormatException e) { return false; }
     }
+    
+    public static boolean areEmptyFields(String[] fields) {
+        for(String f : fields) {
+            if(DataIOParser.checkInput(f)) return true;
+        }
+        return false;
+    }
+    
+    public static boolean areValidMeasures(String[] inputs) {
+        for(String i : inputs) {
+            if(!DataIOParser.validateDouble(i)) return true;
+        }
+        return false;
+    }
 }
