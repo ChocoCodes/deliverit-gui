@@ -582,7 +582,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
             return;
         }
         // Case 3 - duplicate phone numbers: phone field is different than the customer phone field
-        if(!customerLoggedIn.getContactInfo().equals(phone) && CSVParser.searchCustomer(name)) {
+        if(!customerLoggedIn.getContactInfo().equals(phone) && CSVParser.searchCustomerContact(phone)) {
             new DialogBoxUI(this, "ATTEMPT ERROR 2: The phone number entered is already registered at our system.", JOptionPane.ERROR_MESSAGE);
             resetFields();
             return;
@@ -593,6 +593,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
         customerLoggedIn.setAddress(addr);
         // Save updated info in the Customer CSV
         CSVParser.updateCSV("src/CSVFiles/customers.csv", customerLoggedIn.getCustomerID(), customerLoggedIn, customerLoggedIn.getCustomerHeader());
+        new DialogBoxUI(this, "Customer info saved successfully", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void addItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addItemBtnActionPerformed
@@ -621,7 +622,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
         shipment.calcShipCost();
         // Show checkout form
         new ShipmentForm(customerLoggedIn, shipment);
-        // Reset fields after transaction
+        // TODO: Reset fields after transaction
         rAddrFld.setText("");
         DefaultTableModel model = (DefaultTableModel) itemTbl.getModel();
         model.setRowCount(0);

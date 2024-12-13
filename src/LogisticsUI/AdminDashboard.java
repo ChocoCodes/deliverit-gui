@@ -18,6 +18,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         loadWarehouseData();
         loadVehicleData();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -223,6 +224,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         addWarehouseBtn.setForeground(new java.awt.Color(255, 255, 255));
         addWarehouseBtn.setText("Add");
         addWarehouseBtn.setBorder(null);
+        addWarehouseBtn.setFocusPainted(false);
         addWarehouseBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addWarehouseBtnActionPerformed(evt);
@@ -270,6 +272,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         removeWarehouseBtn.setForeground(new java.awt.Color(255, 255, 255));
         removeWarehouseBtn.setText("Remove");
         removeWarehouseBtn.setBorder(null);
+        removeWarehouseBtn.setFocusPainted(false);
         removeWarehouseBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeWarehouseBtnActionPerformed(evt);
@@ -413,6 +416,7 @@ public class AdminDashboard extends javax.swing.JFrame {
         generateBtn.setForeground(new java.awt.Color(255, 255, 255));
         generateBtn.setText("Generate");
         generateBtn.setBorder(null);
+        generateBtn.setFocusPainted(false);
         generateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generateBtnActionPerformed(evt);

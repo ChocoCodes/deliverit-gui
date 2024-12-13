@@ -1,16 +1,16 @@
 id,pkgId,vId,wId,dest,shipCost,confirmed,status,shipDate,eta
-1,1,2,0,Bago City Block 1 Lot 1,100,true,Pending,04/10/2024,05/10/2024
-3,3,2,0,Bago City Block 3 Lot 3,70,true,Pending,11/10/2024,12/10/2024
-4,4,2,0,Bago City Block 4 Lot 4,120,true,Pending,12/10/2024,13/10/2024
-5,5,2,0,Bago City Block 5 Lot 5,80,true,Pending,05/10/2024,06/10/2024
-6,6,2,0,Bago City Block 6 Lot 6,60,true,Pending,05/10/2024,06/10/2024
-7,7,2,0,Bago City Block 7 Lot 7,140,true,Pending,06/10/2024,07/10/2024
-8,8,2,0,Bago City Block 8 Lot 8,90,true,Pending,07/10/2024,08/10/2024
-9,9,2,0,Bago City Block 9 Lot 9,110,true,Pending,07/10/2024,08/10/2024
-10,10,2,0,Bago City Block 10 Lot 10,130,true,Pending,08/10/2024,09/10/2024
-11,12,2,0,Bago City Torres St,450.0,true,Pending,10/13/2024,10/16/2024
-12,12,2,0,Bago City,300.0,true,Pending,10/16/2024,10/17/2024
-13,13,2,0,Bago City,300.0,true,Pending,10/17/2024,10/21/2024
-14,14,0,3,Mansilingan Bacolod City,200.0,true,Pending,01/01/1970,01/01/1970
-15,15,0,1,Alijis Bacolod City,200.0,false,Paid,Pending,Pending
-16,16,0,1,UNO-R Bacolod City,550.0,false,Paid,Pending,Pending
+1,1,0,0,Bago City Block 1 Lot 1,100,true,Delivered,04/10/2024,05/10/2024
+3,3,4,0,Bago City Block 3 Lot 3,70,true,Pending,11/10/2024,12/10/2024
+4,4,4,0,Bago City Block 4 Lot 4,120,true,Pending,12/10/2024,13/10/2024
+5,5,0,1,Bago City Block 5 Lot 5,80,false,Paid,05/10/2024,06/10/2024
+6,6,0,1,Bago City Block 6 Lot 6,60,false,Paid,05/10/2024,06/10/2024
+7,7,0,1,Bago City Block 7 Lot 7,140,false,Paid,06/10/2024,07/10/2024
+8,8,0,1,Bago City Block 8 Lot 8,90,false,Paid,07/10/2024,08/10/2024
+9,9,0,1,Bago City Block 9 Lot 9,110,false,Paid,07/10/2024,08/10/2024
+10,10,0,1,Bago City Block 10 Lot 10,130,false,Paid,08/10/2024,09/10/2024
+11,12,0,1,Bago City Torres St,450.0,false,Paid,10/13/2024,10/16/2024
+12,12,0,1,Bago City,300.0,false,Paid,10/16/2024,10/17/2024
+13,13,0,1,Bago City,300.0,false,Paid,10/17/2024,10/21/2024
+14,14,0,1,Mansilingan Bacolod City,200.0,false,Paid,01/01/1970,01/01/1970
+15,15,0,1,Alijis Bacolod City,200.0,false,Paid,01/01/1970,01/01/1970
+16,16,0,1,UNO-R Bacolod City,550.0,false,Paid,01/01/1970,01/01/1970

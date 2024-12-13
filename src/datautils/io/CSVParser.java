@@ -169,5 +169,12 @@ public class CSVParser {
         }
         return false;
     }
-   
+    
+    public static boolean searchCustomerContact(String phone) {
+       Customer[] customers = Customer.toCustomer(CSVParser.loadCSVData("src/CSVFiles/customers.csv"));
+       for(Customer c : customers) {
+           if(c.getContactInfo().equals(phone)) return true; 
+       }
+       return false;
+    }
 }

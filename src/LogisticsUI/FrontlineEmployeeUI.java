@@ -54,6 +54,7 @@ public class FrontlineEmployeeUI extends javax.swing.JFrame {
         setTitle("DeliverIT | Dashboard");
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
+        setPreferredSize(new java.awt.Dimension(800, 500));
 
         NullPanel.setBackground(new java.awt.Color(240, 245, 255));
         NullPanel.setLayout(null);
@@ -123,7 +124,7 @@ public class FrontlineEmployeeUI extends javax.swing.JFrame {
         );
 
         NullPanel.add(SidebarPanel);
-        SidebarPanel.setBounds(0, 0, 0, 500);
+        SidebarPanel.setBounds(0, 0, 200, 500);
 
         MainPanel.setBackground(new java.awt.Color(240, 245, 255));
         MainPanel.setLayout(new java.awt.CardLayout());
@@ -218,11 +219,11 @@ public class FrontlineEmployeeUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();

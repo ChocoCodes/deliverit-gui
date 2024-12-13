@@ -278,7 +278,7 @@ public class Logistics extends javax.swing.JFrame {
                 }
                 return false;
             case "admin":
-                Admin admin = new Admin(user);
+                Employee admin = new Admin(user);
                 if(admin.login(pass)) {
                     new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
@@ -286,7 +286,7 @@ public class Logistics extends javax.swing.JFrame {
                     return true;
                 }
             case "frontline":
-                FrontlineEmployee fEmp = new FrontlineEmployee(user);
+                Employee fEmp = new FrontlineEmployee(user);
                 if(fEmp.login(pass)) {
                     new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
@@ -294,7 +294,7 @@ public class Logistics extends javax.swing.JFrame {
                     return true;
                 }
             case "warehouse": 
-                WarehouseManager warehouseMan = new WarehouseManager(user);
+                Employee warehouseMan = new WarehouseManager(user);
                 if(warehouseMan.login(pass)) {
                     new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
@@ -302,7 +302,7 @@ public class Logistics extends javax.swing.JFrame {
                     return true;
                 }
             case "driver":
-                Driver driver = new Driver(user);
+                Employee driver = new Driver(user);
                 if(driver.login(pass)) {
                     new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
