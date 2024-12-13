@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package LogisticsUI;
 
 import datautils.io.CSVParser;
@@ -11,16 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ClassTemplates.Shipment;
 
-
-/**
- *
- * @author User
- */
 public class FrontlineEmployeeUI extends javax.swing.JFrame {
-
-    /**
-     * Creates new form FrontlineEmployee
-     */
     public FrontlineEmployeeUI() {
         initComponents();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());

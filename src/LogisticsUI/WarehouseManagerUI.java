@@ -10,18 +10,13 @@ import ClassTemplates.Vehicle;
 import ClassTemplates.Warehouse;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-/**
- *
- * @author User
- */
+
 public class WarehouseManagerUI extends javax.swing.JFrame {
     
     private final java.awt.Color defaultButtonColor = java.awt.Color.decode("#465CEF");
     private final java.awt.Color activeButtonColor = java.awt.Color.decode("#509BE5");
     private Warehouse currentWarehouse;
-    /**
-     * Creates new form WarehouseManager
-     */
+
     public WarehouseManagerUI() {
         initComponents();
         assignWarehouseWithDialog();
@@ -74,6 +69,7 @@ public class WarehouseManagerUI extends javax.swing.JFrame {
     
         loadAndAssignResources();
     }
+    
     private void loadAndAssignResources() {
         Vehicle[] vehicles = loadVehicles();
         Shipment[] shipments = loadShipments();
@@ -132,6 +128,7 @@ public class WarehouseManagerUI extends javax.swing.JFrame {
             }
         }
     }
+    
     private void resetButtonColors() {
         DropOffBtn.setOpaque(false);
         DropOffBtn.setBackground(defaultButtonColor);

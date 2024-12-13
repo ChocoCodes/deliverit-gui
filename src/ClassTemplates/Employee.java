@@ -13,6 +13,5 @@ public abstract class Employee {
     }
     
     public abstract boolean login(String pass);
-
     public abstract void showMenu();
 }

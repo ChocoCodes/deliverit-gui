@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package LogisticsUI;
 
 import datautils.io.CSVParser;
@@ -13,10 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ClassTemplates.Shipment;
 import ClassTemplates.Vehicle;
-/**
- *
- * @author User
- */
+
 public class DriverUI extends javax.swing.JFrame {
     
     private final java.awt.Color defaultButtonColor = java.awt.Color.decode("#465CEF");
@@ -24,9 +17,7 @@ public class DriverUI extends javax.swing.JFrame {
     private String driverName;
     private Vehicle currentVehicle;
     private boolean isVehicleAssigned = false;
-    /**
-     * Creates new form Driver
-     */
+
     public DriverUI() {
         initComponents();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
@@ -362,11 +353,11 @@ public class DriverUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
+            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE)
+            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
