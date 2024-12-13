@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package LogisticsUI;
 
 import datautils.io.CSVParser;
@@ -11,19 +7,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ClassTemplates.Shipment;
 
-
-/**
- *
- * @author User
- */
-public class FrontlineEmployee extends javax.swing.JFrame {
-
-    /**
-     * Creates new form FrontlineEmployee
-     */
-    public FrontlineEmployee() {
+public class FrontlineEmployeeUI extends javax.swing.JFrame {
+    public FrontlineEmployeeUI() {
         initComponents();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
+        setResizable(false);
     }
 
     /**
@@ -53,6 +41,7 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         setTitle("DeliverIT | Dashboard");
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
+        setPreferredSize(new java.awt.Dimension(800, 500));
 
         NullPanel.setBackground(new java.awt.Color(240, 245, 255));
         NullPanel.setLayout(null);
@@ -100,13 +89,14 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         SidebarPanel.setLayout(SidebarPanelLayout);
         SidebarPanelLayout.setHorizontalGroup(
             SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(UserGreetingsLabel, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(UserGreetingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(ProcessShipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(SidebarPanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ProcessShipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         SidebarPanelLayout.setVerticalGroup(
             SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,8 +105,9 @@ public class FrontlineEmployee extends javax.swing.JFrame {
                 .addComponent(UserGreetingsLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(ProcessShipmentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(169, 169, 169)
-                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(111, 111, 111)
+                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
 
         NullPanel.add(SidebarPanel);
@@ -135,11 +126,8 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         NestedPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         HeaderLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        HeaderLabel.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel.setText("<html><span style='font-family: Inter; font-weight: bold;'>Unprocessed Paid Shipment(s)</span></html>");
 
-        PaidShipmentsTable.setBackground(new java.awt.Color(255, 255, 255));
-        PaidShipmentsTable.setForeground(new java.awt.Color(0, 0, 0));
         PaidShipmentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -218,11 +206,11 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
@@ -336,20 +324,21 @@ public class FrontlineEmployee extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrontlineEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontlineEmployeeUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrontlineEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontlineEmployeeUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrontlineEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontlineEmployeeUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrontlineEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontlineEmployeeUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run(){
-                new FrontlineEmployee().setVisible(true);
+                new FrontlineEmployeeUI().setVisible(true);
             }
         });
     }

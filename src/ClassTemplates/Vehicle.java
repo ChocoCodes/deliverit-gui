@@ -14,9 +14,6 @@ public class Vehicle {
     protected boolean isAvailable;
     protected Shipment[] shipments; 
 
-    // Changed Package[] packages -> Shipment[] shipments because the Driver Role Needs Vehicle to have a Shipment 
-    // Packages method can still be accessed through shipment class
-
     // Vehicle Constructor for CSV File
     public Vehicle(int vehicleID, int whId, String type, String licensePlate, String driver, double capacityKG, double currentCapacityKG, int maxShipmentCount, int currentShipmentCount, boolean isAvailable) {
         this.vehicleID = vehicleID;

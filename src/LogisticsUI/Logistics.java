@@ -1,6 +1,5 @@
 package LogisticsUI;
 
-import javax.swing.border.BevelBorder;
 import javax.swing.ImageIcon;
 import datautils.io.DataIOParser;
 import datautils.io.CSVParser;
@@ -16,6 +15,7 @@ public class Logistics extends javax.swing.JFrame {
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         setLocationRelativeTo(null);
         setResizable(false);
+        setVisible(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -235,10 +235,10 @@ public class Logistics extends javax.swing.JFrame {
     }//GEN-LAST:event_passfieldActionPerformed
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        System.out.println(selectedUserRole);
+        // System.out.println(selectedUserRole);
         String username = userfield.getText(), password = new String(passfield.getPassword());
         if(DataIOParser.checkInput(username) || DataIOParser.checkInput(password)) { 
-            new DialogBoxUI("Invalid. Missing input in required field/s.", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI(this, "Invalid. Missing input in required field/s.", JOptionPane.ERROR_MESSAGE);
             return;
         }
         boolean success = validateLogin(username, password, selectedUserRole);
@@ -249,7 +249,7 @@ public class Logistics extends javax.swing.JFrame {
                 new CustomerRegistration();
             }
         } else if(!success) {
-            new DialogBoxUI("Invalid Login Credentials.", JOptionPane.ERROR_MESSAGE);
+            new DialogBoxUI(this, "Invalid Login Credentials.", JOptionPane.ERROR_MESSAGE);
             resetLoginFields();
             return;
         }
@@ -270,14 +270,45 @@ public class Logistics extends javax.swing.JFrame {
                 Customer[] customers = Customer.toCustomer(CSVParser.loadCSVData("src/CSVFiles/customers.csv"));
                 for(Customer customer: customers) {
                     if(customer.getName().equals(user) && customer.getContactInfo().equals(pass)) {
-                        new DialogBoxUI("Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                        new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
                         this.dispose();
-                        new CustomerDashboard(customer); // TODO:
+                        new CustomerDashboard(customer);
                         return true;
                     }
                 }
                 return false;
-            // Handle other roles in default
+            case "admin":
+                Employee admin = new Admin(user);
+                if(admin.login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    admin.showMenu();
+                    return true;
+                }
+            case "frontline":
+                Employee fEmp = new FrontlineEmployee(user);
+                if(fEmp.login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    fEmp.showMenu();
+                    return true;
+                }
+            case "warehouse": 
+                Employee warehouseMan = new WarehouseManager(user);
+                if(warehouseMan.login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    warehouseMan.showMenu();
+                    return true;
+                }
+            case "driver":
+                Employee driver = new Driver(user);
+                if(driver.login(pass)) {
+                    new DialogBoxUI(this, "Successfully Logged In!", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    driver.showMenu();
+                    return true;
+                }
             default: 
                 return false; 
         }
@@ -286,7 +317,7 @@ public class Logistics extends javax.swing.JFrame {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Logistics().setVisible(true);
+                new Logistics();
             }
         });
     }

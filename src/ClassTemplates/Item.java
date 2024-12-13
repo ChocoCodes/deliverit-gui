@@ -1,5 +1,7 @@
 package ClassTemplates;
 
+import java.util.ArrayList;
+
 public class Item implements Measurable {
     private final String[] ITEMS_H = {"pkgID", "name", "weight_kg", "length_cm", "width_cm", "height_cm"};
     private String name;
@@ -36,11 +38,28 @@ public class Item implements Measurable {
             String.valueOf(dim.getHeight())
         }; 
     }
+    
     public static Item toItem(String[][] raw, int idx) {
         return new Item(
             raw[idx][1],
             Double.parseDouble(raw[idx][2]),
             Dimension.toDimension(raw[idx], 3)
         );
+    }
+
+    public static Item[] toItem(String[][] rawData) {
+        ArrayList<Item> items = new ArrayList<>();
+        for(int i = 0; i < rawData.length; i++) {
+            String name = "";
+            double weight = 0.0;
+            Dimension dim = null;
+            for(int j = 0; j < rawData[i].length; j++) {
+                name = rawData[i][0];
+                weight = Double.parseDouble(rawData[i][1]);
+                dim = new Dimension(Double.parseDouble(rawData[i][2]), Double.parseDouble(rawData[i][3]), Double.parseDouble(rawData[i][4])); 
+            }
+            items.add(new Item(name, weight, dim));
+        }
+        return items.toArray(new Item[0]);
     }
 }

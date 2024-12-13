@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package LogisticsUI;
 
 import datautils.io.CSVParser;
@@ -13,24 +9,21 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import ClassTemplates.Shipment;
 import ClassTemplates.Vehicle;
-/**
- *
- * @author User
- */
-public class Driver extends javax.swing.JFrame {
+
+public class DriverUI extends javax.swing.JFrame {
     
     private final java.awt.Color defaultButtonColor = java.awt.Color.decode("#465CEF");
     private final java.awt.Color activeButtonColor = java.awt.Color.decode("#509BE5");
     private String driverName;
     private Vehicle currentVehicle;
     private boolean isVehicleAssigned = false;
-    /**
-     * Creates new form Driver
-     */
-    public Driver() {
+
+    public DriverUI() {
         initComponents();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         askForDriverName();
+        setResizable(false);
+        setLocationRelativeTo(null);
     }
 
     private void askForDriverName() {
@@ -183,7 +176,7 @@ public class Driver extends javax.swing.JFrame {
                 .addComponent(AssignVehicleBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(DeliverPackageBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
+                .addGap(60, 60, 60)
                 .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -203,11 +196,8 @@ public class Driver extends javax.swing.JFrame {
         NestedPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         HeaderLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        HeaderLabel.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel.setText("<html><span style='font-family: Inter; font-weight: bold;'>Available Vehicle(s)</span></html>");
 
-        AvailableVehiclesTable.setBackground(new java.awt.Color(255, 255, 255));
-        AvailableVehiclesTable.setForeground(new java.awt.Color(0, 0, 0));
         AvailableVehiclesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -284,11 +274,8 @@ public class Driver extends javax.swing.JFrame {
         NestedPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         HeaderLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        HeaderLabel1.setForeground(new java.awt.Color(0, 0, 0));
         HeaderLabel1.setText("<html><span style='font-family: Inter; font-weight: bold;'>Shipment(s) Stored in Vehicle</span></html>");
 
-        ShipmentListTable.setBackground(new java.awt.Color(255, 255, 255));
-        ShipmentListTable.setForeground(new java.awt.Color(0, 0, 0));
         ShipmentListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -366,11 +353,11 @@ public class Driver extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(NullPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
@@ -699,20 +686,21 @@ public class Driver extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Driver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DriverUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Driver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DriverUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Driver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DriverUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Driver.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DriverUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Driver().setVisible(true);
+                new DriverUI().setVisible(true);
             }
         });
     }
