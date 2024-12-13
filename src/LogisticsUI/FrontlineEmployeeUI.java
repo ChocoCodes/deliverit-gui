@@ -16,16 +16,15 @@ import ClassTemplates.Shipment;
  *
  * @author User
  */
-public class FrontlineEmployee extends javax.swing.JFrame {
+public class FrontlineEmployeeUI extends javax.swing.JFrame {
 
     /**
      * Creates new form FrontlineEmployee
      */
-    public FrontlineEmployee() {
+    public FrontlineEmployeeUI() {
         initComponents();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         setResizable(false);
-        setVisible(true);
     }
 
     /**
@@ -124,7 +123,7 @@ public class FrontlineEmployee extends javax.swing.JFrame {
         );
 
         NullPanel.add(SidebarPanel);
-        SidebarPanel.setBounds(0, 0, 200, 500);
+        SidebarPanel.setBounds(0, 0, 0, 500);
 
         MainPanel.setBackground(new java.awt.Color(240, 245, 255));
         MainPanel.setLayout(new java.awt.CardLayout());
@@ -337,20 +336,21 @@ public class FrontlineEmployee extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrontlineEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontlineEmployeeUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrontlineEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontlineEmployeeUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrontlineEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontlineEmployeeUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrontlineEmployee.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrontlineEmployeeUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run(){
-                new FrontlineEmployee().setVisible(true);
+                new FrontlineEmployeeUI().setVisible(true);
             }
         });
     }

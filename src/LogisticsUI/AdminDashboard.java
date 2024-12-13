@@ -13,15 +13,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class AdminDashboard extends javax.swing.JFrame {
-    private Admin admin;
-
-    public AdminDashboard(Admin admin) {
-        this.admin = admin;
+    public AdminDashboard() {
         initComponents();
         loadWarehouseData();
         loadVehicleData();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
-        setVisible(true);
     }
 
     /**

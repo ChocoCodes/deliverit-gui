@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
  *
  * @author User
  */
-public class WarehouseManager extends javax.swing.JFrame {
+public class WarehouseManagerUI extends javax.swing.JFrame {
     
     private final java.awt.Color defaultButtonColor = java.awt.Color.decode("#465CEF");
     private final java.awt.Color activeButtonColor = java.awt.Color.decode("#509BE5");
@@ -22,12 +22,11 @@ public class WarehouseManager extends javax.swing.JFrame {
     /**
      * Creates new form WarehouseManager
      */
-    public WarehouseManager() {
+    public WarehouseManagerUI() {
         initComponents();
         assignWarehouseWithDialog();
         setIconImage(new ImageIcon("src/assets/truck.png").getImage());
         setResizable(false);
-        setVisible(true);
     }
 
     private void assignWarehouseWithDialog() {
@@ -1058,20 +1057,21 @@ public class WarehouseManager extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(WarehouseManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WarehouseManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(WarehouseManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WarehouseManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(WarehouseManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WarehouseManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(WarehouseManager.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(WarehouseManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new WarehouseManager().setVisible(true);
+                new WarehouseManagerUI().setVisible(true);
             }
         });
     }
